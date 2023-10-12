@@ -6,21 +6,35 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class GUIInfixPrecedence extends JFrame{
+
+    // INFIX CARD
+    private JPanel infixCard;
+
+    // EVALUATE CARD
+    private JPanel evaluateCard = new JPanel();
+
+    private JPanel infoCard = new JPanel();
+
+    private CardLayout cardLayout = new CardLayout();
+
+    private JPanel contentPanel;
+
+
     private final Resources resources = new Resources();
+
+    private JButton infixButton;
     public GUIInfixPrecedence() {
         // Main Frame
         super("Infix Statement Conversion");
-       // resources.loadFonts();
-       // Font titleFont = resources.montserratBold;
+
         setLayout(new BorderLayout());
+
+        JPanel page = populateInfoCard();
+        add(page, BorderLayout.CENTER);
 
         // SIDEBAR
         JPanel sideBar = createSideBar();
         add(sideBar, BorderLayout.WEST);
-
-        // PAGE
-        JPanel page = createPage();
-        add(page, BorderLayout.CENTER);
 
         revalidate();
         repaint();
@@ -28,6 +42,25 @@ public class GUIInfixPrecedence extends JFrame{
         setVisible(true);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    private JPanel populateInfixCard() {
+        // Page specifications
+        JPanel pagePanel = new JPanel();
+        pagePanel.setLayout(new BorderLayout());
+        pagePanel.setBackground(resources.darkBlack);
+        pagePanel.setBorder(resources.pageMargin);
+        pagePanel.setPreferredSize(new Dimension(500,500));
+
+        JPanel contentPanel = new JPanel();
+        contentPanel.setBackground(Color.ORANGE);
+        contentPanel.setBorder(resources.roundedBorder);
+        contentPanel.setSize(500,500);
+        pagePanel.add(contentPanel, BorderLayout.CENTER);
+        JLabel title = new JLabel("THIS IS INFIX CARD");
+        title.setForeground(Color.WHITE);
+        contentPanel.add(title);
+        return pagePanel;
     }
 
     private JPanel createSideBar() {
@@ -57,14 +90,15 @@ public class GUIInfixPrecedence extends JFrame{
         buttons.setPreferredSize(new Dimension(200, 80));
         buttons.setBackground(resources.greyishBlack);
 
-        JButton homeButton = new JButton("Enter");
-        homeButton.setForeground(resources.eggshellWhite);
-        homeButton.setBackground(resources.grey);
+        infixButton = new JButton("Infix");
+        infixButton.setForeground(resources.eggshellWhite);
+        infixButton.setBackground(resources.grey);
+        infixButton.setBorderPainted(false);
         // Addresses an issue with displaying buttons on Macs
-        homeButton.setOpaque(true);
-        homeButton.setBorderPainted(false);
-        homeButton.setBorder(resources.roundedBorder);
-        homeButton.setPreferredSize(new Dimension(100, 30));
+        infixButton.setOpaque(true);
+        infixButton.setBorderPainted(false);
+        infixButton.setBorder(resources.roundedBorder);
+        infixButton.setPreferredSize(new Dimension(100, 30));
 
         JButton evaluateButton = new JButton("Evaluate");
         evaluateButton.setForeground(resources.eggshellWhite);
@@ -75,14 +109,19 @@ public class GUIInfixPrecedence extends JFrame{
         evaluateButton.setBorder(resources.roundedBorder);
         evaluateButton.setPreferredSize(new Dimension(100, 30));
 
+        infixButton.addActionListener(e-> {
+            cardLayout.show(contentPanel, "infixCard");
 
-        buttons.add(homeButton);
+        });
+
+
+        buttons.add(infixButton);
         buttons.add(evaluateButton);
         sidebarPanel.add(buttons, BorderLayout.CENTER);
         return sidebarPanel;
     } // end of createSideBar method
 
-    private JPanel createPage() {
+    private JPanel populateInfoCard() {
 
         // Page specifications
         JPanel pagePanel = new JPanel();
@@ -91,11 +130,25 @@ public class GUIInfixPrecedence extends JFrame{
         pagePanel.setBorder(resources.pageMargin);
         pagePanel.setPreferredSize(new Dimension(500,500));
 
-        JPanel contentPanel = new JPanel();
+        contentPanel = new JPanel();
+        contentPanel.setLayout(cardLayout);
         contentPanel.setBackground(resources.darkBlack);
         contentPanel.setBorder(resources.roundedBorder);
         contentPanel.setSize(500,500);
         pagePanel.add(contentPanel, BorderLayout.CENTER);
+        JLabel title = new JLabel("THIS IS INFO CARD");
+        title.setForeground(Color.WHITE);
+        contentPanel.add(title);
+
+        // PAGE
+
+
+        infixCard = populateInfixCard();
+        contentPanel.add(infixCard,BorderLayout.CENTER);
+        contentPanel.add(infixCard, "infixCard");
+        contentPanel.add(infoCard, "infoCard");
+        contentPanel.add(evaluateCard, "evaluateCard");
+
         return pagePanel;
     }
 
