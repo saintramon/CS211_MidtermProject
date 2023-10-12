@@ -24,23 +24,59 @@ public class Stack<T> implements StackInterface<T> {
         count = 0;
     } // end of Stack default constructor
 
+    /**
+     * Inserts a given Node in the Stack and sets itself as the top node.
+     * @param item given data to be inserted.
+     */
     @Override
     public void push(T item) {
-
+        Node<T> node = new Node<>(item);
+        if (!isEmpty()) {
+            node.setNext(top);
+        } // end of if-else
+        top = node;
+        count++;
     } // end of push method
 
+    /**
+     * Removes an element from the Stack and returns the removed element.
+     * @return The element being removed.
+     * @throws StackUnderflowException if stack is empty.
+     */
     @Override
     public T pop() throws StackUnderflowException {
-        return null;
+        T topElement = null;
+        if (!isEmpty()) {
+            topElement = top.getData();
+            if (count == 1) {
+                top = null;
+            } else {
+                top = top.getNext();
+            } // end of if-else (count)
+            count--;
+        } else {
+            throw new StackUnderflowException();
+        } // end of if-else (isEmpty)
+        return topElement;
     } // end of pop method
 
+    /**
+     * Returns the top element of the stack without deleting the element.
+     * @return The data of the top element.
+     * @throws StackUnderflowException if stack is empty.
+     */
     @Override
     public T peek() throws StackUnderflowException {
-        return null;
+        if (!isEmpty()) {
+            return top.getData(); // returns if stack and top is not null
+        } else {
+            throw new StackUnderflowException(); // if stack is empty
+        } // end of if-else (isEmpty)
+        return null; // no element will return
     } // end of peek method
 
     /**
-     * TODO: Documentation
+     * Represents the size or length of the stack using the stack's count.
      * @return Integer representation of the stack's size.
      */
     @Override
@@ -49,11 +85,13 @@ public class Stack<T> implements StackInterface<T> {
     } // end of size method
 
     /**
-     * TODO: Documentation
+     * Checks the stack's size if it is empty or not.
      * @return true if the stack is empty, false if otherwise.
      */
     @Override
     public boolean isEmpty() {
-        return count == 0;
+        if (count == 0)
+            return true;
+        return false;
     } // end of isEmpty method
 } // end of class Stack
