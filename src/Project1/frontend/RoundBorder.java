@@ -1,4 +1,4 @@
-package frontend;
+package Project1.frontend;
 
 import javax.swing.border.AbstractBorder;
 import java.awt.*;
