@@ -62,11 +62,10 @@ public class GUIInfixPrecedence extends JFrame{
         JPanel titlePanel = new JPanel();
         titlePanel.setLayout(new FlowLayout());
         titlePanel.setPreferredSize(new Dimension(200,80));
-        JLabel title = new JLabel();
-        title.setText("Infix Precedence");
+        JLabel title = resources.getAppTitle();
+        title.setText("Precedence");
         title.setVerticalAlignment(SwingConstants.NORTH);
         title.setHorizontalAlignment(SwingConstants.CENTER);
-        title.setForeground(resources.eggshellWhite);
         sidebarPanel.add(title,BorderLayout.NORTH);
 
         // Buttons
@@ -78,21 +77,24 @@ public class GUIInfixPrecedence extends JFrame{
 
         homeButton = resources.getRoundedButton();
         homeButton.setText("Home");
+        homeButton.setFont(resources.montserratBold);
         homeButton.setForeground(resources.eggshellWhite);
         homeButton.setBackground(resources.grey);
         homeButton.setPreferredSize(new Dimension(100, 30));
 
         infixButton = new JButton("Infix");
+        infixButton.setFont(resources.montserratBold);
         infixButton.setForeground(resources.eggshellWhite);
         infixButton.setOpaque(false);
         infixButton.setBorderPainted(false);
         infixButton.setPreferredSize(new Dimension(100, 30));
 
         evaluateButton = new JButton("Evaluate");
+        evaluateButton.setFont(resources.montserratBold);
         evaluateButton.setForeground(resources.eggshellWhite);
         evaluateButton.setOpaque(false);
         evaluateButton.setBorderPainted(false);
-        evaluateButton.setPreferredSize(new Dimension(100, 30));
+        evaluateButton.setPreferredSize(new Dimension(150, 30));
 
         infixButton.addActionListener(e-> {
             cardLayout.show(contentPanel, "infixCard");
@@ -169,20 +171,47 @@ public class GUIInfixPrecedence extends JFrame{
 
         // HOLDS INPUT
         JPanel inputPanel = new JPanel();
-        inputPanel.setLayout(new GridLayout());
+        inputPanel.setLayout(new BorderLayout());
         inputPanel.setBackground(resources.greyishBlack);
-        inputPanel.setSize(40,30);
         inputPanel.setBorder(resources.getRoundedBorder(resources.lightGrey, resources.lightGrey));
+
+        JLabel inputLabel = resources.getInputTitle();
+        inputLabel.setText("  Enter Expression");
+        JTextField expressionField = resources.getRoundedTextField();
+        expressionField.setBackground(resources.lightestGrey);
+
+        JPanel buttonsPanel = new JPanel();
+        buttonsPanel.setLayout(new BorderLayout());
+        JPanel emptyPanel = new JPanel();
+        emptyPanel.setBackground(Color.ORANGE);
+        emptyPanel.setPreferredSize(new Dimension(80, 30));
+        JButton convertButton = new JButton("Convert");
+        JButton clearButton = new JButton("Clear");
+        buttonsPanel.add(convertButton, BorderLayout.WEST);
+        buttonsPanel.add(clearButton, BorderLayout.EAST);
+        buttonsPanel.add(emptyPanel, BorderLayout.SOUTH);
+
+        inputPanel.setPreferredSize(new Dimension(50, 150));
+        buttonsPanel.setPreferredSize(new Dimension(100, 100));
+        convertButton.setPreferredSize(new Dimension(100, 50));
+        clearButton.setPreferredSize(new Dimension(100, 50));
+
+        inputPanel.add(inputLabel, BorderLayout.NORTH);
+        inputPanel.add(expressionField, BorderLayout.CENTER);
+        inputPanel.add(buttonsPanel, BorderLayout.SOUTH);
 
         // HOLDS EVALUATE REDIRECT BUTTONS
         JPanel evaluatePanel = new JPanel();
         evaluatePanel.setLayout(cardLayout);
-        evaluatePanel.setBackground(Color.BLUE);
-        evaluatePanel.setBorder(resources.getRoundedBorder(resources.lightGrey, resources.lightGrey));
+        evaluatePanel.setBackground(resources.greyishBlack);
+        evaluatePanel.setBorder(resources.getRoundedBorder(resources.greyishBlack, resources.greyishBlack));
+        evaluatePanel.setPreferredSize(new Dimension(500, 100));
+
 
 
         contentPanel.add(title, BorderLayout.NORTH);
         contentPanel.add(inputPanel, BorderLayout.CENTER);
+        contentPanel.add(evaluatePanel, BorderLayout.SOUTH);
         return contentPanel;
     }
 

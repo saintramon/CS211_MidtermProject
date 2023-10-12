@@ -22,7 +22,7 @@ public class Resources {
 
             // Montserrat Regular
             montserrat = Font.createFont(Font.TRUETYPE_FONT,
-                    new File("fonts/Montserrat/static/Montserrat-Regular.ttf")).deriveFont(20f);
+                    new File("fonts/Montserrat/static/Montserrat-Regular.ttf")).deriveFont(15f);
             ge.registerFont(montserrat);
 
             // Montserrat Bold
@@ -47,6 +47,8 @@ public class Resources {
     final Color lightGrey = new Color(51,51,51);
     final Color grey = new Color(95,95,95);
     final Color eggshellWhite = new Color(240,234,214);
+    final Color blue = new Color(56,95,157);
+    final Color lightestGrey = new Color(95,95,95);
 
     final EmptyBorder titleMargin = new EmptyBorder(100,10,10,10);
     final EmptyBorder buttonMargin = new EmptyBorder(60,10,10,10);
@@ -65,6 +67,19 @@ public class Resources {
         return roundedButton;
     }
 
+    public JTextField getRoundedTextField() {
+        JTextField textField = new JTextField(20);
+        textField.setPreferredSize(new Dimension(150, 30));
+
+        // Set the border to null to remove the border
+        textField.setBorder(null);
+
+        // Disable tooltip text
+        textField.setToolTipText(null);
+
+        return  textField;
+    }
+
     public JLabel getPanelTitle() {
         JLabel title = new JLabel();
         title.setForeground(eggshellWhite);
@@ -72,4 +87,23 @@ public class Resources {
         title.setFont(montserratBold);
         return title;
     }
+
+    public JLabel getInputTitle() {
+        JLabel title = new JLabel();
+        title.setForeground(blue);
+        title.setPreferredSize(new Dimension(70,20));
+        title.setFont(montserratBold);
+        return title;
+    }
+
+    public JLabel getAppTitle() {
+        JLabel title = new JLabel();
+        title.setForeground(blue);
+        title.setPreferredSize(new Dimension(70,20));
+        title.setFont(montserratBlack);
+        return title;
+    }
+
+
+
 }
