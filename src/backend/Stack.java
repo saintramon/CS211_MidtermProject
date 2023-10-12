@@ -94,4 +94,25 @@ public class Stack<T> implements StackInterface<T> {
             return true;
         return false;
     } // end of isEmpty method
+
+    /**
+     * TODO: Documentation
+     * @param operator1
+     * @param operator2
+     * @return True if operator1 has precedence over operator2, false if otherwise.
+     */
+    public boolean checkPrecedence(char operator1, char operator2) {
+        boolean result = false;
+
+
+        return result;
+    } // end of checkPrecedence method
+
+    /**
+     * TODO: Documentation
+     * @return
+     */
+    public String convertToPostfix() {
+
+    } // end of convertToPostfix method
 } // end of class Stack
