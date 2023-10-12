@@ -47,7 +47,7 @@ public class Stack<T> implements StackInterface<T> {
      */
     @Override
     public T pop() throws StackUnderflowException {
-        T topElement = null;
+        T topElement;
         if (!isEmpty()) {
             topElement = top.getData();
             if (count == 1) {
@@ -74,7 +74,6 @@ public class Stack<T> implements StackInterface<T> {
         } else {
             throw new StackUnderflowException(); // if stack is empty
         } // end of if-else (isEmpty)
-        return null; // no element will return
     } // end of peek method
 
     /**
