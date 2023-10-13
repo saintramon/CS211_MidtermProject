@@ -91,34 +91,6 @@ public class Stack<T> implements StackInterface<T> {
      */
     @Override
     public boolean isEmpty() {
-        return count == 0; // returns true if count is equal to 0.
+        return size() == 0; // returns true if count is equal to 0.
     } // end of isEmpty method
-
-    /**
-     * TODO: Documentation
-     * @param operator1 Character representation of the first operator.
-     * @param operator2 Character representation of the second operator.
-     * @return True if operator1 has precedence over operator2, false if otherwise.
-     */
-    public boolean checkPrecedence(char operator1, char operator2) {
-        boolean result = false;
-
-
-        return result;
-    } // end of checkPrecedence method
-
-    /**
-     * TODO: Documentation
-     * @return
-     */
-    public String convertToPostfix(String infixExpression) {
-        String postfixExpression = "";
-        Stack<String> operatorStack = new Stack<>();
-
-        while ()
-    } // end of convertToPostfix method
-
-    public boolean isOperand() {
-
-    } // end of isOperand method
 } // end of class Stack
