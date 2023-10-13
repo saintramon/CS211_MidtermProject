@@ -133,7 +133,7 @@ public class Expression {
         return result;
     } // end of checkPrecedence method
 
-    public boolean isOperand() {
+    public boolean isOperand(char currentCharacter) {
 
     } // end of isOperand method
 
@@ -142,9 +142,40 @@ public class Expression {
      * @return
      */
     public void convertToPostfix() {
-        this.postfixExpression = "";
-        this.operatorStack = new Stack<>();
+        symbols = toSymbols(infixExpression);
+        operatorStack = new Stack<>();
+        int index = 0;
 
-        while ()
+        while (index != infixExpression.length()) {
+            if (isOperand(infixExpression.charAt(index))) {
+                postfixExpression.concat(String.valueOf(symbols[index]));
+            } else {
+                while (!operatorStack.isEmpty() && checkPrecedence(operatorStack.peek(), symbols[index])) {
+                    postfixExpression.concat(operatorStack.pop());
+                } // end of while (!empty stack)
+                if (operatorStack.isEmpty() || symbols[index] != ')') {
+                    operatorStack.push(String.valueOf(symbols[index]));
+                } else {
+
+                } // end of if-else (empty stack)
+            } // end of if-else (isOperand)
+            index++;
+        } // end of while (infixExpression length)
+        while (!operatorStack.isEmpty()) {
+            postfixExpression.concat()
+        }
     } // end of convertToPostfix method
+
+    /**
+     * TODO: Documentation
+     * @param infixExpression
+     * @return
+     */
+    private char[] toSymbols(String infixExpression) {
+        char[] symbols = new char[infixExpression.length()];
+        for (int x = 0; x < symbols.length; x++) {
+            symbols[x] = infixExpression.charAt(x);
+        } // end of for
+        return symbols;
+    } // end of toSymbols method
 } // end of class StackUtility
