@@ -95,8 +95,8 @@ public class VariableExpression {
      * TODO: Documentation
      * @return
      */
-    public char[] getSymbols() {
-        return symbols;
+    public char getSymbol(int index) {
+        return symbols[index];
     } // end of getSymbols accessor method
 
     /**
@@ -124,7 +124,7 @@ public class VariableExpression {
      * @param currentCharacter character representation of the symbol being evaluated as an operator.
      * @return true if the symbol is an operator, false if it is an operand
      */
-    public boolean isOperator(char currentCharacter) {
+    boolean isOperator(char currentCharacter) {
         char[] operators = {'+','-','*','/','^','$','(',')','[',']','{','}','%'};
         for (char operator : operators) {
             return currentCharacter == operator;
@@ -136,7 +136,7 @@ public class VariableExpression {
      * TODO: Documentation
      * @return
      */
-    public String convertToPostfix() {
+    private String convertToPostfix() {
         int index = 0;
         while (index != infixExpression.length()) {
             symbols[index] = infixExpression.charAt(index);
