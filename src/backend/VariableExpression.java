@@ -1,14 +1,15 @@
 package backend;
 
+import backend.stack.Stack;
 import java.lang.*;
 
 /**
- * @author ROXAS, LACANILAO, SICCUAN
+ * @author ROXAS, Johan Rickardo
  * @version 1.00 (13 October 2023)
  * Template for Expression object.
  * This class converts an infix expression to a postfix expression by implementing the Stack data structure.
  */
-public class Expression {
+public class VariableExpression {
     /**
      * The String representation of the infix expression to be converted.
      */
@@ -32,7 +33,7 @@ public class Expression {
     /**
      * Constructs an object of Expression with null values.
      */
-    public Expression() {
+    public VariableExpression() {
         infixExpression = "";
         postfixExpression = "";
         symbols = null;
@@ -43,7 +44,7 @@ public class Expression {
      * Constructs an object of Expression with user-defined values.
      * @param infixExpression given String representation of infix expression.
      */
-    public Expression(String infixExpression) {
+    public VariableExpression(String infixExpression) {
         this.infixExpression = infixExpression;
         this.postfixExpression = convertToPostfix();
         this.symbols = populateSymbols();
