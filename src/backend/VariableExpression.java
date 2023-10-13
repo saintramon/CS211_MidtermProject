@@ -170,4 +170,15 @@ public class VariableExpression {
         } // end of for
         return symbols;
     } // end of populateSymbols method
+
+    /*
+    Notes:
+    - Add exception handling method where the number of parentheses, brackets, or curly braces must be syntactically
+    correct (number of closings must be equal to the number of openings).
+    - Add exception handling method where there should be an operand after each operator (for loop that iterates through
+    each character of the user's input, use isOperator method).
+    - Think of how you will display the operator Stack in a table (possible use of LinkedList).
+    - Think of how you will handle mixture of operator characters when using the checkPrecedence method.
+    - Think of how you will display the table properly using the symbols, postfix expression and stack of operators.
+     */
 } // end of class Expressions
