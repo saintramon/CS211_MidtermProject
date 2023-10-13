@@ -125,7 +125,7 @@ public class VariableExpression {
      * @return true if the symbol is an operator, false if it is an operand
      */
     public boolean isOperator(char currentCharacter) {
-        char[] operators = {'+','-','*','/','^','(',')','%'};
+        char[] operators = {'+','-','*','/','^','$','(',')','[',']','{','}','%'};
         for (char operator : operators) {
             return currentCharacter == operator;
         } // end of for
