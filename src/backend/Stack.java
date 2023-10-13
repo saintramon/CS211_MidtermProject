@@ -8,6 +8,7 @@ import java.lang.*;
  * @param <T> The type of elements stored in the stack.
  */
 public class Stack<T> implements StackInterface<T> {
+
     /**
      * The last and top element of the stack.
      */
@@ -43,11 +44,10 @@ public class Stack<T> implements StackInterface<T> {
     /**
      * Removes an element from the Stack and returns the removed element.
      * @return The element being removed.
-     * @throws StackUnderflowException if stack is empty.
      */
     @Override
-    public T pop() throws StackUnderflowException {
-        T topElement;
+    public T pop(){
+        T topElement = null;
         if (!isEmpty()) {
             topElement = top.getData();
             if (count == 1) {
@@ -56,24 +56,20 @@ public class Stack<T> implements StackInterface<T> {
                 top = top.getNext();
             } // end of if-else (count)
             count--;
-        } else {
-            throw new StackUnderflowException();
-        } // end of if-else (isEmpty)
+        } // end of if
         return topElement;
     } // end of pop method
 
     /**
      * Returns the top element of the stack without deleting the element.
      * @return The data of the top element.
-     * @throws StackUnderflowException if stack is empty.
      */
     @Override
-    public T peek() throws StackUnderflowException {
+    public T peek() {
         if (!isEmpty()) {
             return top.getData(); // returns if stack and top is not null
-        } else {
-            throw new StackUnderflowException(); // if stack is empty
         } // end of if-else (isEmpty)
+        return null;
     } // end of peek method
 
     /**

@@ -5,12 +5,106 @@ import java.lang.*;
 /**
  * @author ROXAS, LACANILAO, SICCUAN
  * @version 1.00 (13 October 2023)
- * Template for Expressions object.
+ * Template for Expression object.
  * This class converts an infix expression to a postfix expression by implementing the Stack data structure.
  */
 public class Expression {
+    /**
+     * The String representation of the infix expression to be converted.
+     */
+    private String infixExpression;
 
+    /**
+     * The String representation of the postfix expression.
+     */
+    private String postfixExpression;
 
+    /**
+     * Array of characters to hold the elements of the symbols.
+     */
+    private char[] symbols;
+
+    /**
+     * Stack that holds the characters of operators.
+     */
+    private Stack<Character> operatorStack;
+
+    /**
+     * Constructs an object of Expression with null values.
+     */
+    public Expression() {
+        infixExpression = "";
+        postfixExpression = "";
+        symbols = null;
+        operatorStack = null;
+    } // end of Expression default constructor
+
+    /**
+     * Constructs an object of Expression with user-defined values.
+     * @param infixExpression given String representation of infix expression.
+     */
+    public Expression(String infixExpression) {
+        this.infixExpression = infixExpression;
+        this.postfixExpression = convertToPostfix();
+        this.symbols = populateSymbols();
+        this.operatorStack = new Stack<>();
+    } // end of Expression constructor
+
+    /**
+     * TODO: Documentation
+     * @param infixExpression
+     */
+    public void setInfixExpression(String infixExpression) {
+        this.infixExpression = infixExpression;
+    } // end of setInfixExpression mutator method
+
+    /**
+     * TODO: Documentation
+     * @param postfixExpression
+     */
+    public void setPostfixExpression(String postfixExpression) {
+        this.postfixExpression = postfixExpression;
+    } // end of setPostfixExpression mutator method
+
+    /**
+     * TODO: Documentation
+     * @param symbols
+     */
+    public void setSymbols(char[] symbols) {
+        this.symbols = symbols;
+    } // end of setSymbols mutator method
+
+    /**
+     * TODO: Documentation
+     * @return
+     */
+    public String getInfixExpression() {
+        return infixExpression;
+    } // end of getInfixExpression accessor method
+
+    /**
+     * TODO: Documentation
+     * @return
+     */
+    public String getPostfixExpression() {
+        return postfixExpression;
+    } // end of getPostfixExpression accessor method
+
+    /**
+     * TODO: Documentation
+     * @return
+     */
+    public char[] getSymbols() {
+        return symbols;
+    } // end of getSymbols accessor method
+
+    /**
+     * TODO: Documentation
+     * @return
+     */
+    public Stack<Character> getOperatorStack() {
+        return operatorStack;
+    } // end of getOperatorStack accessor method
 
     /**
      * TODO: Documentation
@@ -20,59 +114,59 @@ public class Expression {
      */
     public boolean checkPrecedence(char operator1, char operator2) {
         boolean result = false;
-
-
+        // TODO: Supporting code
         return result;
     } // end of checkPrecedence method
 
     /**
      * TODO: Documentation
-     * @param currentCharacter
-     * @return
+     * @param currentCharacter character representation of the symbol being evaluated as an operator.
+     * @return true if the symbol is an operator, false if it is an operand
      */
-    public boolean isOperand(char currentCharacter) {
-        char[] operators = {'+','-','*','/','^','(',')'};
+    public boolean isOperator(char currentCharacter) {
+        char[] operators = {'+','-','*','/','^','(',')','%'};
         for (char operator : operators) {
-            if (currentCharacter == operator) {
-                return true;
-            } // end of if
+            return currentCharacter == operator;
         } // end of for
         return false;
     } // end of isOperand method
 
     /**
      * TODO: Documentation
-     * @param infixExpression
      * @return
      */
-    public String convertToPostfix(String infixExpression) {
-        String postfixExpression = "";
-        Stack<Character> operatorStack = new Stack<>();
+    public String convertToPostfix() {
         int index = 0;
-
-        try {
-            while (index != infixExpression.length()) {
-                char symbol = infixExpression.charAt(index);
-                if (!isOperand(symbol)) {
-                    postfixExpression = postfixExpression.concat(Character.toString(symbol));
+        while (index != infixExpression.length()) {
+            symbols[index] = infixExpression.charAt(index);
+            if (!isOperator(symbols[index])) {
+                postfixExpression = postfixExpression.concat(Character.toString(symbols[index]));
+            } else {
+                while (!operatorStack.isEmpty() && checkPrecedence(operatorStack.peek(), symbols[index])) {
+                    postfixExpression = postfixExpression.concat(operatorStack.pop().toString());
+                } // end of while (checkPrecedence)
+                if (operatorStack.isEmpty() || symbols[index] != ')') {
+                    operatorStack.push(symbols[index]);
                 } else {
-                    while (!operatorStack.isEmpty() && checkPrecedence(operatorStack.peek(), symbol)) {
-                        postfixExpression = postfixExpression.concat(operatorStack.pop().toString());
-                    } // end of while (checkPrecedence)
-                    if (operatorStack.isEmpty() || symbol != ')') {
-                        operatorStack.push(symbol);
-                    } else {
-                        char popped = operatorStack.pop();
-                    } // end of if-else (empty stack)
-                } // end of if-else (isOperand for symbol)
-            } // end of while (infixExpression length)
-            while (!operatorStack.isEmpty()) {
-                postfixExpression = postfixExpression.concat(operatorStack.pop().toString());
-            } // end of while
-        } catch (StackUnderflowException e) {
-            e.printStackTrace();
-            e.getMessage();
-        } // end of try-catch
+                    char popped = operatorStack.pop();
+                } // end of if-else (empty stack)
+            } // end of if-else (isOperand for symbol)
+            index++;
+        } // end of while (infixExpression length)
+        while (!operatorStack.isEmpty()) {
+            postfixExpression = postfixExpression.concat(operatorStack.pop().toString());
+        } // end of while
         return postfixExpression;
     } // end of convertToPostfix method
+
+    /**
+     * Populates the array of symbols with the characters of the infix expression.
+     */
+    private char[] populateSymbols() {
+        char[] symbols = new char[this.infixExpression.length()];
+        for (int x = 0; x < infixExpression.length(); x++) {
+            symbols[x] = infixExpression.charAt(x);
+        } // end of for
+        return symbols;
+    } // end of populateSymbols method
 } // end of class Expressions
