@@ -1,13 +1,11 @@
 package frontend;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.AbstractBorder;
+import javax.swing.border.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+
 
 public class Resources {
     Font montserratThin, montserrat, montserratBold, montserratBlack;
@@ -61,15 +59,33 @@ public class Resources {
     }
 
     public JButton getRoundedButton() {
-        JButton roundedButton = new JButton();
-        Border buttonBorder = BorderFactory.createEmptyBorder(10,20,10,20);
+        JButton roundedButton = new JButton("Convert");
+
+        Color backgroundColor = Color.GRAY; // Set the background color you desire
+
+        // Set the background color directly on the button
+        roundedButton.setBackground(backgroundColor);
+
+        // Create a custom border with rounded corners and a different border color
+        Border buttonBorder = new RoundBorder(10, Color.GRAY, Color.LIGHT_GRAY);
+
         roundedButton.setBorder(buttonBorder);
+        roundedButton.setOpaque(true);
+        roundedButton.setForeground(Color.WHITE); // Set the text color
+        roundedButton.setFont(montserratBlack);
+        roundedButton.setText("Convert");
+
         return roundedButton;
     }
 
+
+
+
+
+
     public JTextField getRoundedTextField() {
         JTextField textField = new JTextField(20);
-        textField.setPreferredSize(new Dimension(150, 30));
+        textField.setPreferredSize(new Dimension(150, 100));
 
         // Set the border to null to remove the border
         textField.setBorder(null);

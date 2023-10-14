@@ -1,23 +1,22 @@
 
 package frontend;
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class GUIInfixPrecedence extends JFrame{
 
-    // INFIX CARD
+    // CARDS
     private JPanel infixCard;
-
-    // EVALUATE CARD
     private JPanel evaluateCard = new JPanel();
-
     private JPanel homeCard = new JPanel();
-
+    private JPanel tableCard = new JPanel();
     private CardLayout cardLayout = new CardLayout();
 
-    private JPanel contentPanel;
 
 
     private final Resources resources = new Resources();
@@ -26,6 +25,8 @@ public class GUIInfixPrecedence extends JFrame{
     private  JButton homeButton;
     private JButton infixButton;
     private JButton evaluateButton;
+
+    private JPanel infoPanel = contentPanel();
 
     public GUIInfixPrecedence() {
         // Main Frame
@@ -63,7 +64,7 @@ public class GUIInfixPrecedence extends JFrame{
         titlePanel.setLayout(new FlowLayout());
         titlePanel.setPreferredSize(new Dimension(200,80));
         JLabel title = resources.getAppTitle();
-        title.setText("Precedence");
+        title.setText("INFIX");
         title.setVerticalAlignment(SwingConstants.NORTH);
         title.setHorizontalAlignment(SwingConstants.CENTER);
         sidebarPanel.add(title,BorderLayout.NORTH);
@@ -72,40 +73,56 @@ public class GUIInfixPrecedence extends JFrame{
         JPanel buttons = new JPanel();
         buttons.setLayout(new FlowLayout());
         buttons.setBorder(resources.buttonMargin);
+        buttons.setAlignmentY(Component.LEFT_ALIGNMENT);
         buttons.setPreferredSize(new Dimension(200, 80));
         buttons.setBackground(resources.greyishBlack);
 
-        homeButton = resources.getRoundedButton();
-        homeButton.setText("Home");
+        homeButton = new JButton("Home");
         homeButton.setFont(resources.montserratBold);
         homeButton.setForeground(resources.eggshellWhite);
-        homeButton.setBackground(resources.grey);
-        homeButton.setPreferredSize(new Dimension(100, 30));
+        homeButton.setOpaque(false);
+        homeButton.setBorderPainted(false);
+        homeButton.setFocusPainted(false);
+        homeButton.setHorizontalAlignment(SwingConstants.LEFT);
+        homeButton.setPreferredSize(new Dimension(150, 30));
 
-        infixButton = new JButton("Infix");
+        infixButton = new JButton("Conversion");
         infixButton.setFont(resources.montserratBold);
         infixButton.setForeground(resources.eggshellWhite);
+        infixButton.setFocusPainted(false);
         infixButton.setOpaque(false);
         infixButton.setBorderPainted(false);
-        infixButton.setPreferredSize(new Dimension(100, 30));
+        infixButton.setHorizontalAlignment(SwingConstants.LEFT);
+        infixButton.setPreferredSize(new Dimension(150, 30));
 
         evaluateButton = new JButton("Evaluate");
         evaluateButton.setFont(resources.montserratBold);
         evaluateButton.setForeground(resources.eggshellWhite);
+        evaluateButton.setFocusPainted(false);
         evaluateButton.setOpaque(false);
         evaluateButton.setBorderPainted(false);
+        evaluateButton.setHorizontalAlignment(SwingConstants.LEFT);
         evaluateButton.setPreferredSize(new Dimension(150, 30));
 
         infixButton.addActionListener(e-> {
-            cardLayout.show(contentPanel, "infixCard");
+            cardLayout.show(infoPanel, "infixCard");
+            homeButton.setForeground(resources.eggshellWhite);
+            evaluateButton.setForeground(resources.eggshellWhite);
+            infixButton.setForeground(resources.blue);
         });
 
         evaluateButton.addActionListener(e-> {
-            cardLayout.show(contentPanel, "evaluateCard");
+            cardLayout.show(infoPanel, "evaluateCard");
+            homeButton.setForeground(resources.eggshellWhite);
+            evaluateButton.setForeground(resources.blue);
+            infixButton.setForeground(resources.eggshellWhite);
         });
 
         homeButton.addActionListener(e -> {
-            cardLayout.show(contentPanel, "homeCard");
+            cardLayout.show(infoPanel, "homeCard");
+            homeButton.setForeground(resources.blue);
+            evaluateButton.setForeground(resources.eggshellWhite);
+            infixButton.setForeground(resources.eggshellWhite);
         });
 
         buttons.add(homeButton);
@@ -123,49 +140,53 @@ public class GUIInfixPrecedence extends JFrame{
         pagePanel.setBorder(resources.pageMargin);
         pagePanel.setPreferredSize(new Dimension(500,500));
 
-        JPanel contentPanel = contentPanel();
-        pagePanel.add(contentPanel);
+        pagePanel.add(infoPanel);
         return pagePanel;
     }
 
     private JPanel contentPanel() {
-        contentPanel = new JPanel();
-        contentPanel.setLayout(cardLayout);
-        contentPanel.setBackground(resources.darkBlack);
-        contentPanel.setBorder(resources.getRoundedBorder(resources.greyishBlack, resources.greyishBlack));
-        contentPanel.setSize(500,500);
+        infoPanel = new JPanel();
+        infoPanel.setLayout(cardLayout);
+        infoPanel.setBackground(resources.darkBlack);
+        infoPanel.setBorder(resources.getRoundedBorder(resources.greyishBlack, resources.greyishBlack));
+        infoPanel.setSize(500,500);
 
         // PAGE
-        infixCard = populateInfixCard();
         evaluateCard = populateEvaluateCard();
         homeCard = populateHomeCard();
-        contentPanel.add(infixCard,BorderLayout.CENTER);
-        contentPanel.add(infixCard, "infixCard");
-        contentPanel.add(homeCard, "homeCard");
-        contentPanel.add(evaluateCard, "evaluateCard");
+        infoPanel.add(homeCard, "homeCard");
+        infoPanel.add(evaluateCard, "evaluateCard");
 
-        cardLayout.show(contentPanel, "homeCard");
 
-        return contentPanel;
+        infixCard = populateInfixCard();
+        infoPanel.add(infixCard, "infixCard");
+
+
+        tableCard = populateTableCard();
+        infoPanel.add(tableCard, "tableCard");
+
+        cardLayout.show(infoPanel, "homeCard");
+
+        return infoPanel;
     }
 
     private JPanel populateHomeCard() {
-        JPanel contentPanel = new JPanel();
-        contentPanel.setBackground(resources.greyishBlack);
-        contentPanel.setBorder(resources.getRoundedBorder(resources.greyishBlack, resources.greyishBlack));
-        contentPanel.setSize(500,500);
+        JPanel homePanel = new JPanel();
+        homePanel.setBackground(resources.greyishBlack);
+        homePanel.setBorder(resources.getRoundedBorder(resources.greyishBlack, resources.greyishBlack));
+        homePanel.setSize(500,500);
         JLabel title = new JLabel("THIS IS HOME CARD");
         title.setForeground(Color.WHITE);
-        contentPanel.add(title);
-        return contentPanel;
+        homePanel.add(title);
+        return homePanel;
     }
 
     private JPanel populateInfixCard() {
-        JPanel contentPanel = new JPanel();
-        contentPanel.setLayout(new BorderLayout());
-        contentPanel.setBackground(resources.greyishBlack);
-        contentPanel.setBorder(resources.getRoundedBorder(resources.greyishBlack, resources.greyishBlack));
-        contentPanel.setPreferredSize(new Dimension(500,500));
+        JPanel infixPanel = new JPanel();
+        infixPanel.setLayout(new BorderLayout());
+        infixPanel.setBackground(resources.greyishBlack);
+        infixPanel.setBorder(resources.getRoundedBorder(resources.greyishBlack, resources.greyishBlack));
+        infixPanel.setPreferredSize(new Dimension(500,300));
         JLabel title = resources.getPanelTitle();
         title.setText("  Infix Precedence Conversion");
 
@@ -175,55 +196,152 @@ public class GUIInfixPrecedence extends JFrame{
         inputPanel.setBackground(resources.greyishBlack);
         inputPanel.setBorder(resources.getRoundedBorder(resources.lightGrey, resources.lightGrey));
 
-        JLabel inputLabel = resources.getInputTitle();
-        inputLabel.setText("  Enter Expression");
-        JTextField expressionField = resources.getRoundedTextField();
+        JTextField expressionField = new RoundJTextField(50);
+
         expressionField.setBackground(resources.lightestGrey);
+
+        expressionField.setText("  Enter expression");
+        expressionField.setPreferredSize(new Dimension(90, 50));
+        expressionField.setForeground(resources.eggshellWhite);
+        expressionField.setEditable(true);
+        inputPanel.add(expressionField, BorderLayout.NORTH);
+        inputPanel.setOpaque(true);
+
 
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new BorderLayout());
-        JPanel emptyPanel = new JPanel();
-        emptyPanel.setBackground(Color.ORANGE);
-        emptyPanel.setPreferredSize(new Dimension(80, 30));
-        JButton convertButton = new JButton("Convert");
-        JButton clearButton = new JButton("Clear");
+
+        RoundJButton convertButton = new RoundJButton();
+        convertButton.setText("Convert");
+        convertButton.setBackground(resources.eggshellWhite);
+        convertButton.setForeground(resources.blue);
+        convertButton.setFont(resources.montserratBlack);
+
+        RoundJButton clearButton = new RoundJButton();
+        clearButton.setText("Clear");
+        clearButton.setForeground(resources.blue);
+        clearButton.setFont(resources.montserratBlack);
+
+
+        buttonsPanel.setBackground(resources.lightGrey);
         buttonsPanel.add(convertButton, BorderLayout.WEST);
         buttonsPanel.add(clearButton, BorderLayout.EAST);
-        buttonsPanel.add(emptyPanel, BorderLayout.SOUTH);
 
-        inputPanel.setPreferredSize(new Dimension(50, 150));
-        buttonsPanel.setPreferredSize(new Dimension(100, 100));
-        convertButton.setPreferredSize(new Dimension(100, 50));
-        clearButton.setPreferredSize(new Dimension(100, 50));
 
-        inputPanel.add(inputLabel, BorderLayout.NORTH);
-        inputPanel.add(expressionField, BorderLayout.CENTER);
+        convertButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                convertButton.setBackground(resources.blue);
+                convertButton.setForeground(Color.BLACK);
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                convertButton.setBackground(resources.eggshellWhite);
+                convertButton.setForeground(resources.blue);
+            }
+        });
+
+        clearButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                clearButton.setBackground(resources.blue);
+                clearButton.setForeground(Color.BLACK);
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                clearButton.setBackground(resources.eggshellWhite);
+                clearButton.setForeground(resources.blue);
+            }
+        });
+
+        inputPanel.setPreferredSize(new Dimension(50, 200));
+        //buttonsPanel.setPreferredSize(new Dimension(100, 100));
+        convertButton.setPreferredSize(new Dimension(150, 50));
+        clearButton.setPreferredSize(new Dimension(150, 50));
+
         inputPanel.add(buttonsPanel, BorderLayout.SOUTH);
 
         // HOLDS EVALUATE REDIRECT BUTTONS
         JPanel evaluatePanel = new JPanel();
-        evaluatePanel.setLayout(cardLayout);
+        evaluatePanel.setLayout(new BorderLayout());
         evaluatePanel.setBackground(resources.greyishBlack);
         evaluatePanel.setBorder(resources.getRoundedBorder(resources.greyishBlack, resources.greyishBlack));
-        evaluatePanel.setPreferredSize(new Dimension(500, 100));
+        evaluatePanel.setBorder(resources.getRoundedBorder(resources.greyishBlack, resources.greyishBlack));
+        evaluatePanel.setPreferredSize(new Dimension(500, 160));
+
+        JLabel resultsTitle = resources.getPanelTitle();
+        resultsTitle.setText("Results");
+        evaluatePanel.add(resultsTitle, BorderLayout.NORTH);
+
+        JPanel resultsPanel = new JPanel();
+        resultsPanel.setLayout(new BorderLayout());
+        resultsPanel.setBackground(resources.greyishBlack);
+        resultsPanel.setBorder(resources.getRoundedBorder(resources.lightGrey, resources.lightGrey));
+
+        JLabel resultExpression = resources.getPanelTitle();
+        resultExpression.setText("  xy+ab-");
+        resultExpression.setHorizontalAlignment(SwingConstants.LEFT);
+        resultExpression.setVerticalAlignment(SwingConstants.CENTER);
+        resultsPanel.add(resultExpression, BorderLayout.CENTER);
+
+        evaluatePanel.add(resultsPanel, BorderLayout.CENTER);
+
+
+        JPanel iconPanel = new JPanel();
+        iconPanel.setLayout(new BorderLayout());
+        iconPanel.setBackground(resources.greyishBlack);
+
+        ImageIcon rightArrow = new ImageIcon("icons/right_arrow.png");
+        Image rightArrowImage = rightArrow.getImage();
+        Image rightArrowImageResized = rightArrowImage.getScaledInstance(20, 20,  java.awt.Image.SCALE_SMOOTH);
+        rightArrow = new ImageIcon(rightArrowImageResized);
+        JButton evaluateIcon = new JButton(rightArrow);
+        evaluateIcon.setPreferredSize(new Dimension(20, 30));
+        evaluateIcon.setHorizontalAlignment(SwingConstants.RIGHT);
+        evaluateIcon.setVerticalAlignment(SwingConstants.BOTTOM);
+        evaluateIcon.setOpaque(false);
+
+        evaluateIcon.setContentAreaFilled(false);
+        evaluateIcon.setBorderPainted(false);
+        evaluateIcon.setFocusPainted(false);
+
+        iconPanel.add(evaluateIcon, BorderLayout.EAST);
+        evaluatePanel.add(iconPanel,BorderLayout.SOUTH);
+
+        evaluateIcon.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(infoPanel, "tableCard");
+            }
+        });
 
 
 
-        contentPanel.add(title, BorderLayout.NORTH);
-        contentPanel.add(inputPanel, BorderLayout.CENTER);
-        contentPanel.add(evaluatePanel, BorderLayout.SOUTH);
-        return contentPanel;
+
+        infixPanel.add(title, BorderLayout.NORTH);
+        infixPanel.add(inputPanel, BorderLayout.CENTER);
+        infixPanel.add(evaluatePanel, BorderLayout.SOUTH);
+        return infixPanel;
     }
 
     private JPanel populateEvaluateCard() {
-        JPanel contentPanel = new JPanel();
-        contentPanel.setBackground(resources.greyishBlack);
-        contentPanel.setBorder(resources.getRoundedBorder(resources.greyishBlack, resources.greyishBlack));
-        contentPanel.setSize(500,500);
+        JPanel evaluatePanel = new JPanel();
+        evaluatePanel.setBackground(resources.greyishBlack);
+        evaluatePanel.setBorder(resources.getRoundedBorder(resources.greyishBlack, resources.greyishBlack));
+        evaluatePanel.setSize(500,500);
         JLabel title = new JLabel("THIS IS EVALUATE CARD");
         title.setForeground(Color.WHITE);
-        contentPanel.add(title);
-        return contentPanel;
+        evaluatePanel.add(title);
+        return evaluatePanel;
+    }
+
+    private JPanel populateTableCard() {
+        JPanel tablePanel = new JPanel();
+        tablePanel.setBackground(resources.greyishBlack);
+        tablePanel.setBorder(resources.getRoundedBorder(resources.greyishBlack, resources.greyishBlack));
+        tablePanel.setSize(500,500);
+        JLabel title = new JLabel("THIS IS TABLE CARD");
+        title.setForeground(Color.WHITE);
+        tablePanel.add(title);
+        return tablePanel;
     }
 
 
