@@ -323,13 +323,138 @@ public class GUIInfixPrecedence extends JFrame{
     }
 
     private JPanel populateEvaluateCard() {
+        //!
         JPanel evaluatePanel = new JPanel();
+        evaluatePanel.setLayout(new BorderLayout());
         evaluatePanel.setBackground(resources.greyishBlack);
-        evaluatePanel.setBorder(resources.getRoundedBorder(resources.greyishBlack, resources.greyishBlack));
-        evaluatePanel.setSize(500,500);
-        JLabel title = new JLabel("THIS IS EVALUATE CARD");
-        title.setForeground(Color.WHITE);
-        evaluatePanel.add(title);
+        evaluatePanel.setBorder(resources.getRoundedBorder(resources.greyishBlack,resources.greyishBlack));
+        evaluatePanel.setPreferredSize(new Dimension(500,300));
+        JLabel title = resources.getPanelTitle();
+        title.setText("Postfix Evaluation");
+
+
+        /**
+         * !! INPUT PANEL
+         *
+         * Holds the Textfield and the Buttons
+         */
+        JPanel inputPanel = new JPanel();
+        inputPanel.setLayout(new BorderLayout());
+        inputPanel.setBackground(resources.greyishBlack);
+        inputPanel.setBorder(resources.getRoundedBorder(resources.lightGrey,resources.lightGrey));
+        inputPanel.setOpaque(true);
+        inputPanel.setPreferredSize(new Dimension(50,200));
+
+        JTextField inputField = new RoundJTextField(50);
+        inputField.setText("Enter Postfix Expression");
+        inputField.setPreferredSize(new Dimension(90,50));
+        inputField.setForeground(resources.eggshellWhite);
+        inputField.setEditable(true);
+        inputField.setBackground(resources.lightestGrey);
+
+        /**
+         * !!! BUTTONS PANEL
+         *
+         * Holds the buttons
+         */
+        JPanel buttonsPanel = new JPanel();
+        buttonsPanel.setLayout(new BorderLayout());
+        buttonsPanel.setBackground(resources.lightGrey);
+
+        RoundJButton evaluateButton = new RoundJButton();
+        evaluateButton.setText("Evaluate");
+        evaluateButton.setBackground(resources.eggshellWhite);
+        evaluateButton.setForeground(resources.blue);
+        evaluateButton.setFont(resources.montserratBlack);
+        evaluateButton.setPreferredSize(new Dimension(150,50));
+
+
+        RoundJButton clearButton = new RoundJButton();
+        clearButton.setText("Clear");
+        clearButton.setForeground(resources.blue);
+        clearButton.setFont(resources.montserratBlack);
+        clearButton.setPreferredSize(new Dimension(150,50));
+
+        /**
+         * !! RESULTS PANEL
+         *
+         * Holds the result components
+         */
+        JPanel resultsPanel = new JPanel();
+        resultsPanel.setLayout(new BorderLayout());
+        resultsPanel.setBackground(resources.greyishBlack);
+        resultsPanel.setBorder(resources.getRoundedBorder(resources.greyishBlack,resources.greyishBlack));
+        resultsPanel.setPreferredSize(new Dimension(500,160));
+
+        JLabel resultsTitle = resources.getPanelTitle();
+        resultsTitle.setText("Results");
+
+        /**
+         * !!! ANSWER PANEL
+         *
+         * Holds the text field in which the answer will be displayed
+         */
+        JPanel answerPanel = new JPanel();
+        answerPanel.setLayout(new BorderLayout());
+        answerPanel.setBackground(resources.greyishBlack);
+        answerPanel.setBorder(resources.getRoundedBorder(resources.lightGrey,resources.lightGrey));
+
+        JLabel answerLabel = resources.getPanelTitle();
+        answerLabel.setText("42069");
+        answerLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        answerLabel.setVerticalAlignment(SwingConstants.CENTER);
+
+        /**
+         * !!! ICON PANEL
+         *
+         * Holds the icon for the results panel
+         */
+        JPanel iconPanel = new JPanel();
+        iconPanel.setLayout(new BorderLayout());
+        iconPanel.setBackground(resources.greyishBlack);
+
+        ImageIcon rightArrow = new ImageIcon("icons/right_arrow.png");
+        Image rightArrowImage = rightArrow.getImage();
+        Image rightArrowImageResized = rightArrowImage.getScaledInstance(20,20, Image.SCALE_SMOOTH);
+        rightArrow = new ImageIcon(rightArrowImageResized);
+
+        JButton evaluateIcon = new JButton(rightArrow);
+        evaluateIcon.setPreferredSize(new Dimension(20,30));
+        evaluateIcon.setHorizontalAlignment(SwingConstants.RIGHT);
+        evaluateIcon.setVerticalAlignment(SwingConstants.BOTTOM);
+        evaluateIcon.setOpaque(false);
+        evaluateIcon.setContentAreaFilled(false);
+        evaluateIcon.setBorderPainted(false);
+        evaluateIcon.setFocusPainted(false);
+
+
+
+
+
+        //POPULATE BUTTON PANEL !!!
+        buttonsPanel.add(evaluateButton,BorderLayout.WEST);
+        buttonsPanel.add(clearButton,BorderLayout.EAST);
+
+        //POPULATE INPUT PANEL !!
+        inputPanel.add(inputField,BorderLayout.NORTH);
+        inputPanel.add(buttonsPanel,BorderLayout.SOUTH);
+
+        //POPULATE ANSWER PANEL !!!
+        answerPanel.add(answerLabel,BorderLayout.CENTER);
+
+        //POPULATE ICON PANEL !!!
+        iconPanel.add(evaluateIcon,BorderLayout.EAST);
+
+        //POPULATE RESULTS PANEL !!
+        resultsPanel.add(resultsTitle, BorderLayout.NORTH);
+        resultsPanel.add(answerPanel,BorderLayout.CENTER);
+        resultsPanel.add(iconPanel,BorderLayout.SOUTH);
+
+        //POPULATE EVALUATE PANEL !
+        evaluatePanel.add(title, BorderLayout.NORTH);
+        evaluatePanel.add(inputPanel,BorderLayout.CENTER);
+        evaluatePanel.add(resultsPanel,BorderLayout.SOUTH);
+
         return evaluatePanel;
     }
 
