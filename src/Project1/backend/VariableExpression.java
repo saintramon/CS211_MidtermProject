@@ -114,9 +114,61 @@ public class VariableExpression {
      * @return True if operator1 has precedence over operator2, false if otherwise.
      */
     public boolean checkPrecedence(char operator1, char operator2) {
-        boolean result = false;
-        // TODO: Supporting code
-        return result;
+        if (operator1 == '{') {
+            switch (operator2) {
+                case '{', '[', '(' , '*', '/', '+', '-'-> {return true;}
+            } // end of switch-case
+        } // end of if (curly braces)
+
+        if (operator1 == '[') {
+            switch (operator2) {
+                case '[','(' , '*', '/', '+', '-'-> {return true;}
+                case '{' -> {return false;}
+            } // end of switch-case
+        } // end of if (brackets)
+
+        if (operator1 == '(') {
+            switch (operator2) {
+                case '(' , '*', '/', '+', '-'-> {return true;}
+                case '{' , '[' -> {return false;}
+            } // end of switch-case
+        } // end of if (parentheses)
+
+        if (operator1 == '^') {
+            switch (operator2) {
+                case '{', '[', '(', '^' -> {return false;}
+                case '*', '/', '+', '-' -> {return true;}
+            } // end of switch-case
+        } // end of if (exponentiation)
+
+        if (operator1 == '*') {
+            switch (operator2) {
+                case '{', '[', '(', '^' -> {return false;}
+                case '*', '/', '+', '-' -> {return true;}
+            } // end of switch-case
+        } // end of if (multiplication)
+
+        if (operator1 == '/') {
+            switch (operator2) {
+                case '{', '[', '(', '^' -> {return false;}
+                case '*', '/', '+', '-' -> {return true;}
+            } // end of switch-case
+        } // end of if (division)
+
+        if (operator1 == '+') {
+            switch (operator2) {
+                case '{', '[', '(', '^', '*', '/' -> {return false;}
+                case '+', '-' -> {return true;}
+            } // end of switch-case
+        } // end of if (addition)
+
+        if (operator1 == '-') {
+            switch (operator2) {
+                case '{', '[', '(', '^', '*', '/' -> {return false;}
+                case '+', '-' -> {return true;}
+            } // end of switch-case
+        } // end of if (subtraction)
+        return false;
     } // end of checkPrecedence method
 
     /**
