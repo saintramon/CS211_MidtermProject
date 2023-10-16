@@ -1,6 +1,6 @@
 package Project1.backend;
 
-import backend.stack.Stack;
+import Project1.backend.stack.Stack;
 import java.lang.*;
 
 /**

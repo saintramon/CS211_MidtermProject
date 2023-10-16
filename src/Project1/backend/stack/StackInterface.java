@@ -16,16 +16,14 @@ public interface StackInterface<T> {
     /**
      * TODO: Documentation
      * @return
-     * @throws StackUnderflowException
      */
-    public T pop() throws StackUnderflowException;
+    public T pop();
 
     /**
      * TODO: Documentation
      * @return
-     * @throws StackUnderflowException
      */
-    public T peek() throws StackUnderflowException;
+    public T peek() ;
 
     /**
      * TODO: Documentation
