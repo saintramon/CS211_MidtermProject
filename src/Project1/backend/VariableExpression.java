@@ -6,8 +6,9 @@ import java.lang.*;
 /**
  * @author ROXAS, Johan Rickardo
  * @version 1.00 (13 October 2023)
- * Template for Expression object.
- * This class converts an infix expression to a postfix expression by implementing the Stack data structure.
+ * Template for VariableExpression object.
+ * This class converts an infix expression to a postfix expression (with literal coefficient only)
+ * by implementing the Stack data structure.
  */
 public class VariableExpression {
     /**
