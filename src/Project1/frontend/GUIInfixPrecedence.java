@@ -7,8 +7,14 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import Project1.backend.Expressions;
 
-public class GUIInfixPrecedence extends JFrame{
+public class GUIInfixPrecedence extends JFrame {
+    // BACKEND
+    private Expressions expressions = new Expressions();
+
 
     // CARDS
     private JPanel infixCard;
@@ -211,6 +217,19 @@ public class GUIInfixPrecedence extends JFrame{
         inputPanel.add(expressionField, BorderLayout.NORTH);
         inputPanel.setOpaque(true);
 
+        // Implementations
+        expressionField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                expressionField.setText("");
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (expressionField.getText().isEmpty())
+                    expressionField.setText("  Enter expression");
+            }
+        });
 
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new BorderLayout());
@@ -280,14 +299,22 @@ public class GUIInfixPrecedence extends JFrame{
         resultsPanel.setBorder(resources.getRoundedBorder(resources.lightGrey, resources.lightGrey));
 
         JLabel resultExpression = resources.getPanelTitle();
-        resultExpression.setText("  xy+ab-");
+        resultExpression.setText("");
         resultExpression.setHorizontalAlignment(SwingConstants.LEFT);
         resultExpression.setVerticalAlignment(SwingConstants.CENTER);
         resultsPanel.add(resultExpression, BorderLayout.CENTER);
 
         evaluatePanel.add(resultsPanel, BorderLayout.CENTER);
 
+        convertButton.addActionListener(e -> {
+            resultExpression.setText(expressions.convertToPostfix(expressionField.getText()));
+            System.out.println(resultExpression.getText());
+        });
 
+        clearButton.addActionListener(e -> {
+            resultExpression.setText("");
+            expressionField.setText("  Enter expression");
+        });
 
         JPanel iconPanel = new JPanel();
         iconPanel.setLayout(new BorderLayout());
@@ -312,11 +339,6 @@ public class GUIInfixPrecedence extends JFrame{
                 evaluateButton.setBackground(resources.lightestGrey);
             }
         });
-
-
-
-
-
 
         ImageIcon rightArrow = new ImageIcon("icons/right_arrow.png");
         Image rightArrowImage = rightArrow.getImage();
