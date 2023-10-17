@@ -10,19 +10,26 @@ import Project1.backend.stack.Stack;
  */
 public class Expressions {
 
-    public int getPrecedence(char operator) {
-        return switch (operator) {
-            case '+', '-' -> 1;
-            case '*', '/' -> 2;
-            case '^' -> 3;
-            default -> 0; // for parentheses and other characters
-        };
-    }
-
+    /**
+     * TODO: Documentation
+     * @param operator1 given Character representation of the first operator.
+     * @param operator2 given Character representation of the second operator.
+     * @return
+     */
     public boolean checkPrecedence(char operator1, char operator2) {
-        int precedence1 = getPrecedence(operator1);
-        int precedence2 = getPrecedence(operator2);
-        return precedence1 >= precedence2;
+        switch (operator1) {
+            case '+', '-' -> operator1 = 1;
+            case '*', '/' -> operator1 = 2;
+            case '^' -> operator1= 3;
+            default -> operator1 = 0; // for parentheses and other characters
+        } // end of switch-case (operator1)
+        switch (operator2) {
+            case '+', '-' -> operator2 = 1;
+            case '*', '/' -> operator2 = 2;
+            case '^' -> operator2 = 3;
+            default -> operator2 = 0; // for parentheses and other characters
+        } // end of switch-case (operator 2)
+        return operator1 >= operator2;
     }
 
     /**
