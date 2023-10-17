@@ -288,9 +288,35 @@ public class GUIInfixPrecedence extends JFrame{
         evaluatePanel.add(resultsPanel, BorderLayout.CENTER);
 
 
+
         JPanel iconPanel = new JPanel();
         iconPanel.setLayout(new BorderLayout());
         iconPanel.setBackground(resources.greyishBlack);
+
+        JPanel evaluateButtonPanel = new JPanel();
+        evaluateButtonPanel.setLayout(new BorderLayout());
+        evaluateButtonPanel.setBackground(resources.greyishBlack);
+
+        RoundJButton evaluateButton = new RoundJButton();
+        evaluateButton.setText("Evaluate");
+        evaluateButton.setForeground(resources.eggshellWhite);
+        evaluateButton.setBackground(resources.lightestGrey);
+        evaluateButton.setPreferredSize(new Dimension(120,30));
+        evaluateButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                evaluateButton.setForeground(resources.darkBlack);
+                evaluateButton.setBackground(resources.blue);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                evaluateButton.setForeground(resources.eggshellWhite);
+                evaluateButton.setBackground(resources.lightestGrey);
+            }
+        });
+
+
+
+
+
 
         ImageIcon rightArrow = new ImageIcon("icons/right_arrow.png");
         Image rightArrowImage = rightArrow.getImage();
@@ -306,8 +332,23 @@ public class GUIInfixPrecedence extends JFrame{
         evaluateIcon.setBorderPainted(false);
         evaluateIcon.setFocusPainted(false);
 
+        JPanel footerPanel = new JPanel();
+        footerPanel.setLayout(new BorderLayout());
+        footerPanel.setBackground(resources.greyishBlack);
+        footerPanel.add(evaluateButtonPanel, BorderLayout.WEST);
+        footerPanel.add(iconPanel, BorderLayout.EAST);
+
+        JPanel emptyPanel = new JPanel();
+        emptyPanel.setBackground(resources.greyishBlack);
+        footerPanel.add(emptyPanel, BorderLayout.NORTH);
+
+        evaluateButtonPanel.setPreferredSize(new Dimension(150,30));
+        iconPanel.setPreferredSize(new Dimension(50,30));
+
+
         iconPanel.add(evaluateIcon, BorderLayout.EAST);
-        evaluatePanel.add(iconPanel,BorderLayout.SOUTH);
+        evaluateButtonPanel.add(evaluateButton,BorderLayout.WEST);
+        evaluatePanel.add(footerPanel,BorderLayout.SOUTH);
 
         evaluateIcon.addActionListener(new ActionListener() {
             @Override
@@ -315,6 +356,8 @@ public class GUIInfixPrecedence extends JFrame{
                 cardLayout.show(infoPanel, "tableCard");
             }
         });
+
+
 
 
 
