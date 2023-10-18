@@ -8,5 +8,9 @@ public class Test {
 
         String postfix = expressions.convertToPostfix(infix);
         System.out.println(postfix);
+
+
+        String postfixTest = "12+34+*";
+        System.out.println(expressions.evaluatePostfix(postfixTest));
     }
 }
