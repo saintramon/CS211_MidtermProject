@@ -12,6 +12,7 @@ public class Expressions {
 
     /**
      * TODO: Documentation
+     *
      * @param operator1 given Character representation of the first operator.
      * @param operator2 given Character representation of the second operator.
      * @return
@@ -20,7 +21,7 @@ public class Expressions {
         switch (operator1) {
             case '+', '-' -> operator1 = 1;
             case '*', '/' -> operator1 = 2;
-            case '^' -> operator1= 3;
+            case '^' -> operator1 = 3;
             default -> operator1 = 0; // for parentheses and other characters
         } // end of switch-case (operator1)
         switch (operator2) {
@@ -34,6 +35,7 @@ public class Expressions {
 
     /**
      * TODO: Documentation
+     *
      * @param infixExpression given String value of an infix expression
      * @return String representation of the converted postfix expression from infix
      */
@@ -67,7 +69,83 @@ public class Expressions {
         return postfixExpression;
     } // end of convertToPostfix method
 
-    // TODO: Evaluate methods
+    /**
+     * Evaluate a postfix expression and return the result.
+     *
+     * @param postfixExpression The postfix expression to be evaluated.
+     * @return The result of the evaluation.
+     * @version 1.0
+     */
+    public double evaluatePostfix(String postfixExpression) {
+        Stack<Double> operandStack = new Stack<>();
+
+        for (int index = 0; index < postfixExpression.length(); index++) {
+            char symbol = postfixExpression.charAt(index);
+
+            if (Character.isDigit(symbol)) {
+                operandStack.push((double) (symbol - '0'));
+            } else if (Character.isLetter(symbol)) {
+
+            } else if (isOperator(symbol)) {
+                if (operandStack.size() < 2) {
+                    throw new IllegalArgumentException("Invalid postfix expression");
+                }
+                double operand2 = operandStack.pop();
+                double operand1 = operandStack.pop();
+                double result = performOperation(operand1, operand2, symbol);
+                operandStack.push(result);
+            } else {
+                throw new IllegalArgumentException("Invalid token in postfix expression: " + symbol);
+            }
+        }
+
+        if (operandStack.size() != 1) {
+            throw new IllegalArgumentException("Invalid postfix expression");
+        }
+
+        return operandStack.pop();
+    }
+
+    /**
+     * Check if a character is an operator.
+     *
+     * @param symbol The character to check.
+     * @return True if the character is an operator, false otherwise.
+     * @version 1.0
+     */
+    private boolean isOperator(char symbol) {
+        return "+-*/^".indexOf(symbol) != -1;
+    }
+
+    /**
+     * Perform an arithmetic operation on two operands.
+     *
+     * @param operand1 The first operand.
+     * @param operand2 The second operand.
+     * @param operator The operator to apply.
+     * @return The result of the operation.
+     * @version 1.0
+     */
+    private double performOperation(double operand1, double operand2, char operator) {
+        switch (operator) {
+            case '+':
+                return operand1 + operand2;
+            case '-':
+                return operand1 - operand2;
+            case '*':
+                return operand1 * operand2;
+            case '/':
+                if (operand2 == 0) {
+                    throw new ArithmeticException("Division by zero");
+                }
+                return operand1 / operand2;
+            case '^':
+                return Math.pow(operand1, operand2);
+            default:
+                throw new IllegalArgumentException("Invalid operator: " + operator);
+        } // end of switch-case method
+    } // end of performOperation method
+
 
      /*
     Notes:
