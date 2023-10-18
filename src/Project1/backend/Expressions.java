@@ -79,4 +79,16 @@ public class Expressions {
     - Think of how you will handle mixture of operator characters when using the checkPrecedence method.
     - Think of how you will display the table properly using the symbols, postfix expression and stack of operators.
      */
+
+    public boolean validateParentheses(String infixExpression) {
+        int openCounter = 0;
+        int closeCounter = 0;
+        for (int x = 0; x < infixExpression.length(); x++) {
+            if (infixExpression.charAt(x) == '(')
+                openCounter++;
+            else if (infixExpression.charAt(x) == ')')
+                closeCounter++;
+        }
+        return openCounter == closeCounter;
+    } // end of validateParentheses method
 } // end of class Expressions

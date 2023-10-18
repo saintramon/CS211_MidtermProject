@@ -221,7 +221,8 @@ public class GUIInfixPrecedence extends JFrame {
         expressionField.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                expressionField.setText("");
+                if (expressionField.getText().isEmpty() || expressionField.getText().equals("  Enter expression"))
+                    expressionField.setText("");
             }
 
             @Override
@@ -307,8 +308,11 @@ public class GUIInfixPrecedence extends JFrame {
         evaluatePanel.add(resultsPanel, BorderLayout.CENTER);
 
         convertButton.addActionListener(e -> {
-            resultExpression.setText(expressions.convertToPostfix(expressionField.getText()));
-            System.out.println(resultExpression.getText());
+            if (expressionField.getText().equals("  Enter expression") || expressionField.getText().isEmpty()) {
+                resultExpression.setText("No input has been given.");
+            } else {
+                resultExpression.setText(expressions.convertToPostfix(expressionField.getText()));
+            }
         });
 
         clearButton.addActionListener(e -> {
@@ -519,7 +523,24 @@ public class GUIInfixPrecedence extends JFrame {
         evaluateIcon.setBorderPainted(false);
         evaluateIcon.setFocusPainted(false);
 
+        inputField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (inputField.getText().isEmpty() || inputField.getText().equals(" Enter Postfix Expression"))
+                    inputField.setText("");
+            }
 
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (inputField.getText().isEmpty())
+                    inputField.setText(" Enter Postfix Expression");
+            }
+        });
+
+        clearButton.addActionListener(e-> {
+            inputField.setText("");
+            answerLabel.setText("");
+        });
 
 
 
