@@ -77,75 +77,41 @@ public class Expressions {
      * @version 1.0
      */
     public double evaluatePostfix(String postfixExpression) {
-        Stack<Double> operandStack = new Stack<>();
+        Stack<Integer> operandStack = new Stack<>();
+        char symbol = ' ';
+        double result = 0;
 
         for (int index = 0; index < postfixExpression.length(); index++) {
-            char symbol = postfixExpression.charAt(index);
+            symbol = postfixExpression.charAt(index);
 
             if (Character.isDigit(symbol)) {
-                operandStack.push((double) (symbol - '0'));
-            } else if (Character.isLetter(symbol)) {
-
-            } else if (isOperator(symbol)) {
-                if (operandStack.size() < 2) {
-                    throw new IllegalArgumentException("Invalid postfix expression");
-                }
-                double operand2 = operandStack.pop();
-                double operand1 = operandStack.pop();
-                double result = performOperation(operand1, operand2, symbol);
-                operandStack.push(result);
+                operandStack.push(symbol - '0');
             } else {
-                throw new IllegalArgumentException("Invalid token in postfix expression: " + symbol);
+                int operand2 = operandStack.pop();
+                int operand1 = operandStack.pop();
+
+                switch (symbol) {
+                    case '+':
+                        operandStack.push(operand1 + operand2);
+                        break;
+                    case '-':
+                        operandStack.push(operand1 - operand2);
+                        break;
+                    case '*':
+                        operandStack.push(operand1 * operand2);
+                        break;
+                    case '/':
+                        operandStack.push(operand1 / operand2);
+                        break;
+                    case '^':
+                        operandStack.push((int) Math.pow(operand1,operand2));
+                        break;
+                }
             }
         }
-
-        if (operandStack.size() != 1) {
-            throw new IllegalArgumentException("Invalid postfix expression");
-        }
-
-        return operandStack.pop();
+        result = operandStack.pop();
+        return result;
     }
-
-    /**
-     * Check if a character is an operator.
-     *
-     * @param symbol The character to check.
-     * @return True if the character is an operator, false otherwise.
-     * @version 1.0
-     */
-    private boolean isOperator(char symbol) {
-        return "+-*/^".indexOf(symbol) != -1;
-    }
-
-    /**
-     * Perform an arithmetic operation on two operands.
-     *
-     * @param operand1 The first operand.
-     * @param operand2 The second operand.
-     * @param operator The operator to apply.
-     * @return The result of the operation.
-     * @version 1.0
-     */
-    private double performOperation(double operand1, double operand2, char operator) {
-        switch (operator) {
-            case '+':
-                return operand1 + operand2;
-            case '-':
-                return operand1 - operand2;
-            case '*':
-                return operand1 * operand2;
-            case '/':
-                if (operand2 == 0) {
-                    throw new ArithmeticException("Division by zero");
-                }
-                return operand1 / operand2;
-            case '^':
-                return Math.pow(operand1, operand2);
-            default:
-                throw new IllegalArgumentException("Invalid operator: " + operator);
-        } // end of switch-case method
-    } // end of performOperation method
-
 
      /*
     Notes:
