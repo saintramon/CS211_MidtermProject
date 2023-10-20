@@ -11,6 +11,5 @@ public class Test {
 
 
         String postfixTest = "12+34+*";
-        System.out.println(expressions.evaluatePostfix(postfixTest));
     }
 }
