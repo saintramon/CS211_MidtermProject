@@ -6,8 +6,6 @@ public class Test {
         String infix = "(a+b)*(c-d)";
         System.out.println(infix);
 
-        String postfix = expressions.convertToPostfix(infix);
-        System.out.println(postfix);
 
 
         String postfixTest = "12+34+*";
