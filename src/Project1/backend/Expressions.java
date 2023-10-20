@@ -42,9 +42,10 @@ public class Expressions {
     public String convertToPostfix(String infixExpression) {
         String postfixExpression = "";
         Stack<Character> operatorStack = new Stack<>();
+        char symbol = ' ';
 
         for (int index = 0; index < infixExpression.length(); index++) {
-            char symbol = infixExpression.charAt(index);
+            symbol = infixExpression.charAt(index);
             if (Character.isLetterOrDigit(symbol)) {
                 postfixExpression = postfixExpression.concat(Character.toString(symbol));
             } else if (symbol == '(') {
