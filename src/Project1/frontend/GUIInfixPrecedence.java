@@ -20,7 +20,8 @@ public class GUIInfixPrecedence extends JFrame {
     private JPanel infixCard;
     private JPanel evaluateCard = new JPanel();
     private JPanel homeCard = new JPanel();
-    private JPanel tableCard = new JPanel();
+    private JPanel convertTableCard = new JPanel();
+    private JPanel evaluateTableCard = new JPanel();
     private CardLayout cardLayout = new CardLayout();
 
 
@@ -172,8 +173,11 @@ public class GUIInfixPrecedence extends JFrame {
         infoPanel.add(infixCard, "infixCard");
 
 
-        tableCard = populateTableCard();
-        infoPanel.add(tableCard, "tableCard");
+        convertTableCard= populateConvertTableCard();
+        infoPanel.add(convertTableCard, "convertTableCard");
+
+        evaluateTableCard = populateEvaluateTableCard();
+        infoPanel.add(evaluateTableCard, "evaluateTableCard");
 
         cardLayout.show(infoPanel, "homeCard");
 
@@ -375,7 +379,7 @@ public class GUIInfixPrecedence extends JFrame {
         evaluateIcon.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cardLayout.show(infoPanel, "tableCard");
+                cardLayout.show(infoPanel, "convertTableCard");
             }
         });
 
@@ -519,6 +523,12 @@ public class GUIInfixPrecedence extends JFrame {
         evaluateIcon.setBorderPainted(false);
         evaluateIcon.setFocusPainted(false);
 
+        evaluateIcon.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(infoPanel, "evaluateTableCard");
+            }
+        });
 
 
 
@@ -550,7 +560,7 @@ public class GUIInfixPrecedence extends JFrame {
         return evaluatePanel;
     }
 
-    private JPanel populateTableCard() {
+    private JPanel populateConvertTableCard() {
         JPanel tablePanel = new JPanel();
         tablePanel.setBackground(resources.greyishBlack);
         tablePanel.setBorder(resources.getRoundedBorder(resources.greyishBlack, resources.greyishBlack));
@@ -561,6 +571,16 @@ public class GUIInfixPrecedence extends JFrame {
         return tablePanel;
     }
 
+    private JPanel populateEvaluateTableCard(){
+        JPanel tablePanel = new JPanel();
+        tablePanel.setBackground(resources.greyishBlack);
+        tablePanel.setBorder(resources.getRoundedBorder(resources.greyishBlack, resources.greyishBlack));
+        tablePanel.setSize(500,500);
+        JLabel title = new JLabel("EVALUATE TABLE CARD");
+        title.setForeground(Color.white);
 
+        tablePanel.add(title);
+        return tablePanel;
+    }
 
 }

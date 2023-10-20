@@ -1,9 +1,16 @@
 package Project1.frontend;
 
-import Project1.backend.Expressions;
-
 public class Main {
     public static void main(String[] args) {
-        GUIInfixPrecedence gui = new GUIInfixPrecedence();
+        try{
+            Main program = new Main();
+            program.run();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void run(){
+        new GUIInfixPrecedence();
     }
 }
