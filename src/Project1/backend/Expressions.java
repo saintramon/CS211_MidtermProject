@@ -45,7 +45,9 @@ public class Expressions {
      * @param infixExpression given String value of an infix expression
      * @return String representation of the converted postfix expression from infix
      */
-    public String convertToPostfix(String infixExpression) {
+    public String convertToPostfix(String infixExpression, JTable table) {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+
         String postfixExpression = "";
         Stack<Character> operatorStack = new Stack<>();
         char symbol = ' ';
@@ -69,9 +71,11 @@ public class Expressions {
                 } // end of while (checkPrecedence)
                 operatorStack.push(symbol);
             } // end of if-else (isOperand for symbol)
+            model.addRow(new Object[]{symbol,postfixExpression,operatorStack.toString()});
         } // end of for
         while (!operatorStack.isEmpty()) {
             postfixExpression = postfixExpression.concat(operatorStack.pop().toString());
+            model.addRow(new Object[]{symbol,postfixExpression,operatorStack.toString()});
         } // end of while
         return postfixExpression;
     } // end of convertToPostfix method

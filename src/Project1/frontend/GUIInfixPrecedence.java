@@ -312,7 +312,7 @@ public class GUIInfixPrecedence extends JFrame {
         evaluatePanel.add(resultsPanel, BorderLayout.CENTER);
 
         convertButton.addActionListener(e -> {
-            resultExpression.setText(expressions.convertToPostfix(expressionField.getText()));
+            resultExpression.setText(expressions.convertToPostfix(expressionField.getText(), convertTable));
             System.out.println(resultExpression.getText());
         });
 
@@ -571,12 +571,22 @@ public class GUIInfixPrecedence extends JFrame {
 
     private JPanel populateConvertTableCard() {
         JPanel tablePanel = new JPanel();
+        tablePanel.setLayout(new BorderLayout());
         tablePanel.setBackground(resources.greyishBlack);
         tablePanel.setBorder(resources.getRoundedBorder(resources.greyishBlack, resources.greyishBlack));
         tablePanel.setSize(500,500);
-        JLabel title = new JLabel("THIS IS TABLE CARD");
+        JLabel title = new JLabel("CONVERSION TABLE");
         title.setForeground(Color.WHITE);
-        tablePanel.add(title);
+
+        DefaultTableModel tableModel = new DefaultTableModel();
+        tableModel.addColumn("Symbol");
+        tableModel.addColumn("Postfix");
+        tableModel.addColumn("Stack");
+        convertTable = new JTable(tableModel);
+
+
+        tablePanel.add(title, BorderLayout.NORTH);
+        tablePanel.add(new JScrollPane(convertTable), BorderLayout.CENTER);
         return tablePanel;
     }
 
@@ -586,7 +596,7 @@ public class GUIInfixPrecedence extends JFrame {
         tablePanel.setBackground(resources.greyishBlack);
         tablePanel.setBorder(resources.getRoundedBorder(resources.greyishBlack, resources.greyishBlack));
         tablePanel.setSize(500,500);
-        JLabel title = new JLabel("EVALUATE TABLE CARD");
+        JLabel title = new JLabel("EVALUATION TABLE");
         title.setForeground(Color.white);
 
         DefaultTableModel tableModel = new DefaultTableModel();
