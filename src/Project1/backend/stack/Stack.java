@@ -89,4 +89,20 @@ public class Stack<T> implements StackInterface<T> {
     public boolean isEmpty() {
         return size() == 0; // returns true if count is equal to 0.
     } // end of isEmpty method
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        Node<T> current = top;
+
+        while (current != null) {
+            sb.append(current.getData());
+            if (current.getNext() != null) {
+                sb.append(", ");
+            }
+            current = current.getNext();
+        }
+
+        return sb.toString();
+    }
 } // end of class Stack

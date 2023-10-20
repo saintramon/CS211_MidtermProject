@@ -1,9 +1,7 @@
 
 package Project1.frontend;
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,13 +23,16 @@ public class GUIInfixPrecedence extends JFrame {
     private CardLayout cardLayout = new CardLayout();
 
 
-
     private final Resources resources = new Resources();
 
 
     private  JButton homeButton;
     private JButton infixButton;
     private JButton evaluateButton;
+
+
+    private JTable evaluateTable;
+    private JTable convertTable;
 
     private JPanel infoPanel = contentPanel();
 
@@ -471,6 +472,8 @@ public class GUIInfixPrecedence extends JFrame {
 
 
 
+
+
         /**
          * !! RESULTS PANEL
          *
@@ -530,6 +533,12 @@ public class GUIInfixPrecedence extends JFrame {
             }
         });
 
+        evaluateButton.addActionListener(e -> {
+            String postfixExpression = inputField.getText();
+            double result = expressions.evaluatePostfix(postfixExpression, evaluateTable);
+            answerLabel.setText(String.valueOf(result));
+        });
+
 
 
 
@@ -573,13 +582,20 @@ public class GUIInfixPrecedence extends JFrame {
 
     private JPanel populateEvaluateTableCard(){
         JPanel tablePanel = new JPanel();
+        tablePanel.setLayout(new BorderLayout());
         tablePanel.setBackground(resources.greyishBlack);
         tablePanel.setBorder(resources.getRoundedBorder(resources.greyishBlack, resources.greyishBlack));
         tablePanel.setSize(500,500);
         JLabel title = new JLabel("EVALUATE TABLE CARD");
         title.setForeground(Color.white);
 
-        tablePanel.add(title);
+        DefaultTableModel tableModel = new DefaultTableModel();
+        tableModel.addColumn("Symbol");
+        tableModel.addColumn("Stack");
+        evaluateTable = new JTable(tableModel);
+
+        tablePanel.add(title, BorderLayout.NORTH);
+        tablePanel.add(new JScrollPane(evaluateTable),BorderLayout.CENTER);
         return tablePanel;
     }
 

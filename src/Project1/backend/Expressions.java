@@ -2,6 +2,9 @@ package Project1.backend;
 
 import Project1.backend.stack.Stack;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
 /**
  * @author ROXAS, LACANILAO
  * @version 2.00 (17 October 2023)
@@ -9,6 +12,9 @@ import Project1.backend.stack.Stack;
  * This class converts and evaluates an infix expression to postfix expression.
  */
 public class Expressions {
+
+    public Expressions(){}
+
 
     /**
      * TODO: Documentation
@@ -77,7 +83,8 @@ public class Expressions {
      * @return The result of the evaluation.
      * @version 1.0
      */
-    public double evaluatePostfix(String postfixExpression) {
+    public double evaluatePostfix(String postfixExpression, JTable table) {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
         Stack<Integer> operandStack = new Stack<>();
         char symbol = ' ';
         double result = 0;
@@ -109,6 +116,9 @@ public class Expressions {
                         break;
                 }
             }
+
+            model.addRow(new Object[]{symbol, operandStack.toString()});
+
         }
         result = operandStack.pop();
         return result;
