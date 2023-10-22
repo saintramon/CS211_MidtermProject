@@ -633,7 +633,8 @@ public class GUIInfixPrecedence extends JFrame {
         clearButton.addActionListener(e -> {
             inputField.setText("  Enter Postfix Expression");
             answerLabel.setText("");
-            answerLabel.setForeground(Color.WHITE);
+            answerLabel.setForeground(resources.eggshellWhite);
+            answerLabel.setFont(resources.montserrat);
             evaluateIcon.setVisible(false);
         });
 
