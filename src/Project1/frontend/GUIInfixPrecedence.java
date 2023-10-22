@@ -3,10 +3,8 @@ package Project1.frontend;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+import java.awt.event.*;
+
 import Project1.backend.Expressions;
 
 public class GUIInfixPrecedence extends JFrame {
@@ -36,9 +34,14 @@ public class GUIInfixPrecedence extends JFrame {
 
     private JPanel infoPanel = contentPanel();
 
+    /**
+     * TODO: Documentation
+     */
     public GUIInfixPrecedence() {
         // Main Frame
         super("Infix Statement Conversion");
+
+        setIconImage(resources.logo.getImage());
 
         setLayout(new BorderLayout());
         resources.loadFonts();
@@ -137,6 +140,42 @@ public class GUIInfixPrecedence extends JFrame {
             infixButton.setForeground(resources.eggshellWhite);
         });
 
+        infixButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setCursor(resources.handCursor);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setCursor(resources.defaultCursor);
+            }
+        });
+
+        evaluateButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setCursor(resources.handCursor);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setCursor(resources.defaultCursor);
+            }
+        });
+
+        homeButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setCursor(resources.handCursor);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setCursor(resources.defaultCursor);
+            }
+        });
+
         buttons.add(homeButton);
         buttons.add(infixButton);
         buttons.add(evaluateButton);
@@ -226,7 +265,9 @@ public class GUIInfixPrecedence extends JFrame {
         expressionField.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                expressionField.setText("");
+                if (expressionField.getText().isEmpty() || expressionField.getText().equals("  Enter expression")) {
+                    expressionField.setText("");
+                } // end of if
             }
 
             @Override
@@ -259,11 +300,14 @@ public class GUIInfixPrecedence extends JFrame {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 convertButton.setForeground(resources.darkBlack);
                 convertButton.setBackground(resources.blue);
+                setCursor(resources.handCursor);
             }
 
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 convertButton.setForeground(resources.eggshellWhite);
                 convertButton.setBackground(resources.lightestGrey);
+                setCursor(resources.defaultCursor);
+
             }
         });
 
@@ -271,11 +315,13 @@ public class GUIInfixPrecedence extends JFrame {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 clearButton.setForeground(resources.darkBlack);
                 clearButton.setBackground(resources.blue);
+                clearButton.setCursor(resources.handCursor);
             }
 
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 clearButton.setForeground(resources.eggshellWhite);
                 clearButton.setBackground(resources.lightestGrey);
+                clearButton.setCursor(resources.defaultCursor);
             }
         });
 
@@ -312,13 +358,19 @@ public class GUIInfixPrecedence extends JFrame {
         evaluatePanel.add(resultsPanel, BorderLayout.CENTER);
 
         convertButton.addActionListener(e -> {
-            resultExpression.setText(expressions.convertToPostfix(expressionField.getText(), convertTable));
-            System.out.println(resultExpression.getText());
+            if (expressions.validateParentheses(expressionField.getText())) {
+                resultExpression.setText(expressions.convertToPostfix(expressionField.getText(), convertTable));
+                System.out.println(resultExpression.getText());
+            } else {
+                resultExpression.setText("Syntax error. Try again.");
+                resultExpression.setForeground(Color.RED);
+            } // end of if-else (user input for infix expression)
         });
 
         clearButton.addActionListener(e -> {
             resultExpression.setText("");
             expressionField.setText("  Enter expression");
+            resultExpression.setForeground(Color.white);
         });
 
         JPanel iconPanel = new JPanel();
@@ -338,10 +390,12 @@ public class GUIInfixPrecedence extends JFrame {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 evaluateButton.setForeground(resources.darkBlack);
                 evaluateButton.setBackground(resources.blue);
+                evaluateButton.setCursor(resources.handCursor);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 evaluateButton.setForeground(resources.eggshellWhite);
                 evaluateButton.setBackground(resources.lightestGrey);
+                evaluateButton.setCursor(resources.defaultCursor);
             }
         });
 
@@ -384,11 +438,6 @@ public class GUIInfixPrecedence extends JFrame {
             }
         });
 
-
-
-
-
-
         infixPanel.add(title, BorderLayout.NORTH);
         infixPanel.add(inputPanel, BorderLayout.CENTER);
         infixPanel.add(evaluatePanel, BorderLayout.SOUTH);
@@ -419,7 +468,7 @@ public class GUIInfixPrecedence extends JFrame {
         inputPanel.setPreferredSize(new Dimension(50,200));
 
         JTextField inputField = new RoundJTextField(50);
-        inputField.setText(" Enter Postfix Expression");
+        inputField.setText("  Enter Postfix Expression");
         inputField.setPreferredSize(new Dimension(90,40));
         inputField.setForeground(resources.eggshellWhite);
         inputField.setEditable(true);
@@ -428,13 +477,15 @@ public class GUIInfixPrecedence extends JFrame {
         inputField.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                inputField.setText("");
+                if (inputField.getText().isEmpty() || inputField.getText().equals("  Enter Postfix Expression")) {
+                    inputField.setText("");
+                } // end of if
             }
 
             @Override
             public void focusLost(FocusEvent e) {
                 if (inputField.getText().isEmpty())
-                    inputField.setText("  Enter expression");
+                    inputField.setText("  Enter Postfix Expression");
             }
         });
         /**
@@ -462,11 +513,13 @@ public class GUIInfixPrecedence extends JFrame {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 evaluateButton.setForeground(resources.darkBlack);
                 evaluateButton.setBackground(resources.blue);
+                setCursor(resources.handCursor);
             }
 
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 evaluateButton.setForeground(resources.eggshellWhite);
                 evaluateButton.setBackground(resources.lightestGrey);
+                setCursor(resources.defaultCursor);
             }
         });
 
@@ -474,16 +527,15 @@ public class GUIInfixPrecedence extends JFrame {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 clearButton.setForeground(resources.darkBlack);
                 clearButton.setBackground(resources.blue);
+                setCursor(resources.handCursor);
             }
 
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 clearButton.setForeground(resources.eggshellWhite);
                 clearButton.setBackground(resources.lightestGrey);
+                setCursor(resources.defaultCursor);
             }
         });
-
-
-
 
         /**
          * !! RESULTS PANEL
@@ -515,8 +567,9 @@ public class GUIInfixPrecedence extends JFrame {
         answerLabel.setVerticalAlignment(SwingConstants.CENTER);
 
         clearButton.addActionListener(e -> {
-            inputField.setText("Enter Expression");
+            inputField.setText("  Enter Postfix Expression");
             answerLabel.setText("");
+            answerLabel.setForeground(Color.WHITE);
         });
 
         /**
@@ -549,14 +602,30 @@ public class GUIInfixPrecedence extends JFrame {
             }
         });
 
-        evaluateButton.addActionListener(e -> {
-            String postfixExpression = inputField.getText();
-            double result = expressions.evaluatePostfix(postfixExpression, evaluateTable);
-            answerLabel.setText(String.valueOf(result));
+        evaluateIcon.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setCursor(resources.handCursor);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setCursor(resources.defaultCursor);
+            }
         });
 
+        evaluateButton.addActionListener(e -> {
+            if (expressions.validateParentheses(inputField.getText())) {
+                String postfixExpression = inputField.getText();
+                double result = expressions.evaluatePostfix(postfixExpression, evaluateTable);
+                answerLabel.setText(String.valueOf(result));
+                // answerLabel.setText(String.valueOf(expressions.evaluatePostfix(inputField.getText(), evaluateTable)));
+            } else {
+                answerLabel.setText("Syntax error. Try again.");
+                answerLabel.setForeground(Color.RED);
+            }
 
-
+        });
 
         //POPULATE BUTTON PANEL !!!
         buttonsPanel.add(evaluateButton,BorderLayout.WEST);

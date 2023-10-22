@@ -8,7 +8,34 @@ import java.io.IOException;
 
 
 public class Resources {
+    /**
+     * TODO: Documentation
+     */
     Font montserratThin, montserrat, montserratBold, montserratBlack;
+
+    /**
+     * TODO: Documentation
+     */
+    ImageIcon logo = new ImageIcon("icons/logo.png");
+
+    /**
+     * Cursor used for buttons
+     */
+    Cursor handCursor = new Cursor(Cursor.HAND_CURSOR);
+
+    /**
+     * Default cursor
+     */
+    Cursor defaultCursor = new Cursor(Cursor.DEFAULT_CURSOR);
+
+    /**
+     * Cursor used for texts
+     */
+    Cursor textCursor = new Cursor(Cursor.TEXT_CURSOR);
+
+    /**
+     * TODO: Documentation
+     */
     void loadFonts() {
         try {
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -78,11 +105,6 @@ public class Resources {
         return roundedButton;
     }
 
-
-
-
-
-
     public JTextField getRoundedTextField() {
         JTextField textField = new JTextField(20);
         textField.setPreferredSize(new Dimension(150, 100));
@@ -119,7 +141,4 @@ public class Resources {
         title.setFont(montserratBlack);
         return title;
     }
-
-
-
 }
