@@ -118,15 +118,31 @@ public class Expressions {
                     case '^':
                         operandStack.push((int) Math.pow(operand1,operand2));
                         break;
-                }
-            }
-
+                } // end of switch-case
+            } // end of if-else (symbol is operand)
             model.addRow(new Object[]{symbol, operandStack.toString()});
-
-        }
+        } // end of for
         result = operandStack.pop();
         return result;
-    }
+    } // end of evaluatePostfix method
+
+    /**
+     * TODO: Documentation
+     * @param infixExpression
+     * @return
+     */
+    public boolean validateParentheses(String infixExpression) {
+        int openCount = 0; // number of open parentheses
+        int closeCount = 0; // number of open parentheses
+        for (int x = 0; x < infixExpression.length(); x++) {
+            if (infixExpression.charAt(x) == '(') {
+                openCount++;
+            } else if (infixExpression.charAt(x) == ')') {
+                closeCount++;
+            } // end of if-else
+        } // end of for (index of infix expression characters)
+        return openCount == closeCount;
+    } // end of validateParentheses method
 
      /*
     Notes:
