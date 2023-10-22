@@ -1,6 +1,7 @@
 package Project1.frontend;
 
 public class Main {
+
     /**
      * Main entry point of the program
      * @param args command line arguments

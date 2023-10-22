@@ -358,13 +358,17 @@ public class GUIInfixPrecedence extends JFrame {
         evaluatePanel.add(resultsPanel, BorderLayout.CENTER);
 
         convertButton.addActionListener(e -> {
-            if (expressions.validateParentheses(expressionField.getText())) {
-                resultExpression.setText(expressions.convertToPostfix(expressionField.getText(), convertTable));
-                System.out.println(resultExpression.getText());
+            if (!expressionField.getText().isEmpty() || !expressionField.getText().equals("  Enter expression")) {
+                if (expressions.validateParentheses(expressionField.getText())) {
+                    resultExpression.setText(expressions.convertToPostfix(expressionField.getText(), convertTable));
+                    System.out.println(resultExpression.getText());
+                } else {
+                    resultExpression.setText("Syntax error. Try again.");
+                    resultExpression.setForeground(Color.RED);
+                } // end of if-else (user input for infix expression)
             } else {
-                resultExpression.setText("Syntax error. Try again.");
-                resultExpression.setForeground(Color.RED);
-            } // end of if-else (user input for infix expression)
+                resultExpression.setText("Input empty.");
+            } // end of if-else (empty expression field)
         });
 
         clearButton.addActionListener(e -> {
@@ -386,6 +390,7 @@ public class GUIInfixPrecedence extends JFrame {
         evaluateButton.setForeground(resources.eggshellWhite);
         evaluateButton.setBackground(resources.lightestGrey);
         evaluateButton.setPreferredSize(new Dimension(120,30));
+
         evaluateButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 evaluateButton.setForeground(resources.darkBlack);
@@ -435,6 +440,18 @@ public class GUIInfixPrecedence extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(infoPanel, "convertTableCard");
+            }
+        });
+
+        evaluateIcon.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setCursor(resources.handCursor);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setCursor(resources.defaultCursor);
             }
         });
 

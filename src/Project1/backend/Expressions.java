@@ -1,7 +1,6 @@
 package Project1.backend;
 
 import Project1.backend.stack.Stack;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -13,8 +12,10 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Expressions {
 
+    /**
+     * Default constructor
+     */
     public Expressions(){}
-
 
     /**
      * TODO: Documentation
@@ -47,10 +48,12 @@ public class Expressions {
      */
     public String convertToPostfix(String infixExpression, JTable table) {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
-
         String postfixExpression = "";
         Stack<Character> operatorStack = new Stack<>();
         char symbol = ' ';
+
+        model.setRowCount(0);
+        table.setDefaultEditor(Object.class, null);
 
         for (int index = 0; index < infixExpression.length(); index++) {
             symbol = infixExpression.charAt(index);
@@ -92,6 +95,9 @@ public class Expressions {
         Stack<Integer> operandStack = new Stack<>();
         char symbol = ' ';
         double result = 0;
+
+        model.setRowCount(0);
+        table.setDefaultEditor(Object.class, null);
 
         for (int index = 0; index < postfixExpression.length(); index++) {
             symbol = postfixExpression.charAt(index);
@@ -144,14 +150,12 @@ public class Expressions {
         return openCount == closeCount;
     } // end of validateParentheses method
 
-     /*
-    Notes:
-    - Add exception handling method where the number of parentheses, brackets, or curly braces must be syntactically
-    correct (number of closings must be equal to the number of openings).
-    - Add exception handling method where there should be an operand after each operator (for loop that iterates through
-    each character of the user's input, use isOperator method).
-    - Think of how you will display the operator Stack in a table (possible use of LinkedList).
-    - Think of how you will handle mixture of operator characters when using the checkPrecedence method.
-    - Think of how you will display the table properly using the symbols, postfix expression and stack of operators.
-     */
+    public boolean verifyDigits(String postfixExpression) {
+        for (int x = 0; x < postfixExpression.length(); x++) {
+            if (Character.isLetter(postfixExpression.charAt(x))) {
+                return false;
+            }
+        }
+        return true;
+    } // end of verifyDigits method
 } // end of class Expressions
