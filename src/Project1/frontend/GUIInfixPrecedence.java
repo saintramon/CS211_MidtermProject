@@ -251,7 +251,7 @@ public class GUIInfixPrecedence extends JFrame {
                         + "General Instructions:\n"
                         + "1. Click the 'Convert' button to see the expression in postfix notation.\n"
                         + "2. Click the 'Evaluate' button to calculate the result of the postfix expression.\n"
-                        + "3. Use spaces for clarity and accurate parsing, e.g., \"3 + 4\" is not as clear as \"3 + 4\".\n"
+                        + "3. Do not use spaces when writing the expression, e.g., \"3+4\" not \"3 + 4\".\n"
                         + "4. The program will return an error message for improperly formatted expressions.\n\n"
                         + "Thank you for using our program. Let's get started!"
         );
@@ -410,9 +410,8 @@ public class GUIInfixPrecedence extends JFrame {
                 }
 
             } else {
-                resultExpression.setText("Syntax error. Try again.");
-                resultExpression.setForeground(Color.RED);
-            } // end of if-else (user input for infix expression)
+                resultExpression.setText("Input empty.");
+            } // end of if-else (empty expression field)
         });
 
         clearButton.addActionListener(e -> {
@@ -494,6 +493,18 @@ public class GUIInfixPrecedence extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(infoPanel, "convertTableCard");
+            }
+        });
+
+        evaluateIcon.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setCursor(resources.handCursor);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setCursor(resources.defaultCursor);
             }
         });
 
