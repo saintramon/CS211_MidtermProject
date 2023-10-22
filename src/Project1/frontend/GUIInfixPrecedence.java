@@ -8,6 +8,7 @@ import java.awt.event.*;
 import Project1.backend.Expressions;
 
 import static java.lang.Character.isDigit;
+import static java.lang.Character.toChars;
 
 public class GUIInfixPrecedence extends JFrame {
     // BACKEND
@@ -738,11 +739,8 @@ public class GUIInfixPrecedence extends JFrame {
         if (statementToUseInEvaluate!=null) {
             inputField.setText(statementToUseInEvaluate);
             statementToUseInEvaluate = null;
-            if (expressions.validateParentheses(inputField.getText())) {
-                String postfixExpression = inputField.getText();
-                double result = expressions.evaluatePostfix(postfixExpression, evaluateTable);
-                answerLabel.setText(String.valueOf(result));
-                // answerLabel.setText(String.valueOf(expressions.evaluatePostfix(inputField.getText(), evaluateTable)));
+            if (!Character.isLetter(Integer.parseInt(inputField.getText()))) {
+                answerLabel.setText(String.valueOf(expressions.evaluatePostfix(inputField.getText(), evaluateTable)));
             } else {
                 answerLabel.setText("Syntax error. Try again.");
                 answerLabel.setForeground(Color.RED);
