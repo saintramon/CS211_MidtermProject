@@ -22,7 +22,8 @@ public class Huffman {
     }
 
     /**
-     * The countFrequency method will count the occurrences of each distinct characters that will be stored in the frequencyTable
+     * The countFrequency method will count the occurrences of each distinct characters that will be stored in the frequencyTable.
+     * The frequencyTable will then be used by the generateHuffmanTable to establish a HashMap that contains the Characters and their corresponding Huffman Codes.
      *
      * VISUALIZATION
      * CHAR    |   CODE
