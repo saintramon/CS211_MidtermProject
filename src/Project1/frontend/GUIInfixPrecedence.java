@@ -425,6 +425,18 @@ public class GUIInfixPrecedence extends JFrame {
         inputField.setEditable(true);
         inputField.setBackground(resources.lightestGrey);
 
+        inputField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                inputField.setText("");
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (inputField.getText().isEmpty())
+                    inputField.setText("  Enter expression");
+            }
+        });
         /**
          * !!! BUTTONS PANEL
          *
@@ -473,7 +485,6 @@ public class GUIInfixPrecedence extends JFrame {
 
 
 
-
         /**
          * !! RESULTS PANEL
          *
@@ -499,9 +510,14 @@ public class GUIInfixPrecedence extends JFrame {
         answerPanel.setBorder(resources.getRoundedBorder(resources.lightGrey,resources.lightGrey));
 
         JLabel answerLabel = resources.getPanelTitle();
-        answerLabel.setText("42069");
+        answerLabel.setText("");
         answerLabel.setHorizontalAlignment(SwingConstants.LEFT);
         answerLabel.setVerticalAlignment(SwingConstants.CENTER);
+
+        clearButton.addActionListener(e -> {
+            inputField.setText("Enter Expression");
+            answerLabel.setText("");
+        });
 
         /**
          * !!! ICON PANEL
