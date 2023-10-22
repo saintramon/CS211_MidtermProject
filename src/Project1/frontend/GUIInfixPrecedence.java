@@ -7,6 +7,8 @@ import java.awt.event.*;
 
 import Project1.backend.Expressions;
 
+import static java.lang.Character.isDigit;
+
 public class GUIInfixPrecedence extends JFrame {
     // BACKEND
     private Expressions expressions = new Expressions();
@@ -26,6 +28,8 @@ public class GUIInfixPrecedence extends JFrame {
 
     private  JButton homeButton;
     private JButton infixButton;
+    private JButton evaluateButtonInMenu;
+
     private JButton evaluateButton;
 
 
@@ -33,6 +37,9 @@ public class GUIInfixPrecedence extends JFrame {
     private JTable convertTable;
 
     private JPanel infoPanel = contentPanel();
+
+    private boolean missingInt;
+    private String statementToUseInEvaluate;
 
     /**
      * TODO: Documentation
@@ -109,34 +116,34 @@ public class GUIInfixPrecedence extends JFrame {
         infixButton.setHorizontalAlignment(SwingConstants.LEFT);
         infixButton.setPreferredSize(new Dimension(150, 30));
 
-        evaluateButton = new JButton("Evaluate");
-        evaluateButton.setFont(resources.montserratBold);
-        evaluateButton.setBackground(resources.greyishBlack);
-        evaluateButton.setForeground(resources.eggshellWhite);
-        evaluateButton.setFocusPainted(false);
-        evaluateButton.setOpaque(false);
-        evaluateButton.setBorderPainted(false);
-        evaluateButton.setHorizontalAlignment(SwingConstants.LEFT);
-        evaluateButton.setPreferredSize(new Dimension(150, 30));
+        evaluateButtonInMenu = new JButton("Evaluate");
+        evaluateButtonInMenu.setFont(resources.montserratBold);
+        evaluateButtonInMenu.setBackground(resources.greyishBlack);
+        evaluateButtonInMenu.setForeground(resources.eggshellWhite);
+        evaluateButtonInMenu.setFocusPainted(false);
+        evaluateButtonInMenu.setOpaque(false);
+        evaluateButtonInMenu.setBorderPainted(false);
+        evaluateButtonInMenu.setHorizontalAlignment(SwingConstants.LEFT);
+        evaluateButtonInMenu.setPreferredSize(new Dimension(150, 30));
 
         infixButton.addActionListener(e-> {
             cardLayout.show(infoPanel, "infixCard");
             homeButton.setForeground(resources.eggshellWhite);
-            evaluateButton.setForeground(resources.eggshellWhite);
+            evaluateButtonInMenu.setForeground(resources.eggshellWhite);
             infixButton.setForeground(resources.blue);
         });
 
-        evaluateButton.addActionListener(e-> {
+        evaluateButtonInMenu.addActionListener(e-> {
             cardLayout.show(infoPanel, "evaluateCard");
             homeButton.setForeground(resources.eggshellWhite);
-            evaluateButton.setForeground(resources.blue);
+            evaluateButtonInMenu.setForeground(resources.blue);
             infixButton.setForeground(resources.eggshellWhite);
         });
 
         homeButton.addActionListener(e -> {
             cardLayout.show(infoPanel, "homeCard");
             homeButton.setForeground(resources.blue);
-            evaluateButton.setForeground(resources.eggshellWhite);
+            evaluateButtonInMenu.setForeground(resources.eggshellWhite);
             infixButton.setForeground(resources.eggshellWhite);
         });
 
@@ -152,7 +159,7 @@ public class GUIInfixPrecedence extends JFrame {
             }
         });
 
-        evaluateButton.addMouseListener(new MouseAdapter() {
+        evaluateButtonInMenu.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
                 setCursor(resources.handCursor);
@@ -178,7 +185,7 @@ public class GUIInfixPrecedence extends JFrame {
 
         buttons.add(homeButton);
         buttons.add(infixButton);
-        buttons.add(evaluateButton);
+        buttons.add(evaluateButtonInMenu);
         sidebarPanel.add(buttons, BorderLayout.CENTER);
         return sidebarPanel;
     } // end of createSideBar method
@@ -231,7 +238,7 @@ public class GUIInfixPrecedence extends JFrame {
         homePanel.setLayout(new BorderLayout());
 
         JLabel title = new JLabel("Welcome to the Infix Expression Converter and Evaluator!");
-        title.setForeground(Color.WHITE);
+        title.setForeground(resources.eggshellWhite);
         homePanel.add(title, BorderLayout.NORTH);
 
         JTextArea instructionTextArea = new JTextArea(
@@ -253,7 +260,7 @@ public class GUIInfixPrecedence extends JFrame {
         instructionTextArea.setLineWrap(true);
         instructionTextArea.setOpaque(false);
         instructionTextArea.setEditable(false);
-        instructionTextArea.setForeground(Color.WHITE);
+        instructionTextArea.setForeground(resources.eggshellWhite);
 
         homePanel.add(instructionTextArea, BorderLayout.CENTER);
 
@@ -383,9 +390,25 @@ public class GUIInfixPrecedence extends JFrame {
         evaluatePanel.add(resultsPanel, BorderLayout.CENTER);
 
         convertButton.addActionListener(e -> {
+            String statement = expressions.convertToPostfix(expressionField.getText(), convertTable);
             if (expressions.validateParentheses(expressionField.getText())) {
-                resultExpression.setText(expressions.convertToPostfix(expressionField.getText(), convertTable));
-                System.out.println(resultExpression.getText());
+                resultExpression.setText(statement);
+                char[] resultExpressionCharList = resultExpression.getText().toCharArray();
+                missingInt = false;
+                for (int x=0; x< resultExpressionCharList.length-1 || missingInt;x++) {
+                    if ((resultExpressionCharList[x] >= 'a' && resultExpressionCharList[x] <= 'z')
+                            || (resultExpressionCharList[x] >= 'A' && resultExpressionCharList[x] <= 'Z')) {
+                        missingInt = true;
+                        break;
+                    }
+                }
+                if (!missingInt) {
+                    statementToUseInEvaluate = statement;
+                    evaluateButton.setVisible(true);
+                } else {
+                    evaluateButton.setVisible(false);
+                }
+
             } else {
                 resultExpression.setText("Syntax error. Try again.");
                 resultExpression.setForeground(Color.RED);
@@ -396,6 +419,7 @@ public class GUIInfixPrecedence extends JFrame {
             resultExpression.setText("");
             expressionField.setText("  Enter expression");
             resultExpression.setForeground(Color.white);
+            evaluateButton.setVisible(false);
         });
 
         JPanel iconPanel = new JPanel();
@@ -406,11 +430,12 @@ public class GUIInfixPrecedence extends JFrame {
         evaluateButtonPanel.setLayout(new BorderLayout());
         evaluateButtonPanel.setBackground(resources.greyishBlack);
 
-        RoundJButton evaluateButton = new RoundJButton();
+        evaluateButton = new RoundJButton();
         evaluateButton.setText("Evaluate");
         evaluateButton.setForeground(resources.eggshellWhite);
         evaluateButton.setBackground(resources.lightestGrey);
         evaluateButton.setPreferredSize(new Dimension(120,30));
+        evaluateButton.setVisible(false);
         evaluateButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 evaluateButton.setForeground(resources.darkBlack);
@@ -422,6 +447,15 @@ public class GUIInfixPrecedence extends JFrame {
                 evaluateButton.setBackground(resources.lightestGrey);
                 evaluateButton.setCursor(resources.defaultCursor);
             }
+        });
+
+        evaluateButton.addActionListener(e -> {
+            evaluateCard = populateEvaluateCard();
+            infoPanel.add(evaluateCard, "evaluateCard");
+            cardLayout.show(infoPanel, "evaluateCard");
+            homeButton.setForeground(resources.eggshellWhite);
+            evaluateButtonInMenu.setForeground(resources.blue);
+            infixButton.setForeground(resources.eggshellWhite);
         });
 
         ImageIcon rightArrow = new ImageIcon("icons/right_arrow.png");
@@ -493,7 +527,6 @@ public class GUIInfixPrecedence extends JFrame {
         inputPanel.setPreferredSize(new Dimension(50,200));
 
         JTextField inputField = new RoundJTextField(50);
-        inputField.setText("  Enter Postfix Expression");
         inputField.setPreferredSize(new Dimension(90,40));
         inputField.setForeground(resources.eggshellWhite);
         inputField.setEditable(true);
@@ -676,6 +709,22 @@ public class GUIInfixPrecedence extends JFrame {
         evaluatePanel.add(inputPanel,BorderLayout.CENTER);
         evaluatePanel.add(resultsPanel,BorderLayout.SOUTH);
 
+        if (statementToUseInEvaluate!=null) {
+            inputField.setText(statementToUseInEvaluate);
+            statementToUseInEvaluate = null;
+            if (expressions.validateParentheses(inputField.getText())) {
+                String postfixExpression = inputField.getText();
+                double result = expressions.evaluatePostfix(postfixExpression, evaluateTable);
+                answerLabel.setText(String.valueOf(result));
+                // answerLabel.setText(String.valueOf(expressions.evaluatePostfix(inputField.getText(), evaluateTable)));
+            } else {
+                answerLabel.setText("Syntax error. Try again.");
+                answerLabel.setForeground(Color.RED);
+            }
+        } else {
+            inputField.setText("  Enter Postfix Expression");
+        }
+
         return evaluatePanel;
     }
 
@@ -697,6 +746,7 @@ public class GUIInfixPrecedence extends JFrame {
 
         tablePanel.add(title, BorderLayout.NORTH);
         tablePanel.add(new JScrollPane(convertTable), BorderLayout.CENTER);
+
         return tablePanel;
     }
 
