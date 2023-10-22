@@ -189,10 +189,34 @@ public class GUIInfixPrecedence extends JFrame {
         JPanel homePanel = new JPanel();
         homePanel.setBackground(resources.greyishBlack);
         homePanel.setBorder(resources.getRoundedBorder(resources.greyishBlack, resources.greyishBlack));
-        homePanel.setSize(500,500);
-        JLabel title = new JLabel("THIS IS HOME CARD");
-        title.setForeground(Color.WHITE);
-        homePanel.add(title);
+        homePanel.setSize(500, 500);
+
+        JTextArea instructionTextArea = new JTextArea(
+                "Welcome to the Infix Expression Converter and Evaluator!\n\n"
+                        + "Purpose:\n"
+                        + "This program helps you convert infix expressions into postfix notation for evaluation " +
+                        "to simplify expressions.\n\n"
+                        + "Accepted Operators and Parentheses:\n"
+                        + "You can only use the following operators: + (addition), - (subtraction), * " +
+                        "(multiplication), / (division), and ^ (exponentiation). You can use parentheses " +
+                        "( and ) to control the order of operations.\n\n"
+                        + "General Instructions:\n"
+                        + "1. Click the 'Convert' button to see the expression in postfix notation.\n"
+                        + "2. Click the 'Evaluate' button to calculate the result of the postfix expression.\n"
+                        + "3. Use spaces for clarity and accurate parsing, e.g., \"3 + 4\" is not as clear as \"3 + 4\".\n"
+                        + "4. The program will return an error message for improperly formatted expressions.\n\n"
+                        + "Thank you for using our Infix Expression Converter and Evaluator. Let's get started!"
+        );
+
+        instructionTextArea.setWrapStyleWord(true);
+        instructionTextArea.setLineWrap(true);
+        instructionTextArea.setOpaque(false);
+        instructionTextArea.setEditable(false);
+        instructionTextArea.setForeground(Color.WHITE); // Set the text color to white
+
+        homePanel.setLayout(new BorderLayout());
+        homePanel.add(instructionTextArea, BorderLayout.CENTER);
+
         return homePanel;
     }
 
