@@ -244,7 +244,7 @@ public class GUIInfixPrecedence extends JFrame {
                         + "General Instructions:\n"
                         + "1. Click the 'Convert' button to see the expression in postfix notation.\n"
                         + "2. Click the 'Evaluate' button to calculate the result of the postfix expression.\n"
-                        + "3. Use spaces for clarity and accurate parsing, e.g., \"3 + 4\" is not as clear as \"3 + 4\".\n"
+                        + "3. Do not use spaces when writing the expression, e.g., \"3+4\" not \"3 + 4\".\n"
                         + "4. The program will return an error message for improperly formatted expressions.\n\n"
                         + "Thank you for using our program. Let's get started!"
         );
