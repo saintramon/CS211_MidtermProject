@@ -228,7 +228,11 @@ public class GUIInfixPrecedence extends JFrame {
         JPanel homePanel = new JPanel();
         homePanel.setBackground(resources.greyishBlack);
         homePanel.setBorder(resources.getRoundedBorder(resources.greyishBlack, resources.greyishBlack));
+        homePanel.setLayout(new BorderLayout());
 
+        JLabel title = new JLabel("Welcome to the Infix Expression Converter and Evaluator!");
+        title.setForeground(Color.WHITE);
+        homePanel.add(title, BorderLayout.NORTH);
 
         JTextArea instructionTextArea = new JTextArea(
                 "This program helps you convert infix expressions into postfix notation for evaluation " +
