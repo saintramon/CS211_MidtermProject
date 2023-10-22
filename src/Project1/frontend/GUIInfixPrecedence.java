@@ -41,6 +41,8 @@ public class GUIInfixPrecedence extends JFrame {
     private boolean missingInt;
     private String statementToUseInEvaluate;
 
+    private JButton evaluateIcon;
+
     /**
      * TODO: Documentation
      */
@@ -286,7 +288,7 @@ public class GUIInfixPrecedence extends JFrame {
 
         expressionField.setBackground(resources.lightestGrey);
 
-        expressionField.setText("  Enter expression");
+        expressionField.setText("  Enter Expression");
         expressionField.setPreferredSize(new Dimension(90, 40));
         expressionField.setForeground(resources.eggshellWhite);
         expressionField.setEditable(true);
@@ -392,6 +394,8 @@ public class GUIInfixPrecedence extends JFrame {
         convertButton.addActionListener(e -> {
             String statement = expressions.convertToPostfix(expressionField.getText(), convertTable);
             if (expressions.validateParentheses(expressionField.getText())) {
+                // TODO: evaluateIcon
+                evaluateIcon.setVisible(true);
                 resultExpression.setText(statement);
                 char[] resultExpressionCharList = resultExpression.getText().toCharArray();
                 missingInt = false;
@@ -419,6 +423,7 @@ public class GUIInfixPrecedence extends JFrame {
             expressionField.setText("  Enter expression");
             resultExpression.setForeground(Color.white);
             evaluateButton.setVisible(false);
+            evaluateIcon.setVisible(false);
         });
 
         JPanel iconPanel = new JPanel();
@@ -461,11 +466,12 @@ public class GUIInfixPrecedence extends JFrame {
         Image rightArrowImage = rightArrow.getImage();
         Image rightArrowImageResized = rightArrowImage.getScaledInstance(20, 20,  java.awt.Image.SCALE_SMOOTH);
         rightArrow = new ImageIcon(rightArrowImageResized);
-        JButton evaluateIcon = new JButton(rightArrow);
+        evaluateIcon = new JButton(rightArrow);
         evaluateIcon.setPreferredSize(new Dimension(50, 40));
         evaluateIcon.setHorizontalAlignment(SwingConstants.RIGHT);
         evaluateIcon.setVerticalAlignment(SwingConstants.BOTTOM);
         evaluateIcon.setOpaque(false);
+        evaluateIcon.setVisible(false);
 
         evaluateIcon.setContentAreaFilled(false);
         evaluateIcon.setBorderPainted(false);
@@ -638,7 +644,9 @@ public class GUIInfixPrecedence extends JFrame {
         clearButton.addActionListener(e -> {
             inputField.setText("  Enter Postfix Expression");
             answerLabel.setText("");
-            answerLabel.setForeground(Color.WHITE);
+            answerLabel.setForeground(resources.eggshellWhite);
+            answerLabel.setFont(resources.montserrat);
+            evaluateIcon.setVisible(false);
         });
 
         /**
@@ -655,7 +663,7 @@ public class GUIInfixPrecedence extends JFrame {
         Image rightArrowImageResized = rightArrowImage.getScaledInstance(20,20, Image.SCALE_SMOOTH);
         rightArrow = new ImageIcon(rightArrowImageResized);
 
-        JButton evaluateIcon = new JButton(rightArrow);
+        evaluateIcon = new JButton(rightArrow);
         evaluateIcon.setPreferredSize(new Dimension(50,40));
         evaluateIcon.setHorizontalAlignment(SwingConstants.RIGHT);
         evaluateIcon.setVerticalAlignment(SwingConstants.BOTTOM);
@@ -663,6 +671,7 @@ public class GUIInfixPrecedence extends JFrame {
         evaluateIcon.setContentAreaFilled(false);
         evaluateIcon.setBorderPainted(false);
         evaluateIcon.setFocusPainted(false);
+        evaluateIcon.setVisible(false);
 
         evaluateIcon.addActionListener(new ActionListener() {
             @Override
@@ -685,6 +694,7 @@ public class GUIInfixPrecedence extends JFrame {
 
         evaluateButton.addActionListener(e -> {
             if (expressions.validateParentheses(inputField.getText())) {
+                evaluateIcon.setVisible(true);
                 String postfixExpression = inputField.getText();
                 double result = expressions.evaluatePostfix(postfixExpression, evaluateTable);
                 answerLabel.setText(String.valueOf(result));
@@ -695,6 +705,9 @@ public class GUIInfixPrecedence extends JFrame {
             }
 
         });
+
+
+
 
         //POPULATE BUTTON PANEL !!!
         buttonsPanel.add(evaluateButton,BorderLayout.WEST);
@@ -707,9 +720,11 @@ public class GUIInfixPrecedence extends JFrame {
         //POPULATE ANSWER PANEL !!!
         answerPanel.add(answerLabel,BorderLayout.CENTER);
 
+        evaluateIcon.setVisible(true);
         //POPULATE ICON PANEL !!!
-        iconPanel.add(evaluateIcon,BorderLayout.EAST);
 
+
+        iconPanel.add(evaluateIcon,BorderLayout.EAST);
         //POPULATE RESULTS PANEL !!
         resultsPanel.add(resultsTitle, BorderLayout.NORTH);
         resultsPanel.add(answerPanel,BorderLayout.CENTER);
