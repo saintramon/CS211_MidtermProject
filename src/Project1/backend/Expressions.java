@@ -18,7 +18,7 @@ public class Expressions {
     public Expressions(){}
 
     /**
-     * TODO: Documentation
+     * Checks the precedence of two operators.
      *
      * @param operator1 given Character representation of the first operator.
      * @param operator2 given Character representation of the second operator.
@@ -41,10 +41,11 @@ public class Expressions {
     }
 
     /**
-     * TODO: Documentation
+     * Converts an infix expression to a postfix expression.
      *
-     * @param infixExpression given String value of an infix expression
-     * @return String representation of the converted postfix expression from infix
+     * @param infixExpression String representation of an infix expression.
+     * @param table JTable used for displaying the conversion process.
+     * @return String representation of the converted postfix expression.
      */
     public String convertToPostfix(String infixExpression, JTable table) {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
@@ -133,9 +134,10 @@ public class Expressions {
     } // end of evaluatePostfix method
 
     /**
-     * TODO: Documentation
-     * @param infixExpression
-     * @return
+     * Validates the balance of parentheses in an infix expression.
+     *
+     * @param infixExpression The infix expression to be validated.
+     * @return `true` if the parentheses are balanced, `false` if they are not.
      */
     public boolean validateParentheses(String infixExpression) {
         int openCount = 0; // number of open parentheses
