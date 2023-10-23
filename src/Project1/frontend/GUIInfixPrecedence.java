@@ -44,7 +44,7 @@ public class GUIInfixPrecedence extends JFrame {
     private JButton evaluateIcon;
 
     /**
-     * TODO: Documentation
+     * Initializes the main application window for infix statement conversion.
      */
     public GUIInfixPrecedence() {
         // Main Frame
