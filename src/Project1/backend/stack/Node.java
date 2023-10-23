@@ -7,12 +7,12 @@ package Project1.backend.stack;
  */
 public class Node<T> {
     /**
-     * TODO: Documentation
+     * The data stored in this node.
      */
     private T data;
 
     /**
-     * TODO: Documentation
+     * A reference to the next node in the stack.
      */
     private Node<T> next;
 
@@ -44,7 +44,7 @@ public class Node<T> {
     } // end of Node constructor (data only)
 
     /**
-     * TODO: Documentation
+     * Get the data stored in the node.
      * @return data being stored
      */
     public T getData() {
@@ -52,7 +52,7 @@ public class Node<T> {
     } // end of getData accessor method
 
     /**
-     * TODO: Documentation
+     * Set the data to be stored in the node.
      * @param data given data to be stored.
      */
     public void setData(T data) {
@@ -60,7 +60,7 @@ public class Node<T> {
     } // end of setData mutator method
 
     /**
-     * TODO: Documentation
+     * Get a reference to the next Node.
      * @return reference to the next Node.
      */
     public Node<T> getNext() {
@@ -68,7 +68,7 @@ public class Node<T> {
     } // end of getNext accessor method
 
     /**
-     * TODO: Documentation
+     * Set the reference to the next Node.
      * @param next given reference to the next Node.
      */
     public void setNext(Node<T> next) {
