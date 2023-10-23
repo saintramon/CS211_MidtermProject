@@ -6,15 +6,18 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-
+/**
+ * The Resources class provides access to various resources, including fonts, colors,
+ * cursors, and UI elements for use in the application.
+ */
 public class Resources {
     /**
-     * TODO: Documentation
+     *  The thin, regular, bold, and black Montserrat font
      */
     Font montserratThin, montserrat, montserratBold, montserratBlack;
 
     /**
-     * TODO: Documentation
+     * The application logo as an ImageIcon.
      */
     ImageIcon logo = new ImageIcon("icons/logo.png");
 
@@ -34,7 +37,7 @@ public class Resources {
     Cursor textCursor = new Cursor(Cursor.TEXT_CURSOR);
 
     /**
-     * TODO: Documentation
+     * Loads a custom fonts for the application.
      */
     void loadFonts() {
         try {
@@ -80,11 +83,19 @@ public class Resources {
     final EmptyBorder pageMargin = new EmptyBorder(
             30,30,30,30);
 
-
+    /**
+     * Gets a rounded border with the specified colors.
+     * @param color1 The first color of the border.
+     * @param color2 The second color of the border.
+     * @return A rounded border with the specified colors.
+     */
     public Border getRoundedBorder(Color color1, Color color2) {
         return new RoundBorder(20, color1, color2);
     }
 
+    /**
+     * Get a rounded button with custom styling.
+     */
     public JButton getRoundedButton() {
         JButton roundedButton = new JButton("Convert");
 
@@ -104,7 +115,9 @@ public class Resources {
 
         return roundedButton;
     }
-
+    /**
+     * Get a rounded text field with custom styling.
+     */
     public JTextField getRoundedTextField() {
         JTextField textField = new JTextField(20);
         textField.setPreferredSize(new Dimension(150, 100));
@@ -117,7 +130,10 @@ public class Resources {
 
         return  textField;
     }
-
+    /**
+     * Get a panel title label with custom styling.
+     * @return A JLabel for panel titles with custom styling.
+     */
     public JLabel getPanelTitle() {
         JLabel title = new JLabel();
         title.setForeground(eggshellWhite);
@@ -125,7 +141,10 @@ public class Resources {
         title.setFont(montserratBold);
         return title;
     }
-
+    /**
+     * Get an input title label with custom styling.
+     * @return A JLabel for input titles with custom styling.
+     */
     public JLabel getInputTitle() {
         JLabel title = new JLabel();
         title.setForeground(blue);
@@ -133,7 +152,10 @@ public class Resources {
         title.setFont(montserratBold);
         return title;
     }
-
+    /**
+     * Get an application title label with custom styling.
+     * @return A JLabel for the application title with custom styling.
+     */
     public JLabel getAppTitle() {
         JLabel title = new JLabel();
         title.setForeground(blue);
