@@ -101,20 +101,30 @@ public class Huffman {
 
     /**
      * This method will accept a String of huffman code and will return its translated plain text.
-     *
+     * Decoding.
      * INPUT: 010100100001111001110111011101101...
      * OUTPUT: The quick brown fox jumps over the lazy dog
      *
-     * @param text
-     * @return
+     * @param text given huffman code representation of the String
+     * @return plain text in String
      */
     public String convertToText(String text){
-        String converted = "";
+        Node current = new Node();
+        StringBuilder decodedText = new StringBuilder();
 
-        //CODE HERE
-
-        return converted;
-    }
+        for (char character : text.toCharArray()) {
+            if (character == 0) {
+                current = current.getLeft();
+            } else {
+                current = current.getRight();
+            } // end of if-else (character)
+            if (current.getLeft() == null || current.getRight() == null) {
+                decodedText.append(current);
+            }
+            current = new Node();
+        } // end of for (text characters)
+        return decodedText.toString();
+    } // end of convertToText method
 
 
     // UTILITY FUNCTIONS

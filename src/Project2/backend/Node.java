@@ -68,4 +68,8 @@ public class Node implements Comparable<Node>{
             return -1;
         }
     }
+
+    public String toString() {
+        return String.valueOf(symbol);
+    }
 }

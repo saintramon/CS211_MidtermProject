@@ -22,5 +22,8 @@ public class Test {
         for (Map.Entry<Character,String> entry : huffman.getHuffmanTable().entrySet()){
             System.out.println(entry.getKey() + "     |  " + entry.getValue());
         }
+
+        String converted = huffman.convertToText(prompt);
+        System.out.println("Decoded text: " + converted);
     }
 }
