@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.PriorityQueue;
 
 public class Huffman {
+    Node huffmanRoot;
     Map<Character,Integer> frequencyTable = new HashMap<>();
     Map<Character,String> huffmanTable = new HashMap<>();
 
@@ -54,7 +55,7 @@ public class Huffman {
      */
     public void generateHuffmanTable(){
         PriorityQueue<Node> huffmanTree = new PriorityQueue<>();
-        Node huffmanRoot = new Node();
+        huffmanRoot = new Node();
 
         for (Map.Entry<Character,Integer> entry : frequencyTable.entrySet()){
             Node newNode = new Node();
@@ -78,7 +79,6 @@ public class Huffman {
             huffmanTree.add(z);
         }
         huffmanRoot = huffmanTree.poll();
-
         populateHuffmanTable(huffmanRoot,"");
     }
 
@@ -108,20 +108,20 @@ public class Huffman {
      * @param text given huffman code representation of the String
      * @return plain text in String
      */
-    public String convertToText(String text){
-        Node current = new Node();
+    public String convertToText(String text) {
+        Node current = huffmanRoot;
         StringBuilder decodedText = new StringBuilder();
 
         for (char character : text.toCharArray()) {
             if (character == 0) {
                 current = current.getLeft();
-            } else {
+            } else if (character == 1) {
                 current = current.getRight();
             } // end of if-else (character)
-            if (current.getLeft() == null || current.getRight() == null) {
+            if (current.getLeft() == null && current.getRight() == null) {
                 decodedText.append(current);
-            }
-            current = new Node();
+                current = huffmanRoot;
+            } // end of if (leaf node)
         } // end of for (text characters)
         return decodedText.toString();
     } // end of convertToText method

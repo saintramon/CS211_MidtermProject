@@ -16,6 +16,8 @@ public class Test {
         String prompt = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbcccccccccccccddddddddddddddddddddeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeffgghhhhhhh";
         Huffman huffman = new Huffman(prompt);
 
+        System.out.println("Original text:" + prompt);
+
         System.out.println(huffman.getFrequencyTable());
 
         System.out.println("CHAR " + " | " + " CODE");
