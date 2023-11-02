@@ -13,8 +13,14 @@ public class Test {
     }
 
     public void run(){
-        String prompt = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbcccccccccccccddddddddddddddddddddeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeffgghhhhhhh";
+        String prompt = "test";
         Huffman huffman = new Huffman(prompt);
+
+        System.out.println("================");
+        System.out.println(huffman.getHuffmanTable());
+        System.out.println("================");
+        System.out.println("Convert to Huffman Code");
+        System.out.println(huffman.convertToHuffmanCode(prompt));
 
         System.out.println(huffman.getFrequencyTable());
 

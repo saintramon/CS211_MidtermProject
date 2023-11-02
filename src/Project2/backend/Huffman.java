@@ -93,8 +93,30 @@ public class Huffman {
      */
     public String convertToHuffmanCode(String text){
         String converted = "";
+        // Get table for conversion
+        Map<Character, String> table = getHuffmanTable();
 
-        //CODE HERE
+        //Split at every char
+        String[] array = text.split("");
+        // Will hold the converted String as array elements
+        String[] convertedArray = new String[array.length];
+        int x = 0;
+
+        // Each letter of the passed in String
+        for (String letter : array) {
+            // Iterate through each character in the table
+            for (char keys: table.keySet()) {
+                // If there is a match between the letter of the string and a key in the table
+                if (String.valueOf(keys).equalsIgnoreCase(letter)) {
+                    // Get the associated value of the key and add it to convertedArray
+                    convertedArray[x] = table.get(keys);
+                    x++;
+                }
+            }
+        }
+        // Append converted letters to the return string
+        for (String numbers : convertedArray)
+            converted += numbers;
 
         return converted;
     }
