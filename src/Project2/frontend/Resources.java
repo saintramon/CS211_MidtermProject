@@ -55,7 +55,7 @@ public class Resources {
 
             // Load Montserrat Bold
             montserratBold = Font.createFont(Font.TRUETYPE_FONT,
-                    getClass().getResourceAsStream("fonts/Montserrat/static/Montserrat-Bold.ttf")).deriveFont(20f);
+                    getClass().getResourceAsStream("/fonts/Montserrat/static/Montserrat-Bold.ttf")).deriveFont(20f);
             ge.registerFont(montserratBold);
 
             // Load Montserrat Black
@@ -92,4 +92,28 @@ public class Resources {
     final EmptyBorder buttonMargin = new EmptyBorder(60,10,10,10);
     final EmptyBorder pageMargin = new EmptyBorder(
             30,30,30,30);
+
+    ImageIcon huffmanLogo = new ImageIcon("icons/huffman-icon-black.png");
+
+    /**
+     * Resizes an image according to desired dimensions
+     * @param sourceImage given image to be resized
+     * @param width desired width in pixels
+     * @param height desired height in pixels
+     * @return scaled ImageIcon
+     */
+    ImageIcon scaleImage(ImageIcon sourceImage, int width, int height) {
+        int newWidth = sourceImage.getIconWidth();
+        int newHeight = sourceImage.getIconHeight();
+
+        if (sourceImage.getIconWidth() > width) {
+            newWidth = width;
+            newHeight = (newWidth * sourceImage.getIconHeight()) / sourceImage.getIconWidth();
+        } else if (newHeight > height) {
+            newHeight = height;
+            newWidth = (sourceImage.getIconWidth() * newHeight) / sourceImage.getIconHeight();
+        } // end of if-else
+        return new ImageIcon(sourceImage.getImage().getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH));
+    } // end of scaleImage method
+
 }
