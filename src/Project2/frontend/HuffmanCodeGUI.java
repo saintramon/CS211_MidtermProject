@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 
 public class HuffmanCodeGUI extends JFrame {
@@ -78,6 +80,7 @@ public class HuffmanCodeGUI extends JFrame {
         codeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                populateCodePanel();
             }
         });
 
@@ -109,6 +112,93 @@ public class HuffmanCodeGUI extends JFrame {
         sidebarPanel.add(optionPanel, BorderLayout.CENTER);
         return sidebarPanel;
     }
+
+    private void populateCodePanel() {
+
+        JPanel codePanel = new JPanel();
+        codePanel.setBackground(resources.timberwolf);
+        codePanel.setLayout(new BorderLayout());
+        codePanel.setPreferredSize(new Dimension(700, 600));
+        contentArea.removeAll();
+        contentArea.add(codePanel, BorderLayout.EAST);
+        contentArea.revalidate();
+        contentArea.repaint();
+
+        JPanel inputPanel = new JPanel();
+        inputPanel.setBackground(resources.fernGreen);
+        inputPanel.setLayout(new GridBagLayout());
+        inputPanel.setPreferredSize(new Dimension(600, 150));
+        codePanel.add(inputPanel, BorderLayout.CENTER);
+
+        JLabel titleLabel = new JLabel("HUFFMAN CODE");
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        titleLabel.setForeground(resources.white);
+        titleLabel.setBackground(resources.fernGreen);
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.insets = new Insets(10, 0, 10, 0);
+
+        inputPanel.add(titleLabel, gbc);
+
+        JTextField phraseTextField = new JTextField();
+        phraseTextField.setFont(new Font("Arial", Font.PLAIN, 14));
+        phraseTextField.setText("Enter a phrase...");
+        phraseTextField.setColumns(40);
+
+        phraseTextField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                phraseTextField.setText(""); // Clear the label when the text field gains focus
+            }
+        });
+
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.weightx = 0.0;
+
+        inputPanel.add(phraseTextField, gbc);
+
+        JPanel buttonsPanel = new JPanel();
+        buttonsPanel.setBackground(resources.fernGreen);
+        buttonsPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        inputPanel.add(buttonsPanel, gbc);
+
+        JButton showCodeButton = new JButton("SHOW CODE");
+        showCodeButton.setFont(new Font("Arial", Font.BOLD, 16));
+        showCodeButton.setForeground(resources.white);
+        showCodeButton.setBackground(resources.sage);
+
+        JButton clearButton = new JButton("CLEAR");
+        clearButton.setFont(new Font("Arial", Font.BOLD, 16));
+        clearButton.setForeground(resources.white);
+        clearButton.setBackground(resources.sage);
+
+        buttonsPanel.add(showCodeButton);
+        buttonsPanel.add(clearButton);
+
+        JPanel outputPanel = new JPanel();
+        outputPanel.setBackground(Color.WHITE);
+        outputPanel.setPreferredSize(new Dimension(600, 450));
+        codePanel.add(outputPanel, BorderLayout.SOUTH);
+
+        showCodeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Handle show code button here
+            }
+        });
+
+        clearButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                phraseTextField.setText("Enter a phrase...");
+            }
+        });
+
+        setButtonFormat(codeButton, new JButton[]{tableButton, treeButton});
+    }
+
 
     private JButton createSidebarButton(String text, String iconPath) {
         JButton button = new JButton();
