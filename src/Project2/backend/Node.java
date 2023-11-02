@@ -68,4 +68,12 @@ public class Node implements Comparable<Node>{
             return -1;
         }
     }
+
+    /**
+     * TODO: Documentation
+     * @return String representation of the current symbol
+     */
+    public String toString() {
+        return String.valueOf(symbol);
+    }
 }

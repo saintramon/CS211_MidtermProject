@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.PriorityQueue;
 
 public class Huffman {
+    Node huffmanRoot;
     Map<Character,Integer> frequencyTable = new HashMap<>();
     Map<Character,String> huffmanTable = new HashMap<>();
 
@@ -54,7 +55,7 @@ public class Huffman {
      */
     public void generateHuffmanTable(){
         PriorityQueue<Node> huffmanTree = new PriorityQueue<>();
-        Node huffmanRoot = new Node();
+        huffmanRoot = new Node();
 
         for (Map.Entry<Character,Integer> entry : frequencyTable.entrySet()){
             Node newNode = new Node();
@@ -111,12 +112,12 @@ public class Huffman {
                 if (!table.containsKey(letter.charAt(0)))
                     return "-1";
                 else
-                // If there is a match between the letter of the string and a key in the table
-                if (String.valueOf(keys).equalsIgnoreCase(letter)) {
-                    // Get the associated value of the key and add it to convertedArray
-                    convertedArray[x] = table.get(keys);
-                    x++;
-                }
+                    // If there is a match between the letter of the string and a key in the table
+                    if (String.valueOf(keys).equalsIgnoreCase(letter)) {
+                        // Get the associated value of the key and add it to convertedArray
+                        convertedArray[x] = table.get(keys);
+                        x++;
+                    }
             }
         }
         // Append converted letters to the return string
@@ -128,20 +129,29 @@ public class Huffman {
 
     /**
      * This method will accept a String of huffman code and will return its translated plain text.
-     *
      * INPUT: 010100100001111001110111011101101...
      * OUTPUT: The quick brown fox jumps over the lazy dog
      *
-     * @param text
-     * @return
+     * @param encodedText given Huffman encoded text
+     * @return decoded String representation of the Huffman code.
      */
-    public String convertToText(String text){
-        String converted = "";
+    public String convertToText(String encodedText) {
+        Node current = huffmanRoot;
+        StringBuilder decodedText = new StringBuilder();
 
-        //CODE HERE
-
-        return converted;
-    }
+        for (char character : encodedText.toCharArray()) {
+            if (character == '0') {
+                current = current.getLeft();
+            } else if (character == '1'){
+                current = current.getRight();
+            } // end of if-else (character)
+            if (current.getLeft() == null && current.getRight() == null) { // if current is a leaf node
+                decodedText.append(current.toString());
+                current = huffmanRoot; // reset to the root for the next character
+            } // end of if (leaf)
+        } // end of for (text characters)
+        return decodedText.toString();
+    } // end of convertToText method
 
 
     // UTILITY FUNCTIONS
