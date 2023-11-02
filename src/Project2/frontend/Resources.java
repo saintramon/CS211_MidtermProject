@@ -43,32 +43,31 @@ public class Resources {
         try {
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 
-            // Montserrat Thin
+            // Load Montserrat Thin
             montserratThin = Font.createFont(Font.TRUETYPE_FONT,
-                    new File("fonts/Montserrat/static/Montserrat-Thin.ttf")).deriveFont(20f);
+                    getClass().getResourceAsStream("/fonts/Montserrat/static/Montserrat-Thin.ttf")).deriveFont(20f);
             ge.registerFont(montserratThin);
 
-            // Montserrat Regular
+            // Load Montserrat Regular
             montserrat = Font.createFont(Font.TRUETYPE_FONT,
-                    new File("fonts/Montserrat/static/Montserrat-Regular.ttf")).deriveFont(15f);
+                    getClass().getResourceAsStream("/fonts/Montserrat/static/Montserrat-Regular.ttf")).deriveFont(20f);
             ge.registerFont(montserrat);
 
-            // Montserrat Bold
+            // Load Montserrat Bold
             montserratBold = Font.createFont(Font.TRUETYPE_FONT,
-                    new File("fonts/Montserrat/static/Montserrat-Bold.ttf")).deriveFont(15f);
+                    getClass().getResourceAsStream("fonts/Montserrat/static/Montserrat-Bold.ttf")).deriveFont(20f);
             ge.registerFont(montserratBold);
 
-            // Montserrat Black
+            // Load Montserrat Black
             montserratBlack = Font.createFont(Font.TRUETYPE_FONT,
-                    new File("fonts/Montserrat/static/Montserrat-Black.ttf")).deriveFont(20f);
+                    getClass().getResourceAsStream("/fonts/Montserrat/static/Montserrat-Black.ttf")).deriveFont(20f);
             ge.registerFont(montserratBlack);
         } catch (IOException ioException) {
             ioException.printStackTrace();
         } catch (FontFormatException fontError) {
-            System.out.println(fontError.getMessage());
             fontError.printStackTrace();
-        } // end of try-catch
-    } // end of loadFonts method
+        }
+    }
 
     final Color darkBlack = new Color(24,24,24);
     final Color greyishBlack = new Color(41,41,41);
@@ -87,6 +86,7 @@ public class Resources {
     final Color fernGreen = new Color(0x588157);
     final Color sage = new Color(0xA3B18A);
     final Color timberwolf = new Color(0xDAD7CD);
+    final Color white = new Color (0xFFFFFF);
 
     final EmptyBorder titleMargin = new EmptyBorder(100,10,10,10);
     final EmptyBorder buttonMargin = new EmptyBorder(60,10,10,10);
