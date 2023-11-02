@@ -6,11 +6,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.util.HashMap;
+import java.util.Map;
 import Project2.backend.Huffman;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JScrollPane;
 
 
 public class HuffmanCodeGUI extends JFrame {
-
+    private Map<Character, String> huffmanTable = new HashMap<>();
     private final Resources resources = new Resources();
     private JPanel contentArea;
     private JButton codeButton;
@@ -420,7 +425,88 @@ public class HuffmanCodeGUI extends JFrame {
         showTableButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Handle show table button here
+                String phrase = phraseTextField.getText();
+
+                if (!phrase.isEmpty() && !phrase.equals("Enter a phrase...")) {
+
+                    Huffman huffman = new Huffman(phrase);
+
+                    Map<Character, String> huffmanTable = huffman.getHuffmanTable();
+
+                    DefaultTableModel model = new DefaultTableModel() {
+                        @Override
+                        public boolean isCellEditable(int row, int column) {
+                            return false;
+                        }
+                    };
+                    model.addColumn("CHARACTER");
+                    model.addColumn("HUFFMAN CODE");
+                    for (Map.Entry<Character, String> entry : huffmanTable.entrySet()) {
+                        model.addRow(new Object[]{entry.getKey(), entry.getValue()});
+                    }
+                    JTable huffmanTableComponent = new JTable(model);
+                    huffmanTableComponent.setFont(huffmanTableComponent.getFont().deriveFont(Font.BOLD, 16f));
+                    huffmanTableComponent.getTableHeader().setFont(huffmanTableComponent.getTableHeader().getFont().deriveFont(Font.BOLD, 16f));
+                    huffmanTableComponent.setBackground(Color.WHITE);
+                    huffmanTableComponent.setRowHeight(15);
+
+                    huffmanTableComponent.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+                    String encodedText = phrase;
+                    String decodedText = huffman.convertToHuffmanCode(phrase);
+
+                    JLabel encodedLabel = new JLabel("ENCODED: ");
+                    encodedLabel.setFont(encodedLabel.getFont().deriveFont(Font.BOLD, 16f));
+
+                    JLabel decodedLabel = new JLabel("DECODED: ");
+                    decodedLabel.setFont(decodedLabel.getFont().deriveFont(Font.BOLD, 16f));
+
+                    JTextField encodedTextfield = new JTextField(encodedText);
+                    JTextField decodedTextfield = new JTextField(decodedText);
+
+                    encodedTextfield.setEditable(false);
+                    encodedTextfield.setBorder(null);
+                    encodedTextfield.setFont(encodedTextfield.getFont().deriveFont(Font.PLAIN, 16f));
+                    decodedTextfield.setEditable(false);
+                    decodedTextfield.setBorder(null);
+                    decodedTextfield.setFont(decodedTextfield.getFont().deriveFont(Font.PLAIN, 16f));
+
+                    JPanel resultPanel = new JPanel(new GridBagLayout());
+                    GridBagConstraints gbc = new GridBagConstraints();
+
+                    gbc.gridx = 0;
+                    gbc.gridy = 0;
+                    gbc.anchor = GridBagConstraints.CENTER;
+                    resultPanel.add(encodedLabel, gbc);
+
+                    gbc.gridx = 2;
+                    resultPanel.add(decodedLabel, gbc);
+
+                    gbc.gridx = 1;
+                    gbc.gridy = 0;
+                    gbc.weightx = 1.0;
+                    gbc.fill = GridBagConstraints.HORIZONTAL;
+                    resultPanel.add(encodedTextfield, gbc);
+
+                    gbc.gridx = 3;
+                    resultPanel.add(decodedTextfield, gbc);
+
+                    resultPanel.setPreferredSize(new Dimension(400, 100));
+
+                    JScrollPane tableScrollPane = new JScrollPane(huffmanTableComponent);
+
+                    tableScrollPane.setPreferredSize(new Dimension(400, 150));
+
+                    outputPanel.removeAll();
+
+                    outputPanel.setLayout(new BorderLayout());
+                    outputPanel.add(tableScrollPane, BorderLayout.CENTER);
+                    outputPanel.add(resultPanel, BorderLayout.SOUTH);
+
+                    // Repaint the content
+                    outputPanel.revalidate();
+                    outputPanel.repaint();
+                }
             }
         });
 
