@@ -13,7 +13,7 @@ public class Test {
     }
 
     public void run(){
-        String prompt = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbcccccccccccccddddddddddddddddddddeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeffgghhhhhhh";
+        String prompt = "Hello, my name is Slim Shady.";
         Huffman huffman = new Huffman(prompt);
 
         System.out.println("Original text:" + prompt);
@@ -25,7 +25,5 @@ public class Test {
             System.out.println(entry.getKey() + "     |  " + entry.getValue());
         }
 
-        String converted = huffman.convertToText(prompt);
-        System.out.println("Decoded text: " + converted);
     }
 }

@@ -3,6 +3,7 @@ package Project2.backend;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.PriorityQueue;
+import java.util.Queue;
 
 public class Huffman {
     Node huffmanRoot;
@@ -92,11 +93,7 @@ public class Huffman {
      * @return
      */
     public String convertToHuffmanCode(String text){
-        String converted = "";
-
-        //CODE HERE
-
-        return converted;
+        return "";
     }
 
     /**
@@ -105,20 +102,20 @@ public class Huffman {
      * INPUT: 010100100001111001110111011101101...
      * OUTPUT: The quick brown fox jumps over the lazy dog
      *
-     * @param text given huffman code representation of the String
+     * @param encodedText given huffman code representation of the String
      * @return plain text in String
      */
-    public String convertToText(String text) {
+    public String convertToText(String encodedText) {
         Node current = huffmanRoot;
         StringBuilder decodedText = new StringBuilder();
 
-        for (char character : text.toCharArray()) {
-            if (character == 0) {
+        for (char character : encodedText.toCharArray()) {
+            if (character == '0') {
                 current = current.getLeft();
-            } else if (character == 1) {
+            } else if (character == '1') {
                 current = current.getRight();
             } // end of if-else (character)
-            if (current.getLeft() == null && current.getRight() == null) {
+            if (current.getLeft() == null && current.getRight() == null) { // if current is a leaf node
                 decodedText.append(current);
                 current = huffmanRoot;
             } // end of if (leaf node)
