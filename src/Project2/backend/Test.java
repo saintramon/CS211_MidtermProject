@@ -14,18 +14,28 @@ public class Test {
 
     public void run(){
         String prompt = "DRAGON";
-        String prompt2 = "DONG";
+        String prompt2 = "DOG";
         Huffman huffman = new Huffman(prompt);
-
-
-        System.out.println("==============================");
-        System.out.println("    Convert to Huffman Code   ");
-        System.out.println(huffman.convertToHuffmanCode(prompt2));
-        System.out.println("==============================");
 
         System.out.println("==============================");
         System.out.println("       Frequency Table        ");
         System.out.println(huffman.getFrequencyTable());
+        System.out.println("==============================");
+
+
+        System.out.println("==============================");
+        System.out.println("    Convert to Huffman Code   ");
+        System.out.println("  " + huffman.convertToHuffmanCode(prompt2));
+        System.out.println("==============================");
+
+        System.out.println("==============================");
+        System.out.println("         Binary Code          ");
+        System.out.println("  " + huffman.convertToBinary(prompt2));
+        System.out.println("==============================");
+
+        System.out.println("==============================");
+        System.out.println("         Saved Space          ");
+        System.out.println(" Saved Space = " + huffman.computeSavedSpace(prompt2) + "%");
         System.out.println("==============================");
 
         System.out.println("==============================");
