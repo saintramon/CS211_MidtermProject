@@ -144,6 +144,51 @@ public class Huffman {
     }
 
 
+    /**
+     * This method will accept a plain text and will then return its Binary representation
+     *
+     * INPUT: The quick
+     * OUTPUT: 01010100 01101000 01100101 00100000 01110001 01110101 01101001 01100011 01101011 00100000
+     *
+     * @param text : String
+     * @return binaryString : String
+     */
+    public String convertToBinary(String text) {
+        String toReturn = "";
+        // Holds each character in the text that is passed in
+        char[] letterArray = text.toCharArray();
+
+        for (char letter : letterArray) {
+            String toAppend = Integer.toBinaryString(letter);
+            if (toAppend.length()==7)
+                toReturn += "0";
+            toReturn += Integer.toBinaryString(letter);
+        }
+        return toReturn;
+    }
+
+    /**
+     * This method will accept a plain text and will then return the Percentage of storage space savings when using the Huffman code.
+     *
+     * INPUT: The quick
+     * OUTPUT: 2.4%
+     *
+     * @param text : String
+     * @return savedSpace : double
+     */
+    public double computeSavedSpace(String text) {
+        System.out.println("Assumptions");
+        System.out.println("\t1. In computing the saved space during a transmission, the Huffman table is ignored. ");
+        System.out.println("\t2. The percentage merely considers the accepted String statement.");
+        System.out.println("\t3. The saved space is computed by considering the length of the Huffman code and the Binary code. ");
+        System.out.println("\t4. The assumed unit of measure is characters.");
+        int huffman = convertToHuffmanCode(text).length();
+        int binary = convertToBinary(text).length();
+        return 100.0 - (double) huffman / binary * 100;
+    }
+
+
+
     // UTILITY FUNCTIONS
     /**
      * A utility function that checks whether the passed character is a punctuation
