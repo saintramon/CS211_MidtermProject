@@ -106,6 +106,11 @@ public class Huffman {
         for (String letter : array) {
             // Iterate through each character in the table
             for (char keys: table.keySet()) {
+
+                // Return -1 if passed in prompt contains a letter not in the table
+                if (!table.containsKey(letter.charAt(0)))
+                    return "-1";
+                else
                 // If there is a match between the letter of the string and a key in the table
                 if (String.valueOf(keys).equalsIgnoreCase(letter)) {
                     // Get the associated value of the key and add it to convertedArray
