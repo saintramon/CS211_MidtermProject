@@ -35,5 +35,11 @@ public class Test {
             System.out.println(entry.getKey() + "     |  " + entry.getValue());
         }
         System.out.println("==============================");
+
+        String encoded = huffman.convertToHuffmanCode(prompt);
+        System.out.println("Encoded text: " + encoded);
+
+        String decoded = huffman.convertToText(encoded);
+        System.out.println("Decoded text: " + decoded);
     }
 }
