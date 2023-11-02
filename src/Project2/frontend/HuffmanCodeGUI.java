@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import Project2.backend.Huffman;
 
 
 public class HuffmanCodeGUI extends JFrame {
@@ -174,12 +175,18 @@ public class HuffmanCodeGUI extends JFrame {
         showCodeButton.setForeground(resources.white);
         showCodeButton.setBackground(resources.sage);
 
+        JButton dataButton = new JButton("SHOW ALL DATA");
+        dataButton.setFont(new Font("Arial", Font.BOLD, 16));
+        dataButton.setForeground(resources.white);
+        dataButton.setBackground(resources.sage);
+
         JButton clearButton = new JButton("CLEAR");
         clearButton.setFont(new Font("Arial", Font.BOLD, 16));
         clearButton.setForeground(resources.white);
         clearButton.setBackground(resources.sage);
 
         buttonsPanel.add(showCodeButton);
+        buttonsPanel.add(dataButton);
         buttonsPanel.add(clearButton);
 
         JPanel outputPanel = new JPanel();
@@ -190,7 +197,142 @@ public class HuffmanCodeGUI extends JFrame {
         showCodeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Handle show code button here
+                String inputText = phraseTextField.getText();
+
+                if (!inputText.isEmpty() && !inputText.equals("Enter a phrase...")) {
+                    Huffman huffman = new Huffman(inputText);
+
+                    String huffmanCode = huffman.convertToHuffmanCode(inputText);
+
+
+                    outputPanel.removeAll();
+                    outputPanel.setLayout(new GridBagLayout());
+                    GridBagConstraints gbc = new GridBagConstraints();
+                    gbc.insets = new Insets(5, 5, 5, 5);
+
+                    JLabel resultLabel = new JLabel("RESULT");
+                    resultLabel.setFont(new Font("Arial", Font.BOLD, 20));
+                    gbc.gridx = 0;
+                    gbc.gridy = 0;
+                    gbc.gridwidth = 2;
+                    gbc.anchor = GridBagConstraints.NORTH;
+                    outputPanel.add(resultLabel, gbc);
+
+                    JLabel huffmanCodeLabel = new JLabel("HUFFMAN CODE:");
+                    huffmanCodeLabel.setFont(new Font("Arial", Font.BOLD, 16));
+                    gbc.gridy++;
+                    gbc.gridx = 0;
+                    gbc.gridwidth = 1;
+                    gbc.anchor = GridBagConstraints.WEST;
+                    outputPanel.add(huffmanCodeLabel, gbc);
+
+                    JTextField huffmanCodeField = new JTextField(huffmanCode);
+                    huffmanCodeField.setFont(new Font("Arial", Font.BOLD, 16));
+                    huffmanCodeField.setEditable(false);
+                    huffmanCodeField.setBorder(null); // Remove border
+                    gbc.gridx = 1;
+                    gbc.fill = GridBagConstraints.HORIZONTAL;
+                    outputPanel.add(huffmanCodeField, gbc);
+
+                    contentArea.revalidate();
+                    contentArea.repaint();
+                }
+            }
+        });
+
+        dataButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String inputText = phraseTextField.getText();
+
+                if (!inputText.isEmpty() && !inputText.equals("Enter a phrase...")) {
+                    Huffman huffman =  new Huffman(inputText);
+
+                    String huffmanCode = huffman.convertToHuffmanCode(inputText);
+                    String frequencyTable = huffman.getFrequencyTable().toString();
+                    String binaryCode = huffman.convertToBinary(inputText);
+                    double savedSpace = huffman.computeSavedSpace(inputText);
+
+                    outputPanel.removeAll();
+                    outputPanel.setLayout(new GridBagLayout());
+                    GridBagConstraints gbc = new GridBagConstraints();
+                    gbc.insets = new Insets(5, 5, 5, 5);
+
+                    JLabel resultLabel = new JLabel("RESULT:");
+                    resultLabel.setFont(new Font("Arial", Font.BOLD, 20));
+                    gbc.gridx = 0;
+                    gbc.gridy = 0;
+                    gbc.gridwidth = 2;
+                    gbc.anchor = GridBagConstraints.CENTER;
+                    outputPanel.add(resultLabel, gbc);
+
+                    JLabel huffmanCodeLabel = new JLabel("HUFFMAN CODE:");
+                    huffmanCodeLabel.setFont(new Font("Arial", Font.BOLD, 16));
+                    gbc.gridy++;
+                    gbc.gridx = 0;
+                    gbc.gridwidth = 1;
+                    gbc.anchor = GridBagConstraints.WEST;
+                    outputPanel.add(huffmanCodeLabel, gbc);
+
+                    JTextField huffmanCodeField = new JTextField(huffmanCode);
+                    huffmanCodeField.setFont(new Font("Arial", Font.BOLD, 16));
+                    huffmanCodeField.setEditable(false);
+                    huffmanCodeField.setBorder(null);
+                    gbc.gridx = 1;
+                    gbc.fill = GridBagConstraints.HORIZONTAL;
+                    outputPanel.add(huffmanCodeField, gbc);
+
+                    JLabel frequencyTableLabel = new JLabel("FREQUENCY TABLE:");
+                    frequencyTableLabel.setFont(new Font("Arial", Font.BOLD, 16));
+                    gbc.gridy++;
+                    gbc.gridx = 0;
+                    gbc.gridwidth = 1;
+                    gbc.anchor = GridBagConstraints.WEST;
+                    outputPanel.add(frequencyTableLabel, gbc);
+
+                    JTextField frequencyTableField = new JTextField(frequencyTable);
+                    frequencyTableField.setFont(new Font("Arial", Font.BOLD, 16));
+                    frequencyTableField.setEditable(false);
+                    frequencyTableField.setBorder(null);
+                    gbc.gridx = 1;
+                    gbc.fill = GridBagConstraints.HORIZONTAL;
+                    outputPanel.add(frequencyTableField, gbc);
+
+                    JLabel binaryCodeLabel = new JLabel("BINARY CODE:");
+                    binaryCodeLabel.setFont(new Font("Arial", Font.BOLD, 16));
+                    gbc.gridy++;
+                    gbc.gridx = 0;
+                    gbc.gridwidth = 1;
+                    gbc.anchor = GridBagConstraints.WEST;
+                    outputPanel.add(binaryCodeLabel, gbc);
+
+                    JTextField binaryCodeField = new JTextField(binaryCode);
+                    binaryCodeField.setFont(new Font("Arial", Font.BOLD, 16));
+                    binaryCodeField.setEditable(false);
+                    binaryCodeField.setBorder(null);
+                    gbc.gridx = 1;
+                    gbc.fill = GridBagConstraints.HORIZONTAL;
+                    outputPanel.add(binaryCodeField, gbc);
+
+                    JLabel savedSpaceLabel = new JLabel("SAVED SPACE:");
+                    savedSpaceLabel.setFont(new Font("Arial", Font.BOLD, 16));
+                    gbc.gridy++;
+                    gbc.gridx = 0;
+                    gbc.gridwidth = 1;
+                    gbc.anchor = GridBagConstraints.WEST;
+                    outputPanel.add(savedSpaceLabel, gbc);
+
+                    JTextField savedSpaceField = new JTextField(savedSpace + "%");
+                    savedSpaceField.setFont(new Font("Arial", Font.BOLD, 16));
+                    savedSpaceField.setEditable(false);
+                    savedSpaceField.setBorder(null);
+                    gbc.gridx = 1;
+                    gbc.fill = GridBagConstraints.HORIZONTAL;
+                    outputPanel.add(savedSpaceField, gbc);
+
+                    contentArea.revalidate();
+                    contentArea.repaint();
+                }
             }
         });
 
@@ -198,6 +340,10 @@ public class HuffmanCodeGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 phraseTextField.setText("Enter a phrase...");
+
+                outputPanel.removeAll();
+                outputPanel.revalidate();
+                outputPanel.repaint();
             }
         });
 
