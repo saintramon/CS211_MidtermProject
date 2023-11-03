@@ -288,7 +288,7 @@ public class HuffmanCodeGUI extends JFrame {
         JPanel codePanel = new JPanel();
         codePanel.setBackground(resources.timberwolf);
         codePanel.setLayout(new BorderLayout());
-        codePanel.setPreferredSize(new Dimension(700, 600));
+        codePanel.setPreferredSize(new Dimension(700, 490));
         contentArea.removeAll();
         contentArea.add(codePanel, BorderLayout.EAST);
         contentArea.revalidate();
@@ -298,7 +298,7 @@ public class HuffmanCodeGUI extends JFrame {
         inputPanel.setBackground(resources.fernGreen);
         inputPanel.setLayout(new GridBagLayout());
         inputPanel.setPreferredSize(new Dimension(600, 150));
-        codePanel.add(inputPanel, BorderLayout.CENTER);
+        codePanel.add(inputPanel, BorderLayout.NORTH);
 
         JLabel titleLabel = new JLabel("HUFFMAN CODE CONVERSION");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
@@ -355,8 +355,12 @@ public class HuffmanCodeGUI extends JFrame {
 
         JPanel outputPanel = new JPanel();
         outputPanel.setBackground(Color.WHITE);
-        outputPanel.setPreferredSize(new Dimension(600, 450));
+        outputPanel.setPreferredSize(new Dimension(600, 340));
         codePanel.add(outputPanel, BorderLayout.SOUTH);
+
+        JPanel resultPanel = new JPanel();
+        resultPanel.setPreferredSize(new Dimension(600, 340));
+        outputPanel.add(resultPanel, BorderLayout.NORTH);
 
         convertToTextButton.addActionListener(new ActionListener() {
             @Override
@@ -367,116 +371,115 @@ public class HuffmanCodeGUI extends JFrame {
                     huffman = new Huffman(inputText);
                     String convertedText = huffman.convertToText(inputText);
 
-                    outputPanel.removeAll();
-                    outputPanel.setLayout(new GridBagLayout());
+                    resultPanel.removeAll();
+
+                    resultPanel.setLayout(new BorderLayout());
+
+                    JLabel resultsTitleLabel = new JLabel("RESULTS", SwingConstants.CENTER);
+                    resultsTitleLabel.setFont(new Font("Arial", Font.BOLD, 16));
+                    resultPanel.add(resultsTitleLabel, BorderLayout.NORTH);
+
+                    JPanel detailsPanel = new JPanel(new GridBagLayout());
                     GridBagConstraints gbc = new GridBagConstraints();
-                    gbc.insets = new Insets(5, 5, 5, 5);
-
-                    JLabel resultLabel = new JLabel("RESULT");
-                    resultLabel.setFont(new Font("Arial", Font.BOLD, 20));
-                    gbc.gridx = 0;
-                    gbc.gridy = 0;
-                    gbc.gridwidth = 2;
-                    gbc.anchor = GridBagConstraints.NORTH;
-                    outputPanel.add(resultLabel, gbc);
-
-                    JLabel huffmanCodeLabel = new JLabel("CONVERTED TEXT:");
-                    huffmanCodeLabel.setFont(new Font("Arial", Font.BOLD, 16));
-                    gbc.gridy++;
-                    gbc.gridx = 0;
-                    gbc.gridwidth = 1;
-                    gbc.anchor = GridBagConstraints.WEST;
-                    outputPanel.add(huffmanCodeLabel, gbc);
-
-                    JTextField convertedTextField = new JTextField(convertedText);
-                    convertedTextField.setFont(new Font("Arial", Font.BOLD, 16));
-                    convertedTextField.setEditable(false);
-                    convertedTextField.setBorder(null);
-                    gbc.gridx = 1;
                     gbc.fill = GridBagConstraints.HORIZONTAL;
-                    outputPanel.add(convertedTextField, gbc);
+                    gbc.insets = new Insets(5, 5, 5, 5);
+                    gbc.anchor = GridBagConstraints.WEST;
+                    gbc.gridy = 0;
+
+                    JLabel convertedTextLabel = new JLabel("CONVERTED TEXT:");
+                    convertedTextLabel.setFont(new Font("Arial", Font.BOLD, 16));
+                    gbc.gridx = 0;
+                    detailsPanel.add(convertedTextLabel, gbc);
+                    JLabel convertedTextValueLabel = new JLabel(convertedText);
+                    convertedTextValueLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+                    gbc.gridx = 1;
+                    detailsPanel.add(convertedTextValueLabel, gbc);
+
+                    gbc.gridy++;
 
                     JButton showAllResultsButton = new JButton("SHOW ALL RESULTS");
                     showAllResultsButton.setFont(new Font("Arial", Font.BOLD, 16));
                     showAllResultsButton.setForeground(resources.white);
                     showAllResultsButton.setBackground(resources.sage);
-                    gbc.gridy++;
-                    gbc.gridwidth = 1;
-                    gbc.anchor = GridBagConstraints.WEST;
-                    outputPanel.add(showAllResultsButton, gbc);
+                    gbc.gridx = 0;
+                    gbc.gridwidth = 2;
+                    detailsPanel.add(showAllResultsButton, gbc);
 
-                    contentArea.revalidate();
-                    contentArea.repaint();
+                    gbc.gridy++;
 
                     showAllResultsButton.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            String convertedText = huffman.convertToText(inputText);
-                            String binaryCode = huffman.convertToBinary(inputText);
-                            double savedSpace = huffman.computeSavedSpace(inputText);
+                            resultPanel.removeAll();
 
-                            outputPanel.removeAll();
-                            outputPanel.setLayout(new GridBagLayout());
+                            resultPanel.setLayout(new BorderLayout());
+
+                            JLabel resultsTitleLabel = new JLabel("RESULTS", SwingConstants.CENTER);
+                            resultsTitleLabel.setFont(new Font("Arial", Font.BOLD, 16));
+                            resultPanel.add(resultsTitleLabel, BorderLayout.NORTH);
+
+                            JPanel detailsPanel = new JPanel(new GridBagLayout());
                             GridBagConstraints gbc = new GridBagConstraints();
-                            gbc.insets = new Insets(5, 5, 5, 5);
-
-                            JLabel resultLabel = new JLabel("RESULT:");
-                            resultLabel.setFont(new Font("Arial", Font.BOLD, 20));
-                            gbc.gridx = 0;
-                            gbc.gridy = 0;
-                            gbc.gridwidth = 2;
-                            gbc.anchor = GridBagConstraints.CENTER;
-                            outputPanel.add(resultLabel, gbc);
-
-                            JLabel convertedTextLabel = new JLabel("CONVERTED TEXT: ");
-                            convertedTextLabel.setFont(new Font("Arial", Font.BOLD, 16));
-                            gbc.gridy++;
-                            gbc.gridx = 0;
-                            gbc.gridwidth = 1;
-                            gbc.anchor = GridBagConstraints.WEST;
-                            outputPanel.add(convertedTextLabel, gbc);
-
-                            JTextField convertedTextField = new JTextField(convertedText);
-                            convertedTextField.setFont(new Font("Arial", Font.BOLD, 16));
-                            convertedTextField.setEditable(false);
-                            convertedTextField.setBorder(null);
-                            gbc.gridx = 1;
                             gbc.fill = GridBagConstraints.HORIZONTAL;
-                            outputPanel.add(convertedTextField, gbc);
+                            gbc.insets = new Insets(5, 5, 5, 5);
+                            gbc.anchor = GridBagConstraints.WEST;
+                            gbc.gridy = 0;
 
+                            JLabel convertedTextLabel = new JLabel("CONVERTED TEXT:");
+                            convertedTextLabel.setFont(new Font("Arial", Font.BOLD, 16));
+                            gbc.gridx = 0;
+                            detailsPanel.add(convertedTextLabel, gbc);
+                            JLabel convertedTextValueLabel = new JLabel(convertedText);
+                            convertedTextValueLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+                            gbc.gridx = 1;
+                            detailsPanel.add(convertedTextValueLabel, gbc);
+
+                            gbc.gridy++;
+
+                            if (convertToCodeButton.isEnabled()) {
+                                String convertedCode = huffman.convertToHuffmanCode(inputText);
+                                JLabel convertedCodeLabel = new JLabel("CONVERTED HUFFMAN CODE:");
+                                convertedCodeLabel.setFont(new Font("Arial", Font.BOLD, 16));
+                                gbc.gridx = 0;
+                                detailsPanel.add(convertedCodeLabel, gbc);
+                                JLabel convertedCodeValueLabel = new JLabel(convertedCode);
+                                convertedCodeValueLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+                                gbc.gridx = 1;
+                                detailsPanel.add(convertedCodeValueLabel, gbc);
+                            }
+
+                            gbc.gridy++;
+
+                            String binaryCode = huffman.convertToBinary(inputText);
                             JLabel binaryCodeLabel = new JLabel("BINARY CODE:");
                             binaryCodeLabel.setFont(new Font("Arial", Font.BOLD, 16));
-                            gbc.gridy++;
                             gbc.gridx = 0;
-                            gbc.gridwidth = 1;
-                            gbc.anchor = GridBagConstraints.WEST;
-                            outputPanel.add(binaryCodeLabel, gbc);
-
-                            JTextField binaryCodeField = new JTextField(binaryCode);
-                            binaryCodeField.setFont(new Font("Arial", Font.BOLD, 16));
-                            binaryCodeField.setEditable(false);
-                            binaryCodeField.setBorder(null);
+                            detailsPanel.add(binaryCodeLabel, gbc);
+                            JLabel binaryCodeValueLabel = new JLabel(binaryCode);
+                            binaryCodeValueLabel.setFont(new Font("Arial", Font.PLAIN, 16));
                             gbc.gridx = 1;
-                            gbc.fill = GridBagConstraints.HORIZONTAL;
-                            outputPanel.add(binaryCodeField, gbc);
+                            detailsPanel.add(binaryCodeValueLabel, gbc);
 
+                            gbc.gridy++;
+
+                            double savedSpace = huffman.computeSavedSpace(inputText);
                             JLabel savedSpaceLabel = new JLabel("SAVED SPACE:");
                             savedSpaceLabel.setFont(new Font("Arial", Font.BOLD, 16));
-                            gbc.gridy++;
                             gbc.gridx = 0;
-                            gbc.gridwidth = 1;
-                            gbc.anchor = GridBagConstraints.WEST;
-                            outputPanel.add(savedSpaceLabel, gbc);
-
-                            JTextField savedSpaceField = new JTextField(savedSpace + "%");
-                            savedSpaceField.setFont(new Font("Arial", Font.BOLD, 16));
-                            savedSpaceField.setEditable(false);
-                            savedSpaceField.setBorder(null);
+                            detailsPanel.add(savedSpaceLabel, gbc);
+                            JLabel savedSpaceValueLabel = new JLabel(String.format("%.2f%%", savedSpace));
+                            savedSpaceValueLabel.setFont(new Font("Arial", Font.PLAIN, 16));
                             gbc.gridx = 1;
-                            gbc.fill = GridBagConstraints.HORIZONTAL;
-                            outputPanel.add(savedSpaceField, gbc);
+                            detailsPanel.add(savedSpaceValueLabel, gbc);
+
+                            resultPanel.add(detailsPanel, BorderLayout.CENTER);
+
+                            contentArea.revalidate();
+                            contentArea.repaint();
                         }
                     });
+
+                    resultPanel.add(detailsPanel, BorderLayout.CENTER);
 
                     contentArea.revalidate();
                     contentArea.repaint();
@@ -493,116 +496,101 @@ public class HuffmanCodeGUI extends JFrame {
                     huffman = new Huffman(inputText);
                     String convertedCode = huffman.convertToHuffmanCode(inputText);
 
-                    outputPanel.removeAll();
-                    outputPanel.setLayout(new GridBagLayout());
+                    resultPanel.removeAll();
+
+                    resultPanel.setLayout(new BorderLayout());
+
+                    JLabel resultsTitleLabel = new JLabel("RESULTS", SwingConstants.CENTER);
+                    resultsTitleLabel.setFont(new Font("Arial", Font.BOLD, 16));
+                    resultPanel.add(resultsTitleLabel, BorderLayout.NORTH);
+
+                    JPanel detailsPanel = new JPanel(new GridBagLayout());
                     GridBagConstraints gbc = new GridBagConstraints();
-                    gbc.insets = new Insets(5, 5, 5, 5);
-
-                    JLabel resultLabel = new JLabel("RESULT");
-                    resultLabel.setFont(new Font("Arial", Font.BOLD, 20));
-                    gbc.gridx = 0;
-                    gbc.gridy = 0;
-                    gbc.gridwidth = 2;
-                    gbc.anchor = GridBagConstraints.NORTH;
-                    outputPanel.add(resultLabel, gbc);
-
-                    JLabel huffmanCodeLabel = new JLabel("CONVERTED TEXT:");
-                    huffmanCodeLabel.setFont(new Font("Arial", Font.BOLD, 16));
-                    gbc.gridy++;
-                    gbc.gridx = 0;
-                    gbc.gridwidth = 1;
-                    gbc.anchor = GridBagConstraints.WEST;
-                    outputPanel.add(huffmanCodeLabel, gbc);
-
-                    JTextField convertedCodeField = new JTextField(convertedCode);
-                    convertedCodeField.setFont(new Font("Arial", Font.BOLD, 16));
-                    convertedCodeField.setEditable(false);
-                    convertedCodeField.setBorder(null);
-                    gbc.gridx = 1;
                     gbc.fill = GridBagConstraints.HORIZONTAL;
-                    outputPanel.add(convertedCodeField, gbc);
+                    gbc.insets = new Insets(5, 5, 5, 5);
+                    gbc.anchor = GridBagConstraints.WEST;
+                    gbc.gridy = 0;
+
+                    JLabel convertedCodeLabel = new JLabel("CONVERTED HUFFMAN CODE:");
+                    convertedCodeLabel.setFont(new Font("Arial", Font.BOLD, 16));
+                    gbc.gridx = 0;
+                    detailsPanel.add(convertedCodeLabel, gbc);
+                    JLabel convertedCodeValueLabel = new JLabel(convertedCode);
+                    convertedCodeValueLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+                    gbc.gridx = 1;
+                    detailsPanel.add(convertedCodeValueLabel, gbc);
+
+                    gbc.gridy++;
 
                     JButton showAllResultsButton = new JButton("SHOW ALL RESULTS");
                     showAllResultsButton.setFont(new Font("Arial", Font.BOLD, 16));
                     showAllResultsButton.setForeground(resources.white);
                     showAllResultsButton.setBackground(resources.sage);
-                    gbc.gridy++;
-                    gbc.gridwidth = 1;
-                    gbc.anchor = GridBagConstraints.WEST;
-                    outputPanel.add(showAllResultsButton, gbc);
+                    gbc.gridx = 0;
+                    gbc.gridwidth = 2;
+                    detailsPanel.add(showAllResultsButton, gbc);
 
-                    contentArea.revalidate();
-                    contentArea.repaint();
+                    gbc.gridy++;
 
                     showAllResultsButton.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            String convertedText = huffman.convertToText(inputText);
-                            String binaryCode = huffman.convertToBinary(inputText);
-                            double savedSpace = huffman.computeSavedSpace(inputText);
+                            resultPanel.removeAll();
 
-                            outputPanel.removeAll();
-                            outputPanel.setLayout(new GridBagLayout());
+                            resultPanel.setLayout(new BorderLayout());
+
+                            JLabel resultsTitleLabel = new JLabel("RESULTS", SwingConstants.CENTER);
+                            resultsTitleLabel.setFont(new Font("Arial", Font.BOLD, 16));
+                            resultPanel.add(resultsTitleLabel, BorderLayout.NORTH);
+
+                            JPanel detailsPanel = new JPanel(new GridBagLayout());
                             GridBagConstraints gbc = new GridBagConstraints();
-                            gbc.insets = new Insets(5, 5, 5, 5);
-
-                            JLabel resultLabel = new JLabel("RESULT:");
-                            resultLabel.setFont(new Font("Arial", Font.BOLD, 20));
-                            gbc.gridx = 0;
-                            gbc.gridy = 0;
-                            gbc.gridwidth = 2;
-                            gbc.anchor = GridBagConstraints.CENTER;
-                            outputPanel.add(resultLabel, gbc);
-
-                            JLabel convertedCodeLabel = new JLabel("CONVERTED HUFFMAN CODE: ");
-                            convertedCodeLabel.setFont(new Font("Arial", Font.BOLD, 16));
-                            gbc.gridy++;
-                            gbc.gridx = 0;
-                            gbc.gridwidth = 1;
-                            gbc.anchor = GridBagConstraints.WEST;
-                            outputPanel.add(convertedCodeLabel, gbc);
-
-                            JTextField convertedTextField = new JTextField(convertedText);
-                            convertedTextField.setFont(new Font("Arial", Font.BOLD, 16));
-                            convertedTextField.setEditable(false);
-                            convertedTextField.setBorder(null);
-                            gbc.gridx = 1;
                             gbc.fill = GridBagConstraints.HORIZONTAL;
-                            outputPanel.add(convertedTextField, gbc);
+                            gbc.insets = new Insets(5, 5, 5, 5);
+                            gbc.anchor = GridBagConstraints.WEST;
+                            gbc.gridy = 0;
 
+                            JLabel convertedCodeLabel = new JLabel("CONVERTED HUFFMAN CODE:");
+                            convertedCodeLabel.setFont(new Font("Arial", Font.BOLD, 16));
+                            gbc.gridx = 0;
+                            detailsPanel.add(convertedCodeLabel, gbc);
+                            JLabel convertedCodeValueLabel = new JLabel(convertedCode);
+                            convertedCodeValueLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+                            gbc.gridx = 1;
+                            detailsPanel.add(convertedCodeValueLabel, gbc);
+
+                            gbc.gridy++;
+
+                            String binaryCode = huffman.convertToBinary(inputText);
                             JLabel binaryCodeLabel = new JLabel("BINARY CODE:");
                             binaryCodeLabel.setFont(new Font("Arial", Font.BOLD, 16));
-                            gbc.gridy++;
                             gbc.gridx = 0;
-                            gbc.gridwidth = 1;
-                            gbc.anchor = GridBagConstraints.WEST;
-                            outputPanel.add(binaryCodeLabel, gbc);
-
-                            JTextField binaryCodeField = new JTextField(binaryCode);
-                            binaryCodeField.setFont(new Font("Arial", Font.BOLD, 16));
-                            binaryCodeField.setEditable(false);
-                            binaryCodeField.setBorder(null);
+                            detailsPanel.add(binaryCodeLabel, gbc);
+                            JLabel binaryCodeValueLabel = new JLabel(binaryCode);
+                            binaryCodeValueLabel.setFont(new Font("Arial", Font.PLAIN, 16));
                             gbc.gridx = 1;
-                            gbc.fill = GridBagConstraints.HORIZONTAL;
-                            outputPanel.add(binaryCodeField, gbc);
+                            detailsPanel.add(binaryCodeValueLabel, gbc);
 
+                            gbc.gridy++;
+
+                            double savedSpace = huffman.computeSavedSpace(inputText);
                             JLabel savedSpaceLabel = new JLabel("SAVED SPACE:");
                             savedSpaceLabel.setFont(new Font("Arial", Font.BOLD, 16));
-                            gbc.gridy++;
                             gbc.gridx = 0;
-                            gbc.gridwidth = 1;
-                            gbc.anchor = GridBagConstraints.WEST;
-                            outputPanel.add(savedSpaceLabel, gbc);
-
-                            JTextField savedSpaceField = new JTextField(savedSpace + "%");
-                            savedSpaceField.setFont(new Font("Arial", Font.BOLD, 16));
-                            savedSpaceField.setEditable(false);
-                            savedSpaceField.setBorder(null);
+                            detailsPanel.add(savedSpaceLabel, gbc);
+                            JLabel savedSpaceValueLabel = new JLabel(String.format("%.2f%%", savedSpace));
+                            savedSpaceValueLabel.setFont(new Font("Arial", Font.PLAIN, 16));
                             gbc.gridx = 1;
-                            gbc.fill = GridBagConstraints.HORIZONTAL;
-                            outputPanel.add(savedSpaceField, gbc);
+                            detailsPanel.add(savedSpaceValueLabel, gbc);
+
+                            resultPanel.add(detailsPanel, BorderLayout.CENTER);
+
+                            contentArea.revalidate();
+                            contentArea.repaint();
                         }
                     });
+
+                    resultPanel.add(detailsPanel, BorderLayout.CENTER);
 
                     contentArea.revalidate();
                     contentArea.repaint();
@@ -616,15 +604,16 @@ public class HuffmanCodeGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 phraseTextField.setText("Enter a word, phrase, or code...");
 
-                outputPanel.removeAll();
-                outputPanel.revalidate();
-                outputPanel.repaint();
+                // Clear the result panel
+                resultPanel.removeAll();
+                resultPanel.revalidate();
+                resultPanel.repaint();
             }
         });
 
+
         setButtonFormat(codeButton, new JButton[]{tableButton, treeButton});
     }
-
 
     private void populateTablePanel() {
         JPanel tablePanel = new JPanel();
