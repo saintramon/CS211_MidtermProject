@@ -31,7 +31,7 @@ public class HuffmanCodeGUI extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(1000, 600);
         setLocationRelativeTo(null);
-        setResizable(true);
+        setResizable(false);
 
         JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBackground(resources.sage);
@@ -93,6 +93,7 @@ public class HuffmanCodeGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setButtonFormat(inputButton, new JButton[]{codeButton, tableButton, treeButton});
+                populateInputPanel();
 
             }
         });
@@ -137,6 +138,150 @@ public class HuffmanCodeGUI extends JFrame {
         return sidebarPanel;
     }
 
+    private void populateInputPanel() {
+
+        JPanel firstInputPanel = new JPanel();
+        firstInputPanel.setBackground(resources.timberwolf);
+        firstInputPanel.setLayout(new BorderLayout());
+        firstInputPanel.setPreferredSize(new Dimension(700, 490));
+        contentArea.removeAll();
+        contentArea.add(firstInputPanel, BorderLayout.EAST);
+        contentArea.revalidate();
+        contentArea.repaint();
+
+        JPanel instructionsPanel = new JPanel();
+        instructionsPanel.setPreferredSize(new Dimension(600, 150));
+        instructionsPanel.setBackground(resources.fernGreen);
+
+        JLabel welcomeLabel = new JLabel("WELCOME TO OUR PROGRAM!");
+        welcomeLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        welcomeLabel.setForeground(resources.white);
+        welcomeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+        instructionsPanel.add(welcomeLabel);
+
+        String instructionsText = "Instructions:\n" +
+                "Input: Enter your text in the input panel and click the option you want in the sidebar.\n" +
+                "Convert: Choose 'Convert' option to convert text to Huffman code and vice versa. You can also view the binary code and saved space.\n" +
+                "Huffman Table: To generate a Huffman table, select the 'Huffman Table' option from the sidebar and then click 'Generate Table.'\n" +
+                "Huffman Tree: Choose the 'Huffman Tree' option in the sidebar and click 'Generate Tree.'";
+
+        JTextArea instructionsArea = new JTextArea(instructionsText);
+        instructionsArea.setPreferredSize(new Dimension(620, 150));
+        instructionsArea.setWrapStyleWord(true);
+        instructionsArea.setLineWrap(true);
+        instructionsArea.setOpaque(false);
+        instructionsArea.setEditable(false);
+        instructionsArea.setFocusable(false);
+        instructionsArea.setForeground(resources.white);
+        instructionsArea.setFont(UIManager.getFont("Label.font"));
+
+        instructionsPanel.add(instructionsArea, BorderLayout.SOUTH);
+
+        JPanel secondInputPanel = new JPanel();
+        secondInputPanel.setBackground(resources.fernGreen);
+        secondInputPanel.setPreferredSize(new Dimension(600, 340));
+        secondInputPanel.setLayout(new BorderLayout());
+        firstInputPanel.add(secondInputPanel, BorderLayout.SOUTH);
+
+        JPanel inputPanel = new JPanel();
+        inputPanel.setBackground(resources.fernGreen);
+        inputPanel.setPreferredSize(new Dimension(600, 150));
+        inputPanel.setLayout(new GridBagLayout());
+
+        JLabel titleLabel = new JLabel("PUT YOUR INPUT HERE");
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        titleLabel.setForeground(resources.white);
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridwidth = GridBagConstraints.NONE;
+        gbc.insets = new Insets(10, 0, 10, 0);
+
+        inputPanel.add(titleLabel, gbc);
+
+        JTextField phraseTextField = new JTextField();
+        phraseTextField.setFont(new Font("Arial", Font.PLAIN, 16));
+        phraseTextField.setText("Enter a word, phrase, or code...");
+        phraseTextField.setColumns(40);
+
+        phraseTextField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                phraseTextField.setText("");
+            }
+        });
+
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.weightx = 0.0;
+
+        inputPanel.add(phraseTextField, gbc);
+
+        JPanel buttonsPanel = new JPanel();
+        buttonsPanel.setBackground(resources.fernGreen);
+        buttonsPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        inputPanel.add(buttonsPanel, gbc);
+
+        JButton submitButton = new JButton("SUBMIT");
+        submitButton.setFont(new Font("Arial", Font.BOLD, 16));
+        submitButton.setForeground(resources.white);
+        submitButton.setBackground(resources.sage);
+
+        JButton clearButton = new JButton("CLEAR");
+        clearButton.setFont(new Font("Arial", Font.BOLD, 16));
+        clearButton.setForeground(resources.white);
+        clearButton.setBackground(resources.sage);
+
+        buttonsPanel.add(submitButton);
+        buttonsPanel.add(clearButton);
+
+        JPanel promptPanel = new JPanel();
+        promptPanel.setBackground(resources.fernGreen);
+        promptPanel.setVisible(false);
+
+        String promptText = "* choose 'Huffman Table' or 'Huffman Tree' in the sidebar to show results *";
+        JLabel promptLabel = new JLabel(promptText);
+        promptLabel.setFont(new Font("Arial", Font.ITALIC, 14));
+        promptLabel.setForeground(resources.white);
+
+        promptPanel.add(promptLabel);
+
+        submitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String inputText = phraseTextField.getText();
+
+                if (inputText.isEmpty()) {
+
+                    promptLabel.setText("YOU MUST ENTER A TEXT BEFORE CLICKING SUBMIT");
+                    promptLabel.setFont(new Font("Arial", Font.BOLD, 14));
+                    promptPanel.setVisible(true);
+                } else {
+                    // Process the input if it's not empty
+
+
+                    promptPanel.setVisible(true);
+                }
+            }
+        });
+
+        clearButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                phraseTextField.setText("Enter a word, phrase, or code...");
+
+
+                promptLabel.setText("");
+                promptPanel.setVisible(false);
+            }
+        });
+
+        firstInputPanel.add(instructionsPanel, BorderLayout.NORTH);
+        secondInputPanel.add(inputPanel, BorderLayout.NORTH);
+        secondInputPanel.add(promptPanel, BorderLayout.CENTER);
+
+        setButtonFormat(inputButton, new JButton[]{codeButton, tableButton, treeButton});
+    }
 
     private void populateCodePanel() {
 
