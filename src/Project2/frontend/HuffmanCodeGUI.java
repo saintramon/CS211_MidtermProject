@@ -19,10 +19,11 @@ public class HuffmanCodeGUI extends JFrame {
     private final Resources resources = new Resources();
     private JPanel contentArea;
     private JButton inputButton;
-    private JButton codeButton;
+    private JButton convertButton;
     private JButton tableButton;
     private JButton treeButton;
     private Huffman huffman;
+    private String inputText;
 
     public HuffmanCodeGUI() {
         super("Huffman Code Application");
@@ -85,23 +86,23 @@ public class HuffmanCodeGUI extends JFrame {
         gbc.insets = new Insets(5, 0, 0, 0);
 
         inputButton = createSidebarButton("Input", "icons/input-icon-black.png");
-        codeButton = createSidebarButton("Code", "icons/code-icon-black.png");
-        tableButton = createSidebarButton("Table", "icons/table-icon-black.png");
-        treeButton = createSidebarButton("Tree", "icons/tree-icon-black.png");
+        convertButton = createSidebarButton("Convert", "icons/code-icon-black.png");
+        tableButton = createSidebarButton("Huffman Table", "icons/table-icon-black.png");
+        treeButton = createSidebarButton("Huffman Tree", "icons/tree-icon-black.png");
 
         inputButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setButtonFormat(inputButton, new JButton[]{codeButton, tableButton, treeButton});
+                setButtonFormat(inputButton, new JButton[]{convertButton, tableButton, treeButton});
                 populateInputPanel();
 
             }
         });
 
-        codeButton.addActionListener(new ActionListener() {
+        convertButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setButtonFormat(codeButton, new JButton[]{inputButton, tableButton, treeButton});
+                setButtonFormat(convertButton, new JButton[]{inputButton, tableButton, treeButton});
                 populateCodePanel();
             }
         });
@@ -109,7 +110,7 @@ public class HuffmanCodeGUI extends JFrame {
         tableButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setButtonFormat(tableButton, new JButton[]{inputButton, codeButton, treeButton});
+                setButtonFormat(tableButton, new JButton[]{inputButton, convertButton, treeButton});
                 populateTablePanel();
             }
         });
@@ -117,7 +118,7 @@ public class HuffmanCodeGUI extends JFrame {
         treeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setButtonFormat(treeButton, new JButton[]{inputButton, codeButton, tableButton});
+                setButtonFormat(treeButton, new JButton[]{inputButton, convertButton, tableButton});
                 populateTreePanel();
             }
         });
@@ -126,7 +127,7 @@ public class HuffmanCodeGUI extends JFrame {
         optionPanel.add(inputButton, gbc);
 
         gbc.gridy = 2;
-        optionPanel.add(codeButton, gbc);
+        optionPanel.add(convertButton, gbc);
 
         gbc.gridy = 3;
         optionPanel.add(tableButton, gbc);
@@ -202,7 +203,7 @@ public class HuffmanCodeGUI extends JFrame {
 
         JTextField phraseTextField = new JTextField();
         phraseTextField.setFont(new Font("Arial", Font.PLAIN, 16));
-        phraseTextField.setText("Enter a word, phrase, or code...");
+        phraseTextField.setText("Enter a word, phrase, or a paragraph...");
         phraseTextField.setColumns(40);
 
         phraseTextField.addFocusListener(new FocusAdapter() {
@@ -249,7 +250,7 @@ public class HuffmanCodeGUI extends JFrame {
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String inputText = phraseTextField.getText();
+                inputText = phraseTextField.getText();
 
                 if (inputText.isEmpty()) {
 
@@ -268,7 +269,8 @@ public class HuffmanCodeGUI extends JFrame {
         clearButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                phraseTextField.setText("Enter a word, phrase, or code...");
+                phraseTextField.setText("Enter a word, phrase, or a paragraph...");
+
 
 
                 promptLabel.setText("");
@@ -280,7 +282,7 @@ public class HuffmanCodeGUI extends JFrame {
         secondInputPanel.add(inputPanel, BorderLayout.NORTH);
         secondInputPanel.add(promptPanel, BorderLayout.CENTER);
 
-        setButtonFormat(inputButton, new JButton[]{codeButton, tableButton, treeButton});
+        setButtonFormat(inputButton, new JButton[]{convertButton, tableButton, treeButton});
     }
 
     private void populateCodePanel() {
@@ -380,6 +382,7 @@ public class HuffmanCodeGUI extends JFrame {
                     resultPanel.add(resultsTitleLabel, BorderLayout.NORTH);
 
                     JPanel detailsPanel = new JPanel(new GridBagLayout());
+                    detailsPanel.setPreferredSize(new Dimension(600,340));
                     GridBagConstraints gbc = new GridBagConstraints();
                     gbc.fill = GridBagConstraints.HORIZONTAL;
                     gbc.insets = new Insets(5, 5, 5, 5);
@@ -419,6 +422,7 @@ public class HuffmanCodeGUI extends JFrame {
                             resultPanel.add(resultsTitleLabel, BorderLayout.NORTH);
 
                             JPanel detailsPanel = new JPanel(new GridBagLayout());
+                            detailsPanel.setPreferredSize(new Dimension(600,340));
                             GridBagConstraints gbc = new GridBagConstraints();
                             gbc.fill = GridBagConstraints.HORIZONTAL;
                             gbc.insets = new Insets(5, 5, 5, 5);
@@ -505,6 +509,7 @@ public class HuffmanCodeGUI extends JFrame {
                     resultPanel.add(resultsTitleLabel, BorderLayout.NORTH);
 
                     JPanel detailsPanel = new JPanel(new GridBagLayout());
+                    detailsPanel.setPreferredSize(new Dimension(600,340));
                     GridBagConstraints gbc = new GridBagConstraints();
                     gbc.fill = GridBagConstraints.HORIZONTAL;
                     gbc.insets = new Insets(5, 5, 5, 5);
@@ -544,6 +549,7 @@ public class HuffmanCodeGUI extends JFrame {
                             resultPanel.add(resultsTitleLabel, BorderLayout.NORTH);
 
                             JPanel detailsPanel = new JPanel(new GridBagLayout());
+                            detailsPanel.setPreferredSize(new Dimension(600,340));
                             GridBagConstraints gbc = new GridBagConstraints();
                             gbc.fill = GridBagConstraints.HORIZONTAL;
                             gbc.insets = new Insets(5, 5, 5, 5);
@@ -612,14 +618,14 @@ public class HuffmanCodeGUI extends JFrame {
         });
 
 
-        setButtonFormat(codeButton, new JButton[]{tableButton, treeButton});
+        setButtonFormat(convertButton, new JButton[]{tableButton, treeButton});
     }
 
     private void populateTablePanel() {
         JPanel tablePanel = new JPanel();
         tablePanel.setBackground(resources.timberwolf);
         tablePanel.setLayout(new BorderLayout());
-        tablePanel.setPreferredSize(new Dimension(700, 600));
+        tablePanel.setPreferredSize(new Dimension(700, 490));
         contentArea.removeAll();
         contentArea.add(tablePanel, BorderLayout.EAST);
         contentArea.revalidate();
@@ -642,52 +648,42 @@ public class HuffmanCodeGUI extends JFrame {
 
         inputPanel.add(titleLabel, gbc);
 
-        JTextField phraseTextField = new JTextField();
-        phraseTextField.setFont(new Font("Arial", Font.PLAIN, 14));
-        phraseTextField.setText("Enter a phrase...");
-        phraseTextField.setColumns(40);
-
-        phraseTextField.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                phraseTextField.setText("");
-            }
-        });
-
-        gbc.fill = GridBagConstraints.NONE;
-        gbc.weightx = 0.0;
-
-        inputPanel.add(phraseTextField, gbc);
-
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.setBackground(resources.fernGreen);
         buttonsPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         inputPanel.add(buttonsPanel, gbc);
 
-        JButton showTableButton = new JButton("SHOW TABLE");
-        showTableButton.setFont(new Font("Arial", Font.BOLD, 16));
-        showTableButton.setForeground(resources.white);
-        showTableButton.setBackground(resources.sage);
+        JButton generateTableButton = new JButton("GENERATE TABLE");
+        generateTableButton.setFont(new Font("Arial", Font.BOLD, 16));
+        generateTableButton.setForeground(resources.white);
+        generateTableButton.setBackground(resources.sage);
+
+        JButton showFrequencyButton = new JButton("SHOW FREQUENCY");
+        showFrequencyButton.setFont(new Font("Arial", Font.BOLD, 16));
+        showFrequencyButton.setForeground(resources.white);
+        showFrequencyButton.setBackground(resources.sage);
 
         JButton clearButton = new JButton("CLEAR");
         clearButton.setFont(new Font("Arial", Font.BOLD, 16));
         clearButton.setForeground(resources.white);
         clearButton.setBackground(resources.sage);
 
-        buttonsPanel.add(showTableButton);
+        buttonsPanel.add(generateTableButton);
+        buttonsPanel.add(showFrequencyButton); // Add the new button
         buttonsPanel.add(clearButton);
 
         JPanel outputPanel = new JPanel();
         outputPanel.setBackground(Color.WHITE);
-        outputPanel.setPreferredSize(new Dimension(600, 450));
+        outputPanel.setPreferredSize(new Dimension(600, 340));
         tablePanel.add(outputPanel, BorderLayout.SOUTH);
 
-        showTableButton.addActionListener(new ActionListener() {
+
+        generateTableButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String phrase = phraseTextField.getText();
-
-                if (!phrase.isEmpty() && !phrase.equals("Enter a phrase...")) {
+                // Get the stored input text
+                if (inputText != null) {
+                    String phrase = inputText;
 
                     Huffman huffman = new Huffman(phrase);
 
@@ -709,61 +705,51 @@ public class HuffmanCodeGUI extends JFrame {
                     huffmanTableComponent.getTableHeader().setFont(huffmanTableComponent.getTableHeader().getFont().deriveFont(Font.BOLD, 16f));
                     huffmanTableComponent.setBackground(Color.WHITE);
                     huffmanTableComponent.setRowHeight(15);
-
                     huffmanTableComponent.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-
-                    String encodedText = phrase;
-                    String decodedText = huffman.convertToHuffmanCode(phrase);
-
-                    JLabel encodedLabel = new JLabel("ENCODED: ");
-                    encodedLabel.setFont(encodedLabel.getFont().deriveFont(Font.BOLD, 16f));
-
-                    JLabel decodedLabel = new JLabel("DECODED: ");
-                    decodedLabel.setFont(decodedLabel.getFont().deriveFont(Font.BOLD, 16f));
-
-                    JTextField encodedTextfield = new JTextField(encodedText);
-                    JTextField decodedTextfield = new JTextField(decodedText);
-
-                    encodedTextfield.setEditable(false);
-                    encodedTextfield.setBorder(null);
-                    encodedTextfield.setFont(encodedTextfield.getFont().deriveFont(Font.PLAIN, 16f));
-                    decodedTextfield.setEditable(false);
-                    decodedTextfield.setBorder(null);
-                    decodedTextfield.setFont(decodedTextfield.getFont().deriveFont(Font.PLAIN, 16f));
-
-                    JPanel resultPanel = new JPanel(new GridBagLayout());
-                    GridBagConstraints gbc = new GridBagConstraints();
-
-                    gbc.gridx = 0;
-                    gbc.gridy = 0;
-                    gbc.anchor = GridBagConstraints.CENTER;
-                    resultPanel.add(encodedLabel, gbc);
-
-                    gbc.gridx = 2;
-                    resultPanel.add(decodedLabel, gbc);
-
-                    gbc.gridx = 1;
-                    gbc.gridy = 0;
-                    gbc.weightx = 1.0;
-                    gbc.fill = GridBagConstraints.HORIZONTAL;
-                    resultPanel.add(encodedTextfield, gbc);
-
-                    gbc.gridx = 3;
-                    resultPanel.add(decodedTextfield, gbc);
-
-                    resultPanel.setPreferredSize(new Dimension(400, 100));
-
-                    JScrollPane tableScrollPane = new JScrollPane(huffmanTableComponent);
-
-                    tableScrollPane.setPreferredSize(new Dimension(400, 150));
 
                     outputPanel.removeAll();
 
                     outputPanel.setLayout(new BorderLayout());
-                    outputPanel.add(tableScrollPane, BorderLayout.CENTER);
-                    outputPanel.add(resultPanel, BorderLayout.SOUTH);
+                    outputPanel.add(new JScrollPane(huffmanTableComponent), BorderLayout.CENTER);
 
-                    // Repaint the content
+                    outputPanel.revalidate();
+                    outputPanel.repaint();
+                }
+            }
+        });
+
+        showFrequencyButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (inputText != null) {
+                    String phrase = inputText;
+                    huffman = new Huffman(phrase);
+
+                    Map<Character, Integer> frequencyTable = huffman.getFrequencyTable();
+
+                    DefaultTableModel model = new DefaultTableModel() {
+                        @Override
+                        public boolean isCellEditable(int row, int column) {
+                            return false;
+                        }
+                    };
+                    model.addColumn("CHARACTER");
+                    model.addColumn("FREQUENCY");
+                    for (Map.Entry<Character, Integer> entry : frequencyTable.entrySet()) {
+                        model.addRow(new Object[]{entry.getKey(), entry.getValue()});
+                    }
+                    JTable frequencyTableComponent = new JTable(model);
+                    frequencyTableComponent.setFont(frequencyTableComponent.getFont().deriveFont(Font.BOLD, 16f));
+                    frequencyTableComponent.getTableHeader().setFont(frequencyTableComponent.getTableHeader().getFont().deriveFont(Font.BOLD, 16f));
+                    frequencyTableComponent.setBackground(Color.WHITE);
+                    frequencyTableComponent.setRowHeight(15);
+                    frequencyTableComponent.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+                    outputPanel.removeAll();
+
+                    outputPanel.setLayout(new BorderLayout());
+                    outputPanel.add(new JScrollPane(frequencyTableComponent), BorderLayout.CENTER);
+
                     outputPanel.revalidate();
                     outputPanel.repaint();
                 }
@@ -773,12 +759,17 @@ public class HuffmanCodeGUI extends JFrame {
         clearButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                phraseTextField.setText("Enter a phrase...");
+                inputText = null;
+
+                outputPanel.removeAll();
+                outputPanel.revalidate();
+                outputPanel.repaint();
             }
         });
 
-        setButtonFormat(tableButton, new JButton[]{codeButton, treeButton});
+        setButtonFormat(tableButton, new JButton[]{convertButton, treeButton});
     }
+
 
     private void populateTreePanel() {
         JPanel treePanel = new JPanel();
@@ -861,7 +852,7 @@ public class HuffmanCodeGUI extends JFrame {
             }
         });
 
-        setButtonFormat(treeButton, new JButton[]{codeButton, tableButton});
+        setButtonFormat(treeButton, new JButton[]{convertButton, tableButton});
     }
 
 
