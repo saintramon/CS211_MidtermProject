@@ -192,6 +192,7 @@ public class Huffman {
         System.out.println("\t2. The percentage merely considers the accepted String statement.");
         System.out.println("\t3. The saved space is computed by considering the length of the Huffman code and the Binary code. ");
         System.out.println("\t4. The assumed unit of measure is characters.");
+        System.out.println("\t5. The bit used for parity checking is not considered.");
         int huffman = convertToHuffmanCode(text).length();
         int binary = convertToBinary(text).length();
         return 100.0 - (double) huffman / binary * 100;
