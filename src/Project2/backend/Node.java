@@ -70,7 +70,7 @@ public class Node implements Comparable<Node>{
     }
 
     /**
-     * TODO: Documentation
+     * Defines a toString method that returns a string representation of the symbol object.
      * @return String representation of the current symbol
      */
     public String toString() {
