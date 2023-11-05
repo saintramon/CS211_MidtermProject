@@ -1,9 +1,13 @@
 package Project2.backend;
 
+import Project2.frontend.Resources;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class HuffmanTree extends JPanel {
+    private final Resources resources = new Resources();
+
     private Node root;
 
     public HuffmanTree() {
@@ -28,14 +32,22 @@ public class HuffmanTree extends JPanel {
 
     private void drawHuffmanTree(Graphics g, int x, int y, Node node, int xOffset) {
         if (node != null) {
+            g.setColor(resources.sage);
+
+            g.drawOval(x - 25, y - 15, 50, 50);
+
+            g.setFont(new Font("Arial", Font.BOLD, 13));
             g.setColor(Color.BLACK);
-            g.drawString(String.valueOf(node.getSymbol()) + ":" + node.getCount(), x, y);
+
+            g.drawString(String.valueOf(node.getSymbol()), x - 5, y + 5);
+            g.drawString(String.valueOf(node.getCount()), x - 5, y + 20);
 
             if (node.getLeft() != null) {
                 int nextX = x - xOffset;
                 int nextY = y + 50;
                 g.drawLine(x, y, nextX, nextY);
                 drawHuffmanTree(g, nextX, nextY, node.getLeft(), xOffset / 2);
+                g.drawString("0", (x + nextX) / 2, (y + nextY) / 2);
             }
 
             if (node.getRight() != null) {
@@ -43,6 +55,7 @@ public class HuffmanTree extends JPanel {
                 int nextY = y + 50;
                 g.drawLine(x, y, nextX, nextY);
                 drawHuffmanTree(g, nextX, nextY, node.getRight(), xOffset / 2);
+                g.drawString("1", (x + nextX) / 2, (y + nextY) / 2);
             }
         }
     }

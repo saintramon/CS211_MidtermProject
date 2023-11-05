@@ -367,6 +367,11 @@ public class HuffmanCodeGUI extends JFrame {
         resultPanel.setPreferredSize(new Dimension(600, 340));
         outputPanel.add(resultPanel, BorderLayout.NORTH);
 
+        JScrollPane scrollPane = new JScrollPane(resultPanel);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        outputPanel.add(scrollPane);
+
         convertToTextButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -680,7 +685,6 @@ public class HuffmanCodeGUI extends JFrame {
         outputPanel.setPreferredSize(new Dimension(600, 340));
         tablePanel.add(outputPanel, BorderLayout.SOUTH);
 
-
         generateTableButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -778,7 +782,7 @@ public class HuffmanCodeGUI extends JFrame {
         JPanel treePanel = new JPanel();
         treePanel.setBackground(resources.timberwolf);
         treePanel.setLayout(new BorderLayout());
-        treePanel.setPreferredSize(new Dimension(700, 600));
+        treePanel.setPreferredSize(new Dimension(700, 500));
         contentArea.removeAll();
         contentArea.add(treePanel, BorderLayout.EAST);
         contentArea.revalidate();
@@ -809,7 +813,16 @@ public class HuffmanCodeGUI extends JFrame {
         phraseTextField.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
-                phraseTextField.setText("");
+                if (phraseTextField.getText().equals("Enter a phrase...") || phraseTextField.getText().isEmpty())
+                    phraseTextField.setText("");
+            }
+        });
+
+        phraseTextField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (phraseTextField.getText().isEmpty())
+                    phraseTextField.setText("Enter a phrase...");
             }
         });
 
@@ -839,24 +852,28 @@ public class HuffmanCodeGUI extends JFrame {
         JPanel outputPanel = new JPanel();
         outputPanel.setLayout(new BorderLayout());
         outputPanel.setBackground(Color.WHITE);
-        outputPanel.setPreferredSize(new Dimension(600, 450));
+        outputPanel.setPreferredSize(new Dimension(600, 350));
         treePanel.add(outputPanel, BorderLayout.SOUTH);
 
         JPanel huffmanTreePanel = new JPanel();
         huffmanTreePanel.setLayout(new BorderLayout());
         huffmanTreePanel.setBackground(Color.GRAY);
-        huffmanTreePanel.setPreferredSize(new Dimension(600, 450));
+        huffmanTreePanel.setPreferredSize(new Dimension(600, 200));
         huffmanTreePanel.setVisible(false);
         outputPanel.add(huffmanTreePanel, BorderLayout.CENTER);
 
-        huffman = new Huffman(phraseTextField.getText());
-        HuffmanTree huffmanTree = new HuffmanTree();
-        huffmanTree.setRoot(huffman.getHuffmanRoot());
-        huffmanTreePanel.add(huffmanTree, BorderLayout.CENTER);
+        JScrollPane scrollPane = new JScrollPane(huffmanTreePanel);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        outputPanel.add(scrollPane);
 
         showTreeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                huffman = new Huffman(phraseTextField.getText());
+                HuffmanTree huffmanTree = new HuffmanTree();
+                huffmanTree.setRoot(huffman.getHuffmanRoot());
+                huffmanTreePanel.add(huffmanTree, BorderLayout.CENTER);
                 huffmanTreePanel.setVisible(true);
             }
         });
@@ -865,6 +882,7 @@ public class HuffmanCodeGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 phraseTextField.setText("Enter a phrase...");
+                huffmanTreePanel.setVisible(false);
             }
         });
 
