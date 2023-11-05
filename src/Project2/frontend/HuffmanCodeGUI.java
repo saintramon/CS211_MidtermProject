@@ -9,9 +9,12 @@ import java.awt.event.FocusEvent;
 import java.util.HashMap;
 import java.util.Map;
 import Project2.backend.Huffman;
+import Project2.backend.HuffmanTree;
+
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 
 public class HuffmanCodeGUI extends JFrame {
@@ -834,14 +837,27 @@ public class HuffmanCodeGUI extends JFrame {
         buttonsPanel.add(clearButton);
 
         JPanel outputPanel = new JPanel();
+        outputPanel.setLayout(new BorderLayout());
         outputPanel.setBackground(Color.WHITE);
         outputPanel.setPreferredSize(new Dimension(600, 450));
         treePanel.add(outputPanel, BorderLayout.SOUTH);
 
+        JPanel huffmanTreePanel = new JPanel();
+        huffmanTreePanel.setLayout(new BorderLayout());
+        huffmanTreePanel.setBackground(Color.GRAY);
+        huffmanTreePanel.setPreferredSize(new Dimension(600, 450));
+        huffmanTreePanel.setVisible(false);
+        outputPanel.add(huffmanTreePanel, BorderLayout.CENTER);
+
+        huffman = new Huffman(phraseTextField.getText());
+        HuffmanTree huffmanTree = new HuffmanTree();
+        huffmanTree.setRoot(huffman.getHuffmanRoot());
+        huffmanTreePanel.add(huffmanTree, BorderLayout.CENTER);
+
         showTreeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Handle show tree button here
+                huffmanTreePanel.setVisible(true);
             }
         });
 
