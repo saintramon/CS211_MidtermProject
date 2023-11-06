@@ -846,20 +846,15 @@ public class HuffmanCodeGUI extends JFrame {
         JPanel outputPanel = new JPanel();
         outputPanel.setLayout(new BorderLayout());
         outputPanel.setBackground(Color.WHITE);
-        outputPanel.setPreferredSize(new Dimension(600, 350));
+        outputPanel.setPreferredSize(new Dimension(600, 500));
         treePanel.add(outputPanel, BorderLayout.SOUTH);
 
         JPanel huffmanTreePanel = new JPanel();
         huffmanTreePanel.setLayout(new BorderLayout());
         huffmanTreePanel.setBackground(Color.GRAY);
-        huffmanTreePanel.setPreferredSize(new Dimension(600, 200));
+        huffmanTreePanel.setPreferredSize(new Dimension(600, 450));
         huffmanTreePanel.setVisible(false);
         outputPanel.add(huffmanTreePanel, BorderLayout.CENTER);
-
-        JScrollPane scrollPane = new JScrollPane(huffmanTreePanel);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        outputPanel.add(scrollPane, BorderLayout.CENTER);
 
         huffman = new Huffman(inputText);
         HuffmanTree huffmanTree = new HuffmanTree();
