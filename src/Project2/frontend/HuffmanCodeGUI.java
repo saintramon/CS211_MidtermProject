@@ -791,50 +791,6 @@ public class HuffmanCodeGUI extends JFrame {
 
         inputPanel.add(titleLabel, gbc);
 
-        JTextField phraseTextField = new JTextField();
-        phraseTextField.setFont(new Font("Arial", Font.PLAIN, 14));
-        phraseTextField.setText("Enter a phrase...");
-        phraseTextField.setColumns(40);
-
-        phraseTextField.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (phraseTextField.getText().equals("Enter a phrase...") || phraseTextField.getText().isEmpty())
-                    phraseTextField.setText("");
-            }
-        });
-
-        phraseTextField.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (phraseTextField.getText().isEmpty())
-                    phraseTextField.setText("Enter a phrase...");
-            }
-        });
-
-        gbc.fill = GridBagConstraints.NONE;
-        gbc.weightx = 0.0;
-
-        inputPanel.add(phraseTextField, gbc);
-
-        JPanel buttonsPanel = new JPanel();
-        buttonsPanel.setBackground(resources.fernGreen);
-        buttonsPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        inputPanel.add(buttonsPanel, gbc);
-
-        JButton showTreeButton = new JButton("GENERATE");
-        showTreeButton.setFont(new Font("Arial", Font.BOLD, 16));
-        showTreeButton.setForeground(resources.white);
-        showTreeButton.setBackground(resources.sage);
-
-        JButton clearButton = new JButton("CLEAR");
-        clearButton.setFont(new Font("Arial", Font.BOLD, 16));
-        clearButton.setForeground(resources.white);
-        clearButton.setBackground(resources.sage);
-
-        buttonsPanel.add(showTreeButton);
-        buttonsPanel.add(clearButton);
-
         JPanel outputPanel = new JPanel();
         outputPanel.setLayout(new BorderLayout());
         outputPanel.setBackground(Color.WHITE);
@@ -853,28 +809,12 @@ public class HuffmanCodeGUI extends JFrame {
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         outputPanel.add(scrollPane);
 
-        showTreeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                huffman = new Huffman(inputText);
-                HuffmanTree huffmanTree = new HuffmanTree();
-                huffmanTree.setRoot(huffman.getHuffmanRoot());
-                huffmanTreePanel.add(huffmanTree, BorderLayout.CENTER);
-                huffmanTreePanel.setVisible(true);
-            }
-        });
-
-        clearButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                phraseTextField.setText("Enter a phrase...");
-                huffmanTreePanel.setVisible(false);
-            }
-        });
-
-        setButtonFormat(treeButton, new JButton[]{convertButton, tableButton});
+        huffman = new Huffman(inputText);
+        HuffmanTree huffmanTree = new HuffmanTree();
+        huffmanTree.setRoot(huffman.getHuffmanRoot());
+        huffmanTreePanel.add(huffmanTree, BorderLayout.CENTER);
+        huffmanTreePanel.setVisible(true);
     }
-
 
     private JButton createSidebarButton(String text, String iconPath) {
         JButton button = new JButton();
