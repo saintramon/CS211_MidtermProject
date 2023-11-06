@@ -17,17 +17,51 @@ import javax.swing.JScrollPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 
+/**
+ * HuffmanCodeGUI is a Swing-based graphical user interface for Huffman coding and decoding.
+ */
 public class HuffmanCodeGUI extends JFrame {
+    /**
+     * A mapping of characters to their corresponding Huffman codes.
+     */
     private Map<Character, String> huffmanTable = new HashMap<>();
+    /**
+     * An instance of the Resources class, providing access to various graphical resources.
+     */
     private final Resources resources = new Resources();
+    /**
+     * The main content area of the GUI where different panels are displayed.
+     */
     private JPanel contentArea;
+    /**
+     * Button for the "Input" option in the sidebar.
+     */
     private JButton inputButton;
+    /**
+     * Button for the "Convert" option in the sidebar.
+     */
     private JButton convertButton;
+    /**
+     * Button for the "Huffman Table" option in the sidebar.
+     */
     private JButton tableButton;
+    /**
+     * Button for the "Huffman Tree" option in the sidebar.
+     */
     private JButton treeButton;
+    /**
+     * An instance of the Huffman class, used for Huffman coding and decoding operations.
+     */
     private Huffman huffman;
+    /**
+     * The input text provided by the user for Huffman coding and decoding.
+     */
     private String inputText;
 
+
+    /**
+     * Constructor for the HuffmanCodeGUI class, which initializes the Huffman Code application's graphical user interface.
+     */
     public HuffmanCodeGUI() {
         super("Huffman Code Application");
 
@@ -70,6 +104,10 @@ public class HuffmanCodeGUI extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * Creates and populates the sidebar panel for the Huffman Code Application.
+     * @return A JPanel containing the populated sidebar with various option buttons.
+     */
     private JPanel populateSidebar() {
         JPanel sidebarPanel = new JPanel();
         sidebarPanel.setLayout(new BorderLayout());
@@ -142,6 +180,10 @@ public class HuffmanCodeGUI extends JFrame {
         return sidebarPanel;
     }
 
+    /**
+     * Populates the input panel within the Huffman Code Application's content area.
+     * It allows users to enter text, provides instructions, and handles text processing.
+     */
     private void populateInputPanel() {
 
         JPanel firstInputPanel = new JPanel();
@@ -289,6 +331,10 @@ public class HuffmanCodeGUI extends JFrame {
         setButtonFormat(inputButton, new JButton[]{convertButton, tableButton, treeButton});
     }
 
+    /**
+     * Populates the code conversion panel within the Huffman Code Application's content area.
+     * It allows users to convert text to Huffman code and vice versa, displaying results and additional information.
+     */
     private void populateCodePanel() {
 
         JPanel codePanel = new JPanel();
@@ -616,6 +662,10 @@ public class HuffmanCodeGUI extends JFrame {
         setButtonFormat(convertButton, new JButton[]{tableButton, treeButton});
     }
 
+    /**
+     * Populates the Huffman Table panel within the Huffman Code Application's content area.
+     * It allows users to generate and display the Huffman table or character frequency table based on input text.
+     */
     private void populateTablePanel() {
         JPanel tablePanel = new JPanel();
         tablePanel.setBackground(resources.timberwolf);
@@ -764,6 +814,10 @@ public class HuffmanCodeGUI extends JFrame {
     }
 
 
+    /**
+     * Populates the Huffman Tree panel within the Huffman Code Application's content area.
+     * It allows users to enter a phrase and visualize the corresponding Huffman tree structure.
+     */
     private void populateTreePanel() {
         JPanel treePanel = new JPanel();
         treePanel.setBackground(resources.timberwolf);
@@ -816,6 +870,13 @@ public class HuffmanCodeGUI extends JFrame {
         huffmanTreePanel.setVisible(true);
     }
 
+
+    /**
+     * Creates and returns a formatted sidebar button with the specified text and icon.
+     * @param text The text displayed on the button.
+     * @param iconPath The file path to the button's icon.
+     * @return A JButton with the specified text, icon, and formatting.
+     */
     private JButton createSidebarButton(String text, String iconPath) {
         JButton button = new JButton();
         button.setText(text);
@@ -832,6 +893,11 @@ public class HuffmanCodeGUI extends JFrame {
         return button;
     }
 
+    /**
+     * Sets the formatting of buttons in the sidebar by changing their text color.
+     * @param selectedButton The button that is currently selected.
+     * @param allButtons     An array of all sidebar buttons.
+     */
     private void setButtonFormat(JButton selectedButton, JButton[] allButtons) {
         for (JButton button : allButtons) {
             button.setForeground(resources.sage);
@@ -839,7 +905,10 @@ public class HuffmanCodeGUI extends JFrame {
         selectedButton.setForeground(resources.eggshellWhite);
     }
 
-
+    /**
+     * The main entry point of the HuffmanCodeGUI application. It creates and initializes the GUI interface.
+     * @param args The command-line arguments (not used in this application).
+     */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             new HuffmanCodeGUI();
