@@ -144,7 +144,7 @@ public class HuffmanCodeGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setButtonFormat(convertButton, new JButton[]{inputButton, tableButton, treeButton});
-                populateCodePanel();
+                populateConvertPanel();
             }
         });
 
@@ -210,7 +210,7 @@ public class HuffmanCodeGUI extends JFrame {
                 "Input: Enter your text in the input panel and click the option you want in the sidebar.\n" +
                 "Convert: Choose 'Convert' option to convert text to Huffman code and vice versa. You can also view the binary code and saved space.\n" +
                 "Huffman Table: To generate a Huffman table, select the 'Huffman Table' option from the sidebar and then click 'Generate Table.'\n" +
-                "Huffman Tree: Choose the 'Huffman Tree' option in the sidebar and click 'Generate Tree.'";
+                "Huffman Tree: To generate a Huffman tree, choose the 'Huffman Tree' option in the sidebar";
 
         JTextArea instructionsArea = new JTextArea(instructionsText);
         instructionsArea.setPreferredSize(new Dimension(620, 150));
@@ -335,14 +335,14 @@ public class HuffmanCodeGUI extends JFrame {
      * Populates the code conversion panel within the Huffman Code Application's content area.
      * It allows users to convert text to Huffman code and vice versa, displaying results and additional information.
      */
-    private void populateCodePanel() {
+    private void populateConvertPanel() {
 
-        JPanel codePanel = new JPanel();
-        codePanel.setBackground(resources.timberwolf);
-        codePanel.setLayout(new BorderLayout());
-        codePanel.setPreferredSize(new Dimension(700, 490));
+        JPanel convertPanel = new JPanel();
+        convertPanel.setBackground(resources.timberwolf);
+        convertPanel.setLayout(new BorderLayout());
+        convertPanel.setPreferredSize(new Dimension(700, 490));
         contentArea.removeAll();
-        contentArea.add(codePanel, BorderLayout.EAST);
+        contentArea.add(convertPanel, BorderLayout.EAST);
         contentArea.revalidate();
         contentArea.repaint();
 
@@ -350,7 +350,7 @@ public class HuffmanCodeGUI extends JFrame {
         inputPanel.setBackground(resources.fernGreen);
         inputPanel.setLayout(new GridBagLayout());
         inputPanel.setPreferredSize(new Dimension(600, 150));
-        codePanel.add(inputPanel, BorderLayout.NORTH);
+        convertPanel.add(inputPanel, BorderLayout.NORTH);
 
         JLabel titleLabel = new JLabel("HUFFMAN CODE CONVERSION");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
@@ -408,7 +408,7 @@ public class HuffmanCodeGUI extends JFrame {
         JPanel outputPanel = new JPanel();
         outputPanel.setBackground(Color.WHITE);
         outputPanel.setPreferredSize(new Dimension(600, 340));
-        codePanel.add(outputPanel, BorderLayout.SOUTH);
+        convertPanel.add(outputPanel, BorderLayout.SOUTH);
 
         JPanel resultPanel = new JPanel();
         resultPanel.setPreferredSize(new Dimension(600, 340));
