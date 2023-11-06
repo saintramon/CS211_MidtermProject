@@ -106,6 +106,7 @@ public class HuffmanCodeGUI extends JFrame {
 
     /**
      * Creates and populates the sidebar panel for the Huffman Code Application.
+     *
      * @return A JPanel containing the populated sidebar with various option buttons.
      */
     private JPanel populateSidebar() {
@@ -318,7 +319,6 @@ public class HuffmanCodeGUI extends JFrame {
                 phraseTextField.setText("Enter a word, phrase, or a paragraph...");
 
 
-
                 promptLabel.setText("");
                 promptPanel.setVisible(false);
             }
@@ -437,7 +437,7 @@ public class HuffmanCodeGUI extends JFrame {
                     resultPanel.add(resultsTitleLabel, BorderLayout.NORTH);
 
                     JPanel detailsPanel = new JPanel(new GridBagLayout());
-                    detailsPanel.setPreferredSize(new Dimension(600,340));
+                    detailsPanel.setPreferredSize(new Dimension(600, 340));
                     GridBagConstraints gbc = new GridBagConstraints();
                     gbc.fill = GridBagConstraints.HORIZONTAL;
                     gbc.insets = new Insets(5, 5, 5, 5);
@@ -477,7 +477,7 @@ public class HuffmanCodeGUI extends JFrame {
                             resultPanel.add(resultsTitleLabel, BorderLayout.NORTH);
 
                             JPanel detailsPanel = new JPanel(new GridBagLayout());
-                            detailsPanel.setPreferredSize(new Dimension(600,340));
+                            detailsPanel.setPreferredSize(new Dimension(600, 340));
                             GridBagConstraints gbc = new GridBagConstraints();
                             gbc.fill = GridBagConstraints.HORIZONTAL;
                             gbc.insets = new Insets(5, 5, 5, 5);
@@ -550,7 +550,7 @@ public class HuffmanCodeGUI extends JFrame {
                     resultPanel.add(resultsTitleLabel, BorderLayout.NORTH);
 
                     JPanel detailsPanel = new JPanel(new GridBagLayout());
-                    detailsPanel.setPreferredSize(new Dimension(600,340));
+                    detailsPanel.setPreferredSize(new Dimension(600, 340));
                     GridBagConstraints gbc = new GridBagConstraints();
                     gbc.fill = GridBagConstraints.HORIZONTAL;
                     gbc.insets = new Insets(5, 5, 5, 5);
@@ -590,7 +590,7 @@ public class HuffmanCodeGUI extends JFrame {
                             resultPanel.add(resultsTitleLabel, BorderLayout.NORTH);
 
                             JPanel detailsPanel = new JPanel(new GridBagLayout());
-                            detailsPanel.setPreferredSize(new Dimension(600,340));
+                            detailsPanel.setPreferredSize(new Dimension(600, 340));
                             GridBagConstraints gbc = new GridBagConstraints();
                             gbc.fill = GridBagConstraints.HORIZONTAL;
                             gbc.insets = new Insets(5, 5, 5, 5);
@@ -764,7 +764,7 @@ public class HuffmanCodeGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (inputText != null) {
                     String phrase = inputText;
-                   // huffman = new Huffman(phrase);
+                    // huffman = new Huffman(phrase);
 
                     Map<Character, Integer> frequencyTable = huffman.getFrequencyTable();
 
@@ -866,7 +866,8 @@ public class HuffmanCodeGUI extends JFrame {
 
     /**
      * Creates and returns a formatted sidebar button with the specified text and icon.
-     * @param text The text displayed on the button.
+     *
+     * @param text     The text displayed on the button.
      * @param iconPath The file path to the button's icon.
      * @return A JButton with the specified text, icon, and formatting.
      */
@@ -888,6 +889,7 @@ public class HuffmanCodeGUI extends JFrame {
 
     /**
      * Sets the formatting of buttons in the sidebar by changing their text color.
+     *
      * @param selectedButton The button that is currently selected.
      * @param allButtons     An array of all sidebar buttons.
      */
@@ -896,15 +898,5 @@ public class HuffmanCodeGUI extends JFrame {
             button.setForeground(resources.sage);
         }
         selectedButton.setForeground(resources.eggshellWhite);
-    }
-
-    /**
-     * The main entry point of the HuffmanCodeGUI application. It creates and initializes the GUI interface.
-     * @param args The command-line arguments (not used in this application).
-     */
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new HuffmanCodeGUI();
-        });
     }
 }
