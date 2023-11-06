@@ -3,7 +3,11 @@ package Project2.backend;
 import Project2.frontend.Resources;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  * HuffmanTree is a class that extends JPanel and is used to visualize a Huffman Tree
@@ -18,9 +22,55 @@ public class HuffmanTree extends JPanel {
      // The root node of the Huffman Tree.
     private Node root;
 
-    // Constructs an empty HuffmanTree with no root node.
+    private Point clickPoint; // track initial dragging
+
+    private Point offset = new Point(0, 0);
+
+    private JSlider zoomSlider;
+    private double zoomLevel = 1.0;
+
+
     public HuffmanTree() {
         root = null;
+        clickPoint = null;
+        zoomSlider = new JSlider(JSlider.HORIZONTAL, 50, 200, 100); // Adjust the min, max, and initial values as needed
+
+        zoomSlider.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                zoomLevel = zoomSlider.getValue() / 100.0;
+                repaint();
+            }
+        });
+
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                clickPoint = e.getPoint();
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                clickPoint = null;
+            }
+        });
+
+        addMouseMotionListener(new MouseAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                if (clickPoint != null) {
+                    Point newPoint = e.getPoint();
+                    int dx = newPoint.x - clickPoint.x;
+                    int dy = newPoint.y - clickPoint.y;
+                    // Adjust the current view's position based on the mouse drag
+                    scroll(dx, dy);
+                    clickPoint = newPoint;
+                }
+            }
+        });
+
+        setLayout(new BorderLayout());
+        add(zoomSlider, BorderLayout.SOUTH);
     }
 
     /**
@@ -49,11 +99,17 @@ public class HuffmanTree extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+
+        Graphics2D g2d = (Graphics2D) g.create();
+        g2d.translate(offset.x, offset.y);
+        g2d.scale(zoomLevel, zoomLevel);
+
         if (this.root != null) {
-            // Draw the Huffman Tree starting from the root node.
-            drawHuffmanTree(g, getWidth() / 2, 30, this.root, getWidth() / 4);
+            drawHuffmanTree(g2d, getWidth() / 2, 30, this.root, getWidth());
         }
-    }
+
+        g2d.dispose();
+    } // end of paintComponent method
 
     /**
      * If the root node of the tree is not null, the method will call itself recursively with the root node as input.
@@ -109,4 +165,11 @@ public class HuffmanTree extends JPanel {
             }
         }
     }
+
+    private void scroll(int dx, int dy) {
+        offset.x += dx;
+        offset.y += dy;
+        repaint();
+    }
+
 }

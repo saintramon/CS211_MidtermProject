@@ -728,8 +728,6 @@ public class HuffmanCodeGUI extends JFrame {
                 // Get the stored input text
                 if (inputText != null) {
 
-                  //  Huffman huffman = new Huffman(phrase);
-
                     Map<Character, String> huffmanTable = huffman.getHuffmanTable();
 
                     DefaultTableModel model = new DefaultTableModel() {
@@ -831,7 +829,7 @@ public class HuffmanCodeGUI extends JFrame {
         JPanel inputPanel = new JPanel();
         inputPanel.setBackground(resources.fernGreen);
         inputPanel.setLayout(new GridBagLayout());
-        inputPanel.setPreferredSize(new Dimension(600, 150));
+        inputPanel.setPreferredSize(new Dimension(600, 100));
         treePanel.add(inputPanel, BorderLayout.CENTER);
 
         JLabel titleLabel = new JLabel("HUFFMAN TREE");
@@ -848,25 +846,20 @@ public class HuffmanCodeGUI extends JFrame {
         JPanel outputPanel = new JPanel();
         outputPanel.setLayout(new BorderLayout());
         outputPanel.setBackground(Color.WHITE);
-        outputPanel.setPreferredSize(new Dimension(600, 350));
+        outputPanel.setPreferredSize(new Dimension(600, 500));
         treePanel.add(outputPanel, BorderLayout.SOUTH);
 
         JPanel huffmanTreePanel = new JPanel();
         huffmanTreePanel.setLayout(new BorderLayout());
         huffmanTreePanel.setBackground(Color.GRAY);
-        huffmanTreePanel.setPreferredSize(new Dimension(600, 200));
+        huffmanTreePanel.setPreferredSize(new Dimension(600, 450));
         huffmanTreePanel.setVisible(false);
         outputPanel.add(huffmanTreePanel, BorderLayout.CENTER);
-
-        JScrollPane scrollPane = new JScrollPane(huffmanTreePanel);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        outputPanel.add(scrollPane);
 
         huffman = new Huffman(inputText);
         HuffmanTree huffmanTree = new HuffmanTree();
         huffmanTree.setRoot(huffman.getHuffmanRoot());
-        huffmanTreePanel.add(huffmanTree, BorderLayout.CENTER);
+        huffmanTreePanel.add(huffmanTree);
         huffmanTreePanel.setVisible(true);
     }
 
