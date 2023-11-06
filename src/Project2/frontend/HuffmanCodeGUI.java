@@ -254,6 +254,7 @@ public class HuffmanCodeGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 inputText = phraseTextField.getText();
+                huffman = new Huffman(inputText);
 
                 if (inputText.isEmpty()) {
 
@@ -378,8 +379,8 @@ public class HuffmanCodeGUI extends JFrame {
                 String inputText = phraseTextField.getText();
 
                 if (!inputText.isEmpty() && !inputText.equals("Enter a word, phrase, or code...")) {
-                    huffman = new Huffman(inputText);
-                    String convertedText = huffman.convertToText(inputText);
+                    //huffman = new Huffman(inputText);
+                    String convertedCode = huffman.convertToText(inputText);
 
                     resultPanel.removeAll();
 
@@ -397,14 +398,14 @@ public class HuffmanCodeGUI extends JFrame {
                     gbc.anchor = GridBagConstraints.WEST;
                     gbc.gridy = 0;
 
-                    JLabel convertedTextLabel = new JLabel("CONVERTED TEXT:");
-                    convertedTextLabel.setFont(new Font("Arial", Font.BOLD, 16));
+                    JLabel convertedCodeLabel = new JLabel("CONVERTED TEXT:");
+                    convertedCodeLabel.setFont(new Font("Arial", Font.BOLD, 16));
                     gbc.gridx = 0;
-                    detailsPanel.add(convertedTextLabel, gbc);
-                    JLabel convertedTextValueLabel = new JLabel(convertedText);
-                    convertedTextValueLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+                    detailsPanel.add(convertedCodeLabel, gbc);
+                    JLabel convertedCodeValueLabel = new JLabel(convertedCode);
+                    convertedCodeValueLabel.setFont(new Font("Arial", Font.PLAIN, 16));
                     gbc.gridx = 1;
-                    detailsPanel.add(convertedTextValueLabel, gbc);
+                    detailsPanel.add(convertedCodeValueLabel, gbc);
 
                     gbc.gridy++;
 
@@ -437,32 +438,18 @@ public class HuffmanCodeGUI extends JFrame {
                             gbc.anchor = GridBagConstraints.WEST;
                             gbc.gridy = 0;
 
-                            JLabel convertedTextLabel = new JLabel("CONVERTED TEXT:");
-                            convertedTextLabel.setFont(new Font("Arial", Font.BOLD, 16));
+                            JLabel convertedCodeLabel = new JLabel("CONVERTED TEXT:");
+                            convertedCodeLabel.setFont(new Font("Arial", Font.BOLD, 16));
                             gbc.gridx = 0;
-                            detailsPanel.add(convertedTextLabel, gbc);
-                            JLabel convertedTextValueLabel = new JLabel(convertedText);
-                            convertedTextValueLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+                            detailsPanel.add(convertedCodeLabel, gbc);
+                            JLabel convertedCodeValueLabel = new JLabel(convertedCode);
+                            convertedCodeValueLabel.setFont(new Font("Arial", Font.PLAIN, 16));
                             gbc.gridx = 1;
-                            detailsPanel.add(convertedTextValueLabel, gbc);
+                            detailsPanel.add(convertedCodeValueLabel, gbc);
 
                             gbc.gridy++;
 
-                            if (convertToCodeButton.isEnabled()) {
-                                String convertedCode = huffman.convertToHuffmanCode(inputText);
-                                JLabel convertedCodeLabel = new JLabel("CONVERTED HUFFMAN CODE:");
-                                convertedCodeLabel.setFont(new Font("Arial", Font.BOLD, 16));
-                                gbc.gridx = 0;
-                                detailsPanel.add(convertedCodeLabel, gbc);
-                                JLabel convertedCodeValueLabel = new JLabel(convertedCode);
-                                convertedCodeValueLabel.setFont(new Font("Arial", Font.PLAIN, 16));
-                                gbc.gridx = 1;
-                                detailsPanel.add(convertedCodeValueLabel, gbc);
-                            }
-
-                            gbc.gridy++;
-
-                            String binaryCode = huffman.convertToBinary(inputText);
+                            String binaryCode = huffman.convertToBinary(huffman.convertToText(inputText));
                             JLabel binaryCodeLabel = new JLabel("BINARY CODE:");
                             binaryCodeLabel.setFont(new Font("Arial", Font.BOLD, 16));
                             gbc.gridx = 0;
@@ -474,7 +461,7 @@ public class HuffmanCodeGUI extends JFrame {
 
                             gbc.gridy++;
 
-                            double savedSpace = huffman.computeSavedSpace(inputText);
+                            double savedSpace = huffman.computeSavedSpace(huffman.convertToText(inputText));
                             JLabel savedSpaceLabel = new JLabel("SAVED SPACE:");
                             savedSpaceLabel.setFont(new Font("Arial", Font.BOLD, 16));
                             gbc.gridx = 0;
@@ -505,7 +492,7 @@ public class HuffmanCodeGUI extends JFrame {
                 String inputText = phraseTextField.getText();
 
                 if (!inputText.isEmpty() && !inputText.equals("Enter a word, phrase, or code...")) {
-                    huffman = new Huffman(inputText);
+                    //huffman = new Huffman(inputText);
                     String convertedCode = huffman.convertToHuffmanCode(inputText);
 
                     resultPanel.removeAll();
@@ -661,7 +648,7 @@ public class HuffmanCodeGUI extends JFrame {
         buttonsPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         inputPanel.add(buttonsPanel, gbc);
 
-        JButton generateTableButton = new JButton("GENERATE TABLE");
+        JButton generateTableButton = new JButton("GENERATE");
         generateTableButton.setFont(new Font("Arial", Font.BOLD, 16));
         generateTableButton.setForeground(resources.white);
         generateTableButton.setBackground(resources.sage);
@@ -690,9 +677,8 @@ public class HuffmanCodeGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 // Get the stored input text
                 if (inputText != null) {
-                    String phrase = inputText;
 
-                    Huffman huffman = new Huffman(phrase);
+                  //  Huffman huffman = new Huffman(phrase);
 
                     Map<Character, String> huffmanTable = huffman.getHuffmanTable();
 
@@ -730,7 +716,7 @@ public class HuffmanCodeGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (inputText != null) {
                     String phrase = inputText;
-                    huffman = new Huffman(phrase);
+                   // huffman = new Huffman(phrase);
 
                     Map<Character, Integer> frequencyTable = huffman.getFrequencyTable();
 
@@ -836,7 +822,7 @@ public class HuffmanCodeGUI extends JFrame {
         buttonsPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         inputPanel.add(buttonsPanel, gbc);
 
-        JButton showTreeButton = new JButton("SHOW TREE");
+        JButton showTreeButton = new JButton("GENERATE");
         showTreeButton.setFont(new Font("Arial", Font.BOLD, 16));
         showTreeButton.setForeground(resources.white);
         showTreeButton.setBackground(resources.sage);
@@ -870,7 +856,7 @@ public class HuffmanCodeGUI extends JFrame {
         showTreeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                huffman = new Huffman(phraseTextField.getText());
+                huffman = new Huffman(inputText);
                 HuffmanTree huffmanTree = new HuffmanTree();
                 huffmanTree.setRoot(huffman.getHuffmanRoot());
                 huffmanTreePanel.add(huffmanTree, BorderLayout.CENTER);
