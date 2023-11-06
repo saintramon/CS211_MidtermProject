@@ -84,7 +84,7 @@ public class Resources {
     final Color brunswickGreen = new Color(0x344E41);
     final Color hunterGreen = new Color(0x3A5A40);
     final Color fernGreen = new Color(0x588157);
-    final Color sage = new Color(0xA3B18A);
+    public final Color sage = new Color(0xA3B18A);
     final Color timberwolf = new Color(0xDAD7CD);
     final Color white = new Color (0xFFFFFF);
 

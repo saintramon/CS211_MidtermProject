@@ -225,4 +225,8 @@ public class Huffman {
         populateHuffmanTable(root.getLeft(), code+"0");
         populateHuffmanTable(root.getRight(), code+"1");
     }
+
+    public Node getHuffmanRoot() {
+        return huffmanRoot;
+    }
 }
