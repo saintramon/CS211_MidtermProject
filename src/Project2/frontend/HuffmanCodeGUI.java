@@ -728,8 +728,6 @@ public class HuffmanCodeGUI extends JFrame {
                 // Get the stored input text
                 if (inputText != null) {
 
-                  //  Huffman huffman = new Huffman(phrase);
-
                     Map<Character, String> huffmanTable = huffman.getHuffmanTable();
 
                     DefaultTableModel model = new DefaultTableModel() {
@@ -831,7 +829,7 @@ public class HuffmanCodeGUI extends JFrame {
         JPanel inputPanel = new JPanel();
         inputPanel.setBackground(resources.fernGreen);
         inputPanel.setLayout(new GridBagLayout());
-        inputPanel.setPreferredSize(new Dimension(600, 150));
+        inputPanel.setPreferredSize(new Dimension(600, 100));
         treePanel.add(inputPanel, BorderLayout.CENTER);
 
         JLabel titleLabel = new JLabel("HUFFMAN TREE");
@@ -859,14 +857,14 @@ public class HuffmanCodeGUI extends JFrame {
         outputPanel.add(huffmanTreePanel, BorderLayout.CENTER);
 
         JScrollPane scrollPane = new JScrollPane(huffmanTreePanel);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        outputPanel.add(scrollPane);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        outputPanel.add(scrollPane, BorderLayout.CENTER);
 
         huffman = new Huffman(inputText);
         HuffmanTree huffmanTree = new HuffmanTree();
         huffmanTree.setRoot(huffman.getHuffmanRoot());
-        huffmanTreePanel.add(huffmanTree, BorderLayout.CENTER);
+        huffmanTreePanel.add(huffmanTree);
         huffmanTreePanel.setVisible(true);
     }
 

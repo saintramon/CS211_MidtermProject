@@ -4,14 +4,48 @@ import Project2.frontend.Resources;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class HuffmanTree extends JPanel {
     private final Resources resources = new Resources();
 
     private Node root;
 
+    private Point clickPoint; // track initial dragging
+
+    private Point offset = new Point(0, 0); // Offset for drawing
+
+
     public HuffmanTree() {
         root = null;
+        clickPoint = null;
+
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                clickPoint = e.getPoint();
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                clickPoint = null;
+            }
+        });
+
+        addMouseMotionListener(new MouseAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                if (clickPoint != null) {
+                    Point newPoint = e.getPoint();
+                    int dx = newPoint.x - clickPoint.x;
+                    int dy = newPoint.y - clickPoint.y;
+                    // Adjust the current view's position based on the mouse drag
+                    scroll(dx, dy);
+                    clickPoint = newPoint;
+                }
+            }
+        });
     }
 
     public Node getRoot() {
@@ -25,9 +59,15 @@ public class HuffmanTree extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+
+        Graphics2D g2d = (Graphics2D) g.create();
+        g2d.translate(offset.x, offset.y);
+
         if (this.root != null) {
-            drawHuffmanTree(g, getWidth() / 2, 30, this.root, getWidth() / 4);
+            drawHuffmanTree(g2d, getWidth() / 2, 30, this.root, getWidth() / 4);
         }
+
+        g2d.dispose();
     }
 
     /**
@@ -76,4 +116,11 @@ public class HuffmanTree extends JPanel {
             }
         }
     }
+
+    private void scroll(int dx, int dy) {
+        offset.x += dx;
+        offset.y += dy;
+        repaint();
+    }
+
 }
