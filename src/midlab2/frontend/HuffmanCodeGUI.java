@@ -1,4 +1,4 @@
-package Project2.frontend;
+package midlab2.frontend;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,8 +8,8 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.util.HashMap;
 import java.util.Map;
-import Project2.backend.Huffman;
-import Project2.backend.HuffmanTree;
+import midlab2.backend.Huffman;
+import midlab2.backend.HuffmanTree;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -856,11 +856,13 @@ public class HuffmanCodeGUI extends JFrame {
         huffmanTreePanel.setVisible(false);
         outputPanel.add(huffmanTreePanel, BorderLayout.CENTER);
 
-        huffman = new Huffman(inputText);
-        HuffmanTree huffmanTree = new HuffmanTree();
-        huffmanTree.setRoot(huffman.getHuffmanRoot());
-        huffmanTreePanel.add(huffmanTree);
-        huffmanTreePanel.setVisible(true);
+        try {
+            huffman = new Huffman(inputText);
+            HuffmanTree huffmanTree = new HuffmanTree();
+            huffmanTree.setRoot(huffman.getHuffmanRoot());
+            huffmanTreePanel.add(huffmanTree);
+            huffmanTreePanel.setVisible(true);
+        } catch (Exception ex) {}
     }
 
 

@@ -1,4 +1,4 @@
-package Project2.backend;
+package midlab2.backend;
 
 /**
  * Represents a node in a data structure and implements the Comparable interface for comparing nodes based on their counts.

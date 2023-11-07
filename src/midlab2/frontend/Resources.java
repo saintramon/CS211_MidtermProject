@@ -1,4 +1,4 @@
-package Project2.frontend;
+package midlab2.frontend;
 
 import javax.swing.*;
 import javax.swing.border.*;

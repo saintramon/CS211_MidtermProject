@@ -1,6 +1,6 @@
-package Project2.backend;
+package midlab2.backend;
 
-import Project2.frontend.Resources;
+import midlab2.frontend.Resources;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
